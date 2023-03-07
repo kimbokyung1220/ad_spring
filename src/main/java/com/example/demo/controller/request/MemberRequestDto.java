@@ -1,5 +1,6 @@
 package com.example.demo.controller.request;
 
+import com.example.demo.entity.Adv;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.enm.RoleGroup;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,9 @@ public class MemberRequestDto {
                 .memberId(memberId)
                 .pwd(passwordEncoder.encode(pwd))
                 .roleGroup(RoleGroup.ROLE_ADV)
+                .adv(Adv.builder()
+                        .advId(memberId)
+                        .build())
                 .build();
     }
 

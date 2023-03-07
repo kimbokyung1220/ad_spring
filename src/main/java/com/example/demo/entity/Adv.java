@@ -19,10 +19,11 @@ import java.io.Serializable;
 public class Adv implements Serializable {
 
     @Id
-    private String id;
+    @Column
+    private String advId;
 
     @MapsId
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "adv_id", referencedColumnName = "member_id")
     private Member member;
     private Integer advIngActYn; // 광고 진행 활성 여부
@@ -30,7 +31,10 @@ public class Adv implements Serializable {
     private Integer eventMoneyBalance; //이벤트 머니 잔액
     private Integer dayLimitBudget; // 일 제한 예산
 
-    public void addBalance(Member member) {
-        this.member = member;
+    public void addBalance() {
+        this.advIngActYn = 1;
+        this.balance = 1000000;
+        this.eventMoneyBalance = 0;
+        this.dayLimitBudget = 0;
     }
 }

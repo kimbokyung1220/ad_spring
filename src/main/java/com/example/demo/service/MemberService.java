@@ -6,6 +6,7 @@ import com.example.demo.controller.request.MemberRequestDto;
 import com.example.demo.controller.response.MemberResponseDto;
 import com.example.demo.entity.Adv;
 import com.example.demo.entity.Member;
+import com.example.demo.repository.AdvRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
-//    private final AdvRepository advRepository;
+    private final AdvRepository advRepository;
     private final ValidationUtil validationUtil;
 
     /**
@@ -36,16 +37,23 @@ public class MemberService {
      */
     @Transactional
     public MemberResponseDto signup(String path, MemberRequestDto memberRequestDto) {
+        // 회원가입이 되어있는지 check
         String memberId = validationUtil.existMember(memberRequestDto.getMemberId());
 
-        if(path.equals("adv")) {
+        // 광고주
+        if (path.equals("adv")) {
             Member member = memberRequestDto.toAdv(passwordEncoder);
             MemberResponseDto.of(Optional.of(memberRepository.save(member)));
+            Adv adv = advRepository.save(Adv.builder()
+                            .advId(member.getMemberId())
+                            .member(member)
+                    .build());
+            adv.addBalance();
 
-//            Adv.addBalance(member);
             return MemberResponseDto.of(Optional.of(member));
 
-        } else if(path.equals("admin")) {
+        // 관리자
+        } else if (path.equals("admin")) {
             Member member = memberRequestDto.toAdmin(passwordEncoder);
             return MemberResponseDto.of(Optional.of(memberRepository.save(member)));
         }
