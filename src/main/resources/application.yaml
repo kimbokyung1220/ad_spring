@@ -24,14 +24,25 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3306/ad?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8
+      jdbc-url: jdbc:mysql://localhost:3306/ad?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&Timezone=Asia/Seoul
       username: root
       password: root
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
     show-sql: true
+
+  output:
+    ansi:
+      enabled: always
+
+# jwt
+# HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+# Secret 값은 특정 문자열을 Base64 로 인코딩한 값 사용 (아래 명령어를 터미널에 쳐보면 그대로 나옴)
+# $ echo 'spring-boot-security-jwt-tutorial-jiwoon-spring-boot-security-jwt-tutorial' | base64
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
