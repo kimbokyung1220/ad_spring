@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.config.jwt.TokenDto;
 import com.example.demo.config.jwt.TokenProvider;
+import com.example.demo.controller.request.AddBalanceRequestDto;
 import com.example.demo.controller.request.MemberRequestDto;
 import com.example.demo.controller.response.MemberResponseDto;
 import com.example.demo.entity.Adv;
@@ -43,14 +44,12 @@ public class MemberService {
         // 광고주
         if (path.equals("adv")) {
             Member member = memberRequestDto.toAdv(passwordEncoder);
-            MemberResponseDto.of(Optional.of(memberRepository.save(member)));
-            Adv adv = advRepository.save(Adv.builder()
-                            .advId(member.getMemberId())
-                            .member(member)
-                    .build());
-            adv.addBalance();
+            memberRepository.save(member);
 
-            return MemberResponseDto.of(Optional.of(member));
+            AddBalanceRequestDto addBalanceRequestDto = new AddBalanceRequestDto(member.getMemberId());
+            advRepository.save(new Adv(member).addBalance(addBalanceRequestDto));
+            System.out.println(member.getMemberId());
+
 
         // 관리자
         } else if (path.equals("admin")) {

@@ -27,9 +27,6 @@ public class MemberRequestDto {
                 .memberId(memberId)
                 .pwd(passwordEncoder.encode(pwd))
                 .roleGroup(RoleGroup.ROLE_ADV)
-                .adv(Adv.builder()
-                        .advId(memberId)
-                        .build())
                 .build();
     }
 

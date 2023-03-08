@@ -118,7 +118,8 @@ public class SecurityConfig {
                 .antMatchers("/", "/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/common/login").permitAll()
 //                .antMatchers(HttpMethod.GET,"/api/chart").hasRole("ADMIN")
-                .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
+//                .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
+                .anyRequest().permitAll()   // 나머지 API 는 전부 인증 필요
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()

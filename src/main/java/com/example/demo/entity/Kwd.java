@@ -1,5 +1,11 @@
 package com.example.demo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -7,6 +13,11 @@ import javax.persistence.Id;
 /**
  * 키워드
  */
+@Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Kwd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

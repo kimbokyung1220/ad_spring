@@ -29,7 +29,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private RoleGroup roleGroup;
     @PrimaryKeyJoinColumn
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Adv adv;
 
