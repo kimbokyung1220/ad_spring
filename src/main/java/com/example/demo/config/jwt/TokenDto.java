@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 @Builder
 public class TokenDto {
-
+    private String memberId;
     private String grantType;
     private String accessToken;
     private String refreshToken;

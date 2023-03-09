@@ -63,6 +63,7 @@ public class TokenProvider {
                 .compact();
 
         return TokenDto.builder()
+                .memberId(authentication.getName())
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .authority(authorities)
