@@ -26,7 +26,6 @@ public class ItemService {
             for (Item item : itemList) {
                 responseList.add(
                         ItemResponseDto.builder()
-                                .itemId(item.getItemId())
                                 .itemNo(item.getItemNo())
                                 .itemName(item.getItemName())
                                 .adultYn(item.getAdultYn())

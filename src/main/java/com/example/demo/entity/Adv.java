@@ -36,6 +36,9 @@ public class Adv implements Serializable {
     private Integer eventMoneyBalance; //이벤트 머니 잔액
     private Integer dayLimitBudget; // 일 제한 예산
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+
+
     public Adv addBalance(AddBalanceRequestDto dto) {
        return Adv.builder()
                .advId(dto.getAdvId())
