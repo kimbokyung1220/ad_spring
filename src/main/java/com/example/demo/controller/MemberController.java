@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.config.jwt.TokenDto;
-import com.example.demo.controller.request.MemberRequestDto;
-import com.example.demo.controller.response.MemberResponseDto;
+import com.example.demo.controller.request.member.MemberRequestDto;
+import com.example.demo.controller.response.member.MemberResponseDto;
 import com.example.demo.service.MemberService;
-import com.example.demo.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = "/common")
 @RequiredArgsConstructor
+@RequestMapping(value = "/common")
 public class MemberController {
     private final MemberService memberService;
 

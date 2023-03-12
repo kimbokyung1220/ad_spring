@@ -1,14 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.request.ItemRequestDto;
-import com.example.demo.controller.response.ItemResponseDto;
+import com.example.demo.controller.request.item.ItemRequestDto;
+import com.example.demo.controller.response.item.ItemResponseDto;
 import com.example.demo.entity.Item;
 import com.example.demo.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 

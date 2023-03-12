@@ -24,9 +24,12 @@ public class Member {
     @Id
     @Column(name="member_id")
     private String memberId; // 아이디
-    @Column
+    @Column(name = "pwd")
     private String pwd;  // 비번
+
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "role_group")
     private RoleGroup roleGroup;
     @PrimaryKeyJoinColumn
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)

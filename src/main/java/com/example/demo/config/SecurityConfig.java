@@ -1,9 +1,9 @@
 package com.example.demo.config;
 
-import com.example.demo.config.jwt.JwtAccessDeniedHandler;
-import com.example.demo.config.jwt.JwtAuthenticationEntryPoint;
 import com.example.demo.config.jwt.TokenProvider;
+import com.example.demo.service.common.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,10 +31,12 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+    @Value("${jwt.secret}")
+    String SECRET_KEY;
     private final TokenProvider tokenProvider;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
+    private final UserDetailsServiceImpl userDetailsService;
+    private final AccessDeniedHandler accessDeniedHandler;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     /**
      * 비밀번호 암호화
      */
@@ -92,9 +96,9 @@ public class SecurityConfig {
                 // exception handling 할 때 우리가 만든 클래스를 추가
                 .exceptionHandling()
                 // 인증실패시 AuthenticationException을 호출 => AuthenticationEntryPoint 인터페이스로 커스텀 가능
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .authenticationEntryPoint(authenticationEntryPoint)
                 // 인가실패시 처리 AccessDeniedException을 호출 => AccessDeniedHandler 인터페이스로 커스텀 가능
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .accessDeniedHandler(accessDeniedHandler)
                 .and()
                 // cors 관련
                 .cors().configurationSource(corsConfigurationSource())
@@ -123,8 +127,7 @@ public class SecurityConfig {
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
-
+                .apply(new JwtSecurityConfig(SECRET_KEY, tokenProvider, userDetailsService));
         return http.build();
     }
 }

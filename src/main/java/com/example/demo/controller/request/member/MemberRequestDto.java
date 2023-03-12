@@ -1,4 +1,4 @@
-package com.example.demo.controller.request;
+package com.example.demo.controller.request.member;
 
 import com.example.demo.entity.Adv;
 import com.example.demo.entity.Member;

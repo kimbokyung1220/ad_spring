@@ -1,5 +1,6 @@
 package com.example.demo.util;
 
+import com.example.demo.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,7 @@ public class SecurityUtil {
     // SecurityContext 에 유저 정보가 저장되는 시점
     // Request 가 들어올 때 JwtFilter 의 doFilter 에서 저장
     // 쓰레드로컬) +
-    public static Long getCurrentMemberId() {
+    public static String getCurrentMemberId() {
         // SecurityContext 는 ThreadLocal 에 사용자의 정보를 저장
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -21,7 +22,7 @@ public class SecurityUtil {
             throw  new RuntimeException("Security Context 에 인증 정보가 없습니다.");
         }
 
-        return Long.parseLong(authentication.getName());
+        return authentication.getName();
     }
 
     public static String getCurrentAuth() {

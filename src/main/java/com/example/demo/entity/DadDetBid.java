@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -23,5 +20,7 @@ public class DadDetBid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dadDet; // 직접광고 상세 ID (FK)
+
+    @Column(name = "bid_cost")
     private Integer bidCost; // 입찰 금액
 }

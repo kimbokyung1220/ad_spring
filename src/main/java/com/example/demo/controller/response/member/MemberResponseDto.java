@@ -1,4 +1,4 @@
-package com.example.demo.controller.response;
+package com.example.demo.controller.response.member;
 
 import com.example.demo.entity.Member;
 import com.example.demo.entity.enm.RoleGroup;

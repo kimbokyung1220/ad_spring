@@ -37,6 +37,9 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     // Validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // MapStruct(Dto 와 Entity 변환)
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 
     // JUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
