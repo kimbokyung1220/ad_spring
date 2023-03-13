@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,8 +39,11 @@ public class DadDet {
     private Integer dadActYn; // 직접광고 활성 여부
     @Column(name = "reg_time", nullable = false)
     private LocalDateTime regTime; // 등록시간
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "cnr_req_id", nullable = false)
     private CnrReq cnrReqs;
+    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "dadDet", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private DadDetBid dadDetBid;
 }

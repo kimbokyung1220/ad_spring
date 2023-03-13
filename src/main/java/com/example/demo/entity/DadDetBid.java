@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
 /**
  * 직접광고 상세 입찰
@@ -16,10 +16,20 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DadDetBid {
+public class DadDetBid implements Serializable {
+
+    public DadDetBid(DadDet dadDet) {
+        this.dadDet = dadDet;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long dadDet; // 직접광고 상세 ID (FK)
+    @Column(name = "dad_det_id")
+    private Long dadDetId;
+
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "dad_det_id", referencedColumnName = "dad_det_id")
+    private DadDet dadDet;
 
     @Column(name = "bid_cost")
     private Integer bidCost; // 입찰 금액

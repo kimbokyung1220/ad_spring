@@ -24,13 +24,7 @@ public class ItemService {
             List<Item> itemList = itemRepository.findByItemNameContainingAndItemNoContainingOrderByItemNoAsc(itemRequestDto.getItemName(), itemRequestDto.getItemNo());
             for (Item item : itemList) {
                 responseList.add(
-                        ItemResponseDto.builder()
-                                .itemNo(item.getItemNo())
-                                .itemName(item.getItemName())
-                                .adultYn(item.getAdultYn())
-                                .itemOrgCost(item.getItemOrgCost())
-                                .itemActYn(item.getItemActYn())
-                                .build()
+                        ItemResponseDto.of(item)
                 );
             }
             System.out.println("상품명 + 상품 번호 조회");
@@ -41,13 +35,7 @@ public class ItemService {
             List<Item> itemList = itemRepository.findByItemNoContainingOrderByItemNoAsc(itemRequestDto.getItemNo());
             for (Item item : itemList) {
                 responseList.add(
-                        ItemResponseDto.builder()
-                                .itemNo(item.getItemNo())
-                                .itemName(item.getItemName())
-                                .adultYn(item.getAdultYn())
-                                .itemOrgCost(item.getItemOrgCost())
-                                .itemActYn(item.getItemActYn())
-                                .build()
+                        ItemResponseDto.of(item)
                 );
             }
             System.out.println("상품번호 조회");
@@ -57,13 +45,7 @@ public class ItemService {
             List<Item> itemList = itemRepository.findByItemNameContainingOrderByItemNoAsc(itemRequestDto.getItemName());
             for (Item item : itemList) {
                 responseList.add(
-                        ItemResponseDto.builder()
-                                .itemNo(item.getItemNo())
-                                .itemName(item.getItemName())
-                                .adultYn(item.getAdultYn())
-                                .itemOrgCost(item.getItemOrgCost())
-                                .itemActYn(item.getItemActYn())
-                                .build()
+                        ItemResponseDto.of(item)
                 );
             }
             System.out.println("상품이름 조회");
@@ -73,13 +55,7 @@ public class ItemService {
         List<Item> itemList = itemRepository.findAllByOrderByItemNoAsc();
         for (Item item : itemList) {
             responseList.add(
-                    ItemResponseDto.builder()
-                            .itemNo(item.getItemNo())
-                            .itemName(item.getItemName())
-                            .adultYn(item.getAdultYn())
-                            .itemOrgCost(item.getItemOrgCost())
-                            .itemActYn(item.getItemActYn())
-                            .build()
+                    ItemResponseDto.of(item)
             );
         }
         return responseList;
