@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 public class Agroup {
     @Id @Column(name = "agroup_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +34,5 @@ public class Agroup {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "adv")
     private Adv adv;
-
-    public Agroup() {
-        this.regTime = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-    }
 
 }

@@ -1,12 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.config.jwt.TokenProvider;
-import com.example.demo.controller.request.ad.AdRequestDto;
+import com.example.demo.controller.request.ad.RegisterAdRequestDto;
 import com.example.demo.entity.*;
-import com.example.demo.repository.AdRepository;
-import com.example.demo.repository.AdvRepository;
-import com.example.demo.repository.AgroupRepository;
-import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +14,16 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AdService {
+    private final KwdService kwdService;
     private final TokenProvider tokenProvider;
     private final AdvRepository advRepository;
     private final ItemRepository itemRepository;
     private final AgroupRepository agroupRepository;
     private final AdRepository adRepository;
+    private final KwdRepository kwdRepository;
+    private final DadDetService dadDetService;
 
-    public void saveAd(AdRequestDto adRequestDto, HttpServletRequest request) {
+    public void saveAd(RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
         Member member = validateMember(request);
         // 광고주
         Adv adv = isPresentAdv(member.getMemberId());
@@ -31,9 +31,29 @@ public class AdService {
         Item item = isPresentItem(adRequestDto.getItemId());
         // 광고그룹
         Agroup agroup = isPresentAgroup(adRequestDto.getAgroupId());
-
+        // 광고 등록
         Ad ad = adRequestDto.createAd(adv, item, agroup);
         adRepository.save(ad);
+
+        // 키워드 등록
+        saveKwd(ad, adRequestDto);
+
+    }
+    public void saveKwd(Ad ad, RegisterAdRequestDto adRequestDto) {
+
+        if (adRequestDto.getKwdName() != null) {
+            if (!kwdRepository.existsByKwdName(adRequestDto.getKwdName())) {
+                Kwd kwdInfo = adRequestDto.createKwd();
+                kwdRepository.save(kwdInfo);
+
+                Kwd kwd = isPresentKwd(adRequestDto.getKwdName());
+                //Kwd kwd = kwdRepository.findByKwdName(adRequestDto.getKwdName());
+                dadDetService.saveDadDet(ad, kwd, adRequestDto);
+            }
+
+        }else {
+            dadDetService.saveDadDet(ad, null, adRequestDto);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -61,5 +81,12 @@ public class AdService {
     public Agroup isPresentAgroup(Long agroupId) {
         Optional<Agroup> agroup = agroupRepository.findById(agroupId);
         return agroup.orElse(null);
+    }
+    // 키워드 확인
+    @Transactional(readOnly = true)
+
+    public Kwd isPresentKwd(String kwdName) {
+        Optional<Kwd> kwd = kwdRepository.findByKwdName(kwdName);
+        return kwd.orElse(null);
     }
 }

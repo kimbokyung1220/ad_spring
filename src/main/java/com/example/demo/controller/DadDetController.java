@@ -11,7 +11,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class DadDetController {
     private final DadDetService dadDetService;
 
-    public void saveDadDet() {
-//        dadDetService.saveDadDet();
-    }
 }

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.request.ad.AdRequestDto;
+import com.example.demo.controller.request.ad.RegisterAdRequestDto;
 import com.example.demo.service.AdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 public class AdController {
     private final AdService adService;
 
+    /**
+     * 광고 등록
+     */
     @PostMapping("/ad")
-    public void saveAd(@RequestBody AdRequestDto adRequestDto, HttpServletRequest request) {
+    public void saveAd(@RequestBody RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
         adService.saveAd(adRequestDto, request);
     }
 }

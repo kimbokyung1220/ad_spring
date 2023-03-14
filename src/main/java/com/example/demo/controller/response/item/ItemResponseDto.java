@@ -25,19 +25,20 @@ public class ItemResponseDto {
     public static ItemResponseDto of(Item item) {
         String adultYn = "";
         String itemActYn = "";
+
         if (item.getAdultYn() == 1) {
             adultYn = "YES";
-        } else {
+        } else if (item.getAdultYn() == 0) {
             adultYn = "NO";
         }
 
-        if (item.getAdultYn() == 1) {
+        if (item.getItemActYn() == 1) {
             itemActYn = "활성화";
-        } else {
+        } else if (item.getItemActYn() == 0) {
             itemActYn = "비활성화";
         }
-        
-        return  ItemResponseDto.builder()
+
+        return ItemResponseDto.builder()
                 .itemId(item.getItemId())
                 .itemNo(item.getItemNo())
                 .itemName(item.getItemName())

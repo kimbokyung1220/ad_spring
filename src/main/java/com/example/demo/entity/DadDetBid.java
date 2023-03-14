@@ -33,4 +33,14 @@ public class DadDetBid implements Serializable {
 
     @Column(name = "bid_cost")
     private Integer bidCost; // 입찰 금액
+
+    public DadDetBid addCost(Long dadDetId, Integer bidCost) {
+        return DadDetBid.builder()
+                .dadDetId(dadDetId)
+                .dadDet(dadDet)
+                .bidCost(bidCost)
+                .build();
+
+
+    }
 }

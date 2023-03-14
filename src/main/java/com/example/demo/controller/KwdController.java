@@ -16,9 +16,4 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api")
 public class KwdController {
     private final KwdService kwdService;
-
-    @PostMapping("/kwd")
-    public void saveKwd(@RequestBody KwdRequestDto kwdRequestDto) {
-        kwdService.saveKwd(kwdRequestDto);
-    }
 }
