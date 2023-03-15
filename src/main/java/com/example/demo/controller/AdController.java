@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
+import com.example.demo.controller.response.ad.AdResponseDto;
+import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.service.AdService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +23,7 @@ public class AdController {
      * 광고 등록
      */
     @PostMapping("/ad")
-    public void saveAd(@RequestBody RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
-        adService.saveAd(adRequestDto, request);
+    public ResponseEntity<AdResponseDto> saveAd(@RequestBody RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
+        return ResponseEntity.ok().body(adService.saveAd(adRequestDto, request));
     }
 }

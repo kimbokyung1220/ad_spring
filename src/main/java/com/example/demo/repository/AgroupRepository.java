@@ -9,4 +9,8 @@ import java.util.Optional;
 
 public interface AgroupRepository extends JpaRepository<Agroup, Long> {
     List<Agroup> findByAdv(Adv adv);
+
+    boolean existsByAgroupName(String agroupName);
+
+    Agroup findByAgroupName(String agroupName);
 }

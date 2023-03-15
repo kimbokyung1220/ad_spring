@@ -25,13 +25,16 @@ public class AgroupService {
     private final AdvRepository advRepository;
     private final AgroupRepository agroupRepository;
 
-    public AgroupResponseDto createAgroup(CreateAgroupReqDto createAgroupReqDto, HttpServletRequest request) {
+    public AgroupResponseDto saveAgroup(CreateAgroupReqDto createAgroupReqDto, HttpServletRequest request) {
         Member member = validateMember(request);
         Adv adv = isPresentAdv(member.getMemberId());
 
-        Agroup agroup = createAgroupReqDto.createAgroup(adv);
-        agroupRepository.save(agroup);
+        if (!agroupRepository.existsByAgroupName(createAgroupReqDto.getAgroupName())) {
+            Agroup agroupInfo = createAgroupReqDto.createAgroup(adv);
+            agroupRepository.save(agroupInfo);
+        }
 
+        Agroup agroup = agroupRepository.findByAgroupName(createAgroupReqDto.getAgroupName());
 
         return AgroupResponseDto.of(agroup);
     }

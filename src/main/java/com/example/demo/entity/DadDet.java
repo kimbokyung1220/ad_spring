@@ -42,6 +42,6 @@ public class DadDet {
     private ZonedDateTime regTime; // 등록시간
     @PrimaryKeyJoinColumn
     @OneToOne(mappedBy = "dadDet", cascade = CascadeType.ALL)
-    @JsonManagedReference
+//    @JsonManagedReference
     private DadDetBid dadDetBid;
 }

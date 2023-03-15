@@ -32,7 +32,7 @@ public class AgroupController {
      * 광고그룹 생성
      */
     @PostMapping("/agroup")
-    public ResponseEntity<AgroupResponseDto> createAgroup(@RequestBody CreateAgroupReqDto createAgroupReqDto, HttpServletRequest request) {
-        return ResponseEntity.ok().body(agroupService.createAgroup(createAgroupReqDto, request));
+    public ResponseEntity<AgroupResponseDto> saveAgroup(@RequestBody CreateAgroupReqDto createAgroupReqDto, HttpServletRequest request) {
+        return ResponseEntity.ok().body(agroupService.saveAgroup(createAgroupReqDto, request));
     }
 }

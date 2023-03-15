@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -16,10 +17,14 @@ import java.time.ZonedDateTime;
 public class RegisterAdRequestDto {
     private Long agroupId; // 광고그룹 ID(FK)
     private Long itemId; // 상품ID(FK)
-    private String kwdName; // 키워드
+    private List<Kwd> kwds; // 키워드 리스트
+    private String kwdName; // 키워드 이름
     private Integer bidCost; // 입찰 금액
+    private String agroupName; // 광고그룹명
 
-
+    /**
+     * 광고 등록
+     */
     public Ad createAd(Adv adv, Item item, Agroup agroup) {
         return Ad.builder()
                 .agroup(agroup)
@@ -31,14 +36,10 @@ public class RegisterAdRequestDto {
                 .build();
     }
 
-    public Kwd createKwd() {
-        return Kwd.builder()
-                .kwdName(kwdName)
-                .sellPossKwdYn(1)
-                .manualCnrKwdYn(0)
-                .build();
-    }
 
+    /**
+     * 광고 직접등록 상세
+     */
     public DadDet createDadDet(Ad ad, Kwd kwd) {
         return DadDet.builder()
                 .ad(ad)

@@ -33,7 +33,7 @@ public class Member {
     private RoleGroup roleGroup;
     @PrimaryKeyJoinColumn
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    @JsonManagedReference
+//    @JsonManagedReference
     private Adv adv;
 
 //    public boolean equals(Object o) {
