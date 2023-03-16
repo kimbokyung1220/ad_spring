@@ -1,5 +1,6 @@
 package com.example.demo.controller.request.ad;
 
+import com.example.demo.controller.request.kwd.KwdRequestDto;
 import com.example.demo.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 public class RegisterAdRequestDto {
     private Long agroupId; // 광고그룹 ID(FK)
+    private Long cnrId; // 검수요청 ID
     private Long itemId; // 상품ID(FK)
-    private List<Kwd> kwds; // 키워드 리스트
+    private List<KwdRequestDto> kwds; // 키워드 리스트
     private String kwdName; // 키워드 이름
     private Integer bidCost; // 입찰 금액
     private String agroupName; // 광고그룹명
@@ -36,7 +38,6 @@ public class RegisterAdRequestDto {
                 .build();
     }
 
-
     /**
      * 광고 직접등록 상세
      */
@@ -49,5 +50,8 @@ public class RegisterAdRequestDto {
                 .dadActYn(1)
                 .regTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")))
                 .build();
+    }
+    public void update(CnrReq cnrReq) {
+        DadDet.builder().cnrReq(cnrReq).build();
     }
 }

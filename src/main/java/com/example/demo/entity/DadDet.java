@@ -1,15 +1,12 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 /**
  * 직접광고 상세
@@ -44,4 +41,13 @@ public class DadDet {
     @OneToOne(mappedBy = "dadDet", cascade = CascadeType.ALL)
 //    @JsonManagedReference
     private DadDetBid dadDetBid;
+
+//    public void addCnrReq(CnrReq cnrReq) {
+//        this.cnrReq = cnrReq;
+//        cnrReq.setDadDet(this);
+//    }
+
+    public void update(CnrReq cnrReq) {
+        DadDet.builder().cnrReq(cnrReq).build();
+    }
 }

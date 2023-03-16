@@ -53,7 +53,7 @@ public class AgroupService {
                             .agroupName(agroup.getAgroupName())
                             .agroupActYn(agroup.getAgroupActYn())
                             .agroupUseYn(agroup.getAgroupUseYn())
-//                            .regTime(agroup.getRegTime())
+                            .regTime(agroup.getRegTime())
                             .build()
 
             );

@@ -12,5 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KwdRequestDto {
-    private String kwdName; // 키워드명
+    private Long key;
+    private String kwdName;
+    private Integer bidCost;
 }

@@ -40,7 +40,11 @@ public class DadDetBid implements Serializable {
                 .dadDet(dadDet)
                 .bidCost(bidCost)
                 .build();
+    }
 
-
+    public DadDetBid updateBidCost() {
+        return DadDetBid.builder()
+                .bidCost(bidCost)
+                .build();
     }
 }

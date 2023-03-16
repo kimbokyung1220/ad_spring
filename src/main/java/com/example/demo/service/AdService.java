@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.config.jwt.TokenProvider;
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
+import com.example.demo.controller.request.kwd.KwdRequestDto;
 import com.example.demo.controller.response.ad.AdResponseDto;
 import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.entity.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class AdService {
     private final KwdService kwdService;
     private final TokenProvider tokenProvider;
@@ -47,28 +49,25 @@ public class AdService {
     }
 
     public void saveKwd(Ad ad, RegisterAdRequestDto adRequestDto) {
-        List<Kwd> kwdList = adRequestDto.getKwds();
-
-        if (kwdList.size() >= 0) {
-            for (int i = 0; i < kwdList.size(); i++) {
-                if (!kwdRepository.existsByKwdName(kwdList.get(i).getKwdName())) {
-                    // 키워드 저장
-                    Kwd kwdInfo = Kwd.builder()
-                            .kwdName(kwdList.get(i).getKwdName())
-                            .sellPossKwdYn(1)
-                            .manualCnrKwdYn(0)
-                            .build();
-                    kwdRepository.save(kwdInfo);
-
-                    Kwd kwd = isPresentKwd(adRequestDto.getKwdName());
-                    dadDetService.saveDadDet(ad, kwd, adRequestDto);
-
-
-                }
-            }
-        } else {
-            dadDetService.saveDadDet(ad, null, adRequestDto);
+        List<KwdRequestDto> kwdList = adRequestDto.getKwds();
+        if (kwdList.isEmpty()) {
+            dadDetService.saveDadDet(ad, adRequestDto);
+            return;
         }
+        for (int i = 0; i < kwdList.size(); i++) {
+            String kwdName = kwdList.get(i).getKwdName();
+            if (!kwdRepository.existsByKwdName(kwdName)) {
+                // 키워드 저장
+                Kwd kwdInfo = Kwd.builder()
+                        .kwdName(kwdList.get(i).getKwdName())
+                        .sellPossKwdYn(1)
+                        .manualCnrKwdYn(0)
+                        .build();
+                kwdRepository.save(kwdInfo);
+
+            }
+        }
+        dadDetService.saveDadDet(ad, adRequestDto);
     }
 
     @Transactional(readOnly = true)
