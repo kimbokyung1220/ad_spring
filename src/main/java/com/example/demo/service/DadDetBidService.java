@@ -1,4 +1,4 @@
-package com.example.demo.service.common;
+package com.example.demo.service;
 
 import com.example.demo.repository.DadDetBidRepository;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.config.jwt.TokenDto;
 import com.example.demo.controller.request.member.MemberRequestDto;
-import com.example.demo.controller.response.member.MemberResponseDto;
+import com.example.demo.controller.response.MemberResponseDto;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

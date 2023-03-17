@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
-import com.example.demo.controller.response.ad.AdResponseDto;
-import com.example.demo.controller.response.agroup.AgroupResponseDto;
+import com.example.demo.controller.response.AdResponseDto;
 import com.example.demo.service.AdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

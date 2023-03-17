@@ -1,14 +1,10 @@
-package com.example.demo.controller.response.item;
+package com.example.demo.controller.response;
 
-import com.example.demo.controller.response.member.MemberResponseDto;
 import com.example.demo.entity.Item;
-import com.example.demo.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Optional;
 
 @Getter
 @Builder

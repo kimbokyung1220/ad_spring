@@ -3,7 +3,7 @@ package com.example.demo.config.jwt;
 import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.RefreshToken;
-import com.example.demo.entity.common.UserDetailsImpl;
+import com.example.demo.service.common.UserDetailsImpl;
 import com.example.demo.entity.enm.RoleGroup;
 import com.example.demo.repository.RefreshTokenRepository;
 import io.jsonwebtoken.*;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -114,7 +112,6 @@ public class TokenProvider {
         }
         return false;
     }
-
     @Transactional(readOnly = true)
     public RefreshToken isPresentRefreshToken(Member member) {
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByMember(member);

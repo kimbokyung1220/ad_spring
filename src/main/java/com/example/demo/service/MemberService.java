@@ -2,19 +2,15 @@ package com.example.demo.service;
 
 import com.example.demo.config.jwt.TokenDto;
 import com.example.demo.config.jwt.TokenProvider;
-import com.example.demo.controller.request.member.AddBalanceRequestDto;
+import com.example.demo.controller.request.adv.AddBalanceRequestDto;
 import com.example.demo.controller.request.member.MemberRequestDto;
-import com.example.demo.controller.response.member.MemberResponseDto;
+import com.example.demo.controller.response.MemberResponseDto;
 import com.example.demo.entity.Adv;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.AdvRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +67,6 @@ public class MemberService {
         //인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(member);
         tokenDto.setTokenToHeaders(response);
-
 
         // 5. 토큰 발급
         return tokenDto;

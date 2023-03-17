@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.request.item.ItemRequestDto;
-import com.example.demo.controller.response.item.ItemResponseDto;
+import com.example.demo.controller.response.ItemResponseDto;
 import com.example.demo.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

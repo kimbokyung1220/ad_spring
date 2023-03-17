@@ -1,6 +1,5 @@
 package com.example.demo.controller.request.agroup;
 
-import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.entity.Adv;
 import com.example.demo.entity.Agroup;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,8 @@
 package com.example.demo.entity;
 
-import com.example.demo.controller.request.member.AddBalanceRequestDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.demo.controller.request.adv.AdActYnRequestDto;
+import com.example.demo.controller.request.adv.AddBalanceRequestDto;
+import com.example.demo.controller.request.adv.DayLimitBudgetRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,8 +33,8 @@ public class Adv implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "adv_id", referencedColumnName = "member_id")
     private Member member;
-    @Column(name = "adv_ing_act_yn")
-    private Integer advIngActYn; // 광고 진행 활성 여부
+    @Column(name = "ad_ing_act_yn")
+    private Integer adIngActYn; // 광고 진행 활성 여부
     @Column(name = "balance")
     private Integer balance; // 잔액
     @Column(name = "event_money_balance")
@@ -49,10 +50,18 @@ public class Adv implements Serializable {
        return Adv.builder()
                .advId(dto.getAdvId())
                .member(member)
-               .advIngActYn(dto.getAdvIngActYn())
+               .adIngActYn(dto.getAdIngActYn())
                .balance(dto.getBalance())
                .eventMoneyBalance(dto.getEventMoneyBalance())
                .dayLimitBudget(dto.getDayLimitBudget())
                .build();
     }
+
+    public void updateAdAct(AdActYnRequestDto adActYnRequestDto) {
+        this.adIngActYn = adActYnRequestDto.getAdIngActYn();
+    }
+    public void updateLimitBudget(DayLimitBudgetRequestDto limitBudgetRequestDto) {
+        this.dayLimitBudget = limitBudgetRequestDto.getDayLimitBudget();
+    }
+
 }

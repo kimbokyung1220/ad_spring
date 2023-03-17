@@ -3,40 +3,32 @@ package com.example.demo.service;
 import com.example.demo.config.jwt.TokenProvider;
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
 import com.example.demo.controller.request.kwd.KwdRequestDto;
-import com.example.demo.controller.response.ad.AdResponseDto;
-import com.example.demo.controller.response.agroup.AgroupResponseDto;
+import com.example.demo.controller.response.AdResponseDto;
 import com.example.demo.entity.*;
 import com.example.demo.repository.*;
+import com.example.demo.service.common.ValidationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-
 public class AdService {
-    private final KwdService kwdService;
-    private final TokenProvider tokenProvider;
-    private final AdvRepository advRepository;
-    private final ItemRepository itemRepository;
-    private final AgroupRepository agroupRepository;
+    private final ValidationService validation;
     private final AdRepository adRepository;
     private final KwdRepository kwdRepository;
     private final DadDetService dadDetService;
 
     public AdResponseDto saveAd(RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
-        Member member = validateMember(request);
+        Member member = validation.getMember(request);
         // 광고주
-        Adv adv = isPresentAdv(member.getMemberId());
+        Adv adv = validation.isPresentAdv(member.getMemberId());
         // 상품
-        Item item = isPresentItem(adRequestDto.getItemId());
+        Item item = validation.isPresentItem(adRequestDto.getItemId());
         // 광고그룹
-        Agroup agroup = isPresentAgroup(adRequestDto.getAgroupId());
+        Agroup agroup = validation.isPresentAgroup(adRequestDto.getAgroupId());
         // 광고 등록
         Ad ad = adRequestDto.createAd(adv, item, agroup);
         adRepository.save(ad);
@@ -68,42 +60,5 @@ public class AdService {
             }
         }
         dadDetService.saveDadDet(ad, adRequestDto);
-    }
-
-    @Transactional(readOnly = true)
-    public Member validateMember(HttpServletRequest request) {
-        if (!tokenProvider.validateToken(request.getHeader("Authorization").substring(7))) {
-            return null;
-        }
-        //Authentication에서 멤버 객체 불러오기
-        return tokenProvider.getMemberFromAuthentication();
-    }
-
-    // 광고주 확인
-    @Transactional(readOnly = true)
-    public Adv isPresentAdv(String advId) {
-        Optional<Adv> adv = advRepository.findById(advId);
-        return adv.orElse(null);
-    }
-
-    //상품 확인
-    @Transactional(readOnly = true)
-    public Item isPresentItem(Long itemId) {
-        Optional<Item> item = itemRepository.findByItemId(itemId);
-        return item.orElse(null);
-    }
-
-    // 광고그룹 확인
-    @Transactional(readOnly = true)
-    public Agroup isPresentAgroup(Long agroupId) {
-        Optional<Agroup> agroup = agroupRepository.findById(agroupId);
-        return agroup.orElse(null);
-    }
-
-    // 키워드 확인
-    @Transactional(readOnly = true)
-    public Kwd isPresentKwd(String kwdName) {
-        Optional<Kwd> kwd = kwdRepository.findByKwdName(kwdName);
-        return kwd.orElse(null);
     }
 }

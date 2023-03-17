@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.request.agroup.CreateAgroupReqDto;
-import com.example.demo.controller.response.agroup.AgroupResponseDto;
-import com.example.demo.entity.common.UserDetailsImpl;
+import com.example.demo.controller.response.AgroupResponseDto;
 import com.example.demo.service.AgroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

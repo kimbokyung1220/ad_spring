@@ -15,16 +15,5 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 @RequiredArgsConstructor
 public class KwdService {
-    private final TokenProvider tokenProvider;
-    private final KwdRepository kwdRepository;
 
-    @Transactional(readOnly = true)
-    public Member validateMember(HttpServletRequest request) {
-        if (!tokenProvider.validateToken(request.getHeader("Authorization").substring(7))) {
-
-            return null;
-        }
-        //Authentication에서 멤버 객체 불러오기
-        return tokenProvider.getMemberFromAuthentication();
-    }
 }

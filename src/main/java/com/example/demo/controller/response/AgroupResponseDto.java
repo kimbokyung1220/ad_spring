@@ -1,4 +1,4 @@
-package com.example.demo.controller.response.agroup;
+package com.example.demo.controller.response;
 
 import com.example.demo.entity.Agroup;
 import lombok.*;

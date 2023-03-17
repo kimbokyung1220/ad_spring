@@ -7,4 +7,5 @@ import javax.swing.*;
 import java.util.Optional;
 
 public interface AdvRepository extends JpaRepository<Adv, String> {
+
 }

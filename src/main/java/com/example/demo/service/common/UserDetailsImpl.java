@@ -1,4 +1,4 @@
-package com.example.demo.entity.common;
+package com.example.demo.service.common;
 
 import com.example.demo.entity.Member;
 import com.example.demo.entity.enm.RoleGroup;

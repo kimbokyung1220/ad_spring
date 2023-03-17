@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.controller.request.item.ItemRequestDto;
-import com.example.demo.controller.response.item.ItemResponseDto;
+import com.example.demo.controller.response.ItemResponseDto;
 import com.example.demo.entity.Item;
 import com.example.demo.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;

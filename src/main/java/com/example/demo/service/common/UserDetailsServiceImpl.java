@@ -1,7 +1,6 @@
 package com.example.demo.service.common;
 
 import com.example.demo.entity.Member;
-import com.example.demo.entity.common.UserDetailsImpl;
 import com.example.demo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

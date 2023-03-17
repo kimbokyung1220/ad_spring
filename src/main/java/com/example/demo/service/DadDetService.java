@@ -7,7 +7,7 @@ import com.example.demo.repository.CnrReqRepository;
 import com.example.demo.repository.DadDetBidRepository;
 import com.example.demo.repository.DadDetRepository;
 import com.example.demo.repository.KwdRepository;
-import com.example.demo.service.common.DadDetBidService;
+import com.example.demo.service.common.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +20,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DadDetService {
     private final EntityManager em;
-    private final DadDetRepository dadDetRepository;
     private final DadDetBidRepository dadDetBidRepository;
-    private final CnrReqRepository cnrReqRepository;
-
-    private final KwdRepository kwdRepository;
+    private final ValidationService validation;
 
     @Transactional
     public void saveDadDet(Ad ad, RegisterAdRequestDto adRequestDto) {
@@ -33,7 +30,7 @@ public class DadDetService {
         for (int i = 0; i < kwdList.size(); i++) {
             String kwdName = kwdList.get(i).getKwdName();
             Integer bidCost = kwdList.get(i).getBidCost();
-            Kwd kwd = isPresentKwd(kwdName);
+            Kwd kwd = validation.isPresentKwd(kwdName);
 
             // 직접광고 상세 등록
             DadDet dadDet = adRequestDto.createDadDet(ad, kwd);
@@ -48,12 +45,5 @@ public class DadDetService {
 
 //        DadDetBidRequestDto dadDetBidRequestDto = new DadDetBidRequestDto(dadDet.getDadDetId(), adRequestDto.getBidCost());
 //        dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), adRequestDto.getBidCost()));
-    }
-
-    // 키워드 확인
-    @Transactional(readOnly = true)
-    public Kwd isPresentKwd(String kwdName) {
-        Optional<Kwd> kwd = kwdRepository.findByKwdName(kwdName);
-        return kwd.orElse(null);
     }
 }
