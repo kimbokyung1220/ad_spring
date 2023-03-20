@@ -28,9 +28,7 @@ public class AdvService {
         return AdvResponseDto.advInfo(adv);
     }
 
-    /**
-     * 광고주 진행 활성 여부 변경
-     */
+    /** 광고주 - 광고 진행 활성 여부 변경 */
     @Transactional
     public AdvResponseDto updateIngActYn(AdActYnRequestDto adActYnRequestDto, HttpServletRequest request) {
         Member member = validation.getMember(request);

@@ -2,17 +2,18 @@ package com.example.demo.service;
 
 import com.example.demo.controller.request.agroup.CreateAgroupRequestDto;
 import com.example.demo.controller.request.agroup.SearchAgroupRequestDto;
+import com.example.demo.controller.request.agroup.UpdateAgUseConfigRequestDto;
 import com.example.demo.controller.response.agroup.AgroupListResponseDto;
 import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.entity.Adv;
 import com.example.demo.entity.Agroup;
 import com.example.demo.entity.Member;
-import com.example.demo.repository.AgroupDslRepository;
 import com.example.demo.repository.AgroupDslRepositoryImpl;
 import com.example.demo.repository.AgroupRepository;
 import com.example.demo.service.common.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class AgroupService {
     }
 
     /**
-     *
+     * 해당 광고주의 광고그룹 목록 조회 - [광고등록]
      */
     public List<AgroupResponseDto> agroupList(HttpServletRequest request) {
         Member member = validation.getMember(request);
@@ -69,7 +70,7 @@ public class AgroupService {
     }
 
     /**
-     * 광고그룹 검색 조회
+     * 광고그룹 검색 - [광고관리]
      */
     public List<AgroupResponseDto> searchAgroupList(SearchAgroupRequestDto agroupRequestDto, HttpServletRequest request) {
         Member member = validation.getMember(request);
@@ -85,5 +86,12 @@ public class AgroupService {
             );
         }
         return result;
+    }
+
+    /** 광고그룹 사용 설정 여부 변경 - [광고관리] */
+    @Transactional
+    public void updateAgUseConfig(UpdateAgUseConfigRequestDto requestDto, HttpServletRequest servletRequest) {
+        Agroup agroup = validation.isPresentAgroup(requestDto.getAgroupId());
+        agroup.updateAgUseConfig(requestDto);
     }
 }

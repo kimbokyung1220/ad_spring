@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.request.agroup.UpdateAgUseConfigRequestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,4 +36,7 @@ public class Agroup {
     @JoinColumn(name = "adv")
     private Adv adv;
 
+    public void updateAgUseConfig(UpdateAgUseConfigRequestDto requestDto) {
+        this.agroupUseConfigYn = requestDto.getAgroupUseConfigYn();
+    }
 }

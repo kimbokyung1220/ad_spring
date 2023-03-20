@@ -22,7 +22,7 @@ public class AdvController {
         return ResponseEntity.ok().body(advService.getAdvInfo(request));
     }
 
-    /** 광고주 진행 활성 여부 변경 */
+    /** 광고주 - 광고 진행 활성 여부 변경 */
     @PostMapping("/adv/ad-act")
     public ResponseEntity<AdvResponseDto> updateIngActYn(@RequestBody AdActYnRequestDto adActYnRequestDto, HttpServletRequest request) {
         return ResponseEntity.ok().body(advService.updateIngActYn(adActYnRequestDto, request));
