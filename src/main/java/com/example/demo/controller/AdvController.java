@@ -24,8 +24,8 @@ public class AdvController {
 
     /** 광고주 진행 활성 여부 변경 */
     @PostMapping("/adv/ad-act")
-    public ResponseEntity<AdvResponseDto> updateAdAct(@RequestBody AdActYnRequestDto adActYnRequestDto, HttpServletRequest request) {
-        return ResponseEntity.ok().body(advService.updateAdAct(adActYnRequestDto, request));
+    public ResponseEntity<AdvResponseDto> updateIngActYn(@RequestBody AdActYnRequestDto adActYnRequestDto, HttpServletRequest request) {
+        return ResponseEntity.ok().body(advService.updateIngActYn(adActYnRequestDto, request));
     }
 
     /** 일일 허용 예산 변경 */

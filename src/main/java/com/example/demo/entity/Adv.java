@@ -57,7 +57,7 @@ public class Adv implements Serializable {
                .build();
     }
 
-    public void updateAdAct(AdActYnRequestDto adActYnRequestDto) {
+    public void updateIngActYn (AdActYnRequestDto adActYnRequestDto) {
         this.adIngActYn = adActYnRequestDto.getAdIngActYn();
     }
     public void updateLimitBudget(DayLimitBudgetRequestDto limitBudgetRequestDto) {

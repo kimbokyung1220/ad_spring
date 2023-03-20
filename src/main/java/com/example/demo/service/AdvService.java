@@ -32,10 +32,10 @@ public class AdvService {
      * 광고주 진행 활성 여부 변경
      */
     @Transactional
-    public AdvResponseDto updateAdAct(AdActYnRequestDto adActYnRequestDto, HttpServletRequest request) {
+    public AdvResponseDto updateIngActYn(AdActYnRequestDto adActYnRequestDto, HttpServletRequest request) {
         Member member = validation.getMember(request);
         Adv adv = validation.isPresentAdv(member.getMemberId());
-        adv.updateAdAct(adActYnRequestDto);
+        adv.updateIngActYn(adActYnRequestDto);
 
         return AdvResponseDto.advInfo(adv);
     }

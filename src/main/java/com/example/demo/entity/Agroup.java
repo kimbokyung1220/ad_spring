@@ -29,8 +29,8 @@ public class Agroup {
     private ZonedDateTime regTime; // 등록시간
     @Column(name="agroup_act_yn", nullable = false)
     private Integer agroupActYn; // 광고그룹 활성 여부
-    @Column(name="agroup_use_yn", nullable = false)
-    private Integer agroupUseYn; // 광고그룹 사용 설정 여부
+    @Column(name="agroup_use_config_yn", nullable = false)
+    private Integer agroupUseConfigYn; // 광고그룹 사용 설정 여부
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "adv")
     private Adv adv;

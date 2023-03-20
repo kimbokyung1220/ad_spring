@@ -17,7 +17,7 @@ public class AdvResponseDto {
     private String advId;
     private Integer adIngActYn; // 광고 진행 활성 여부
     private Integer balance; // 잔액
-    private Integer chargingAmount; // 충전 금액 (잔액 + 이벤트 머니 잔액)
+//    private Integer chargingAmount; // 충전 금액 (잔액 + 이벤트 머니 잔액)
     private Integer eventMoneyBalance; //이벤트 머니 잔액
     private Integer dayLimitBudget; // 일 제한 예산
     private String chargingAmountStatus; // 잔액 상태
@@ -26,13 +26,14 @@ public class AdvResponseDto {
 
 
     public static AdvResponseDto advInfo(Adv adv) {
-        Integer chargingAmount = adv.getBalance() + adv.getEventMoneyBalance();
+//        Integer chargingAmount = adv.getBalance() + adv.getEventMoneyBalance();
+        Integer balance = adv.getBalance() + adv.getEventMoneyBalance();
         String chargingAmountStatus = "";
         String dayLimitBudgetStatus = "";
 
-        if (chargingAmount > 0) {
+        if (balance > 0) {
             chargingAmountStatus = HAVE_BALANCE.getValue();
-        } else if (chargingAmount == 0) {
+        } else if (balance == 0) {
             chargingAmountStatus = NOHAVE_BALANCE.getValue();
         }
 
@@ -43,8 +44,8 @@ public class AdvResponseDto {
         return AdvResponseDto.builder()
                 .advId(adv.getAdvId())
                 .adIngActYn(adv.getAdIngActYn())
-                .balance(adv.getBalance())
-                .chargingAmount(chargingAmount)
+                .balance(balance)
+//                .chargingAmount(chargingAmount)
                 .chargingAmountStatus(chargingAmountStatus)
                 .eventMoneyBalance(adv.getEventMoneyBalance())
                 .dayLimitBudget(adv.getDayLimitBudget())
