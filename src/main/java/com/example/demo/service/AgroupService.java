@@ -66,9 +66,7 @@ public class AgroupService {
     public List<AgroupResponseDto> searchAgroupList(SearchAgroupRequestDto agroupRequestDto, HttpServletRequest request) {
         Member member = validation.getMember(request);
         Adv adv = validation.isPresentAdv(member.getMemberId());
-        System.out.println("adv.getAdvId() *********");
-        System.out.println(adv.getAdvId());
-        List<AgroupListResponseDto> dtoList = agroupDslRepository.searchAgroupList(agroupRequestDto, adv);
+        List<AgroupListResponseDto> dtoList = agroupDslRepository.searchAgroupList(agroupRequestDto);
         List<AgroupResponseDto> result = new ArrayList<>();
 
         for (AgroupListResponseDto dto : dtoList) {

@@ -23,7 +23,7 @@ public class AgroupDslRepositoryImpl implements AgroupDslRepository {
         this.queryFactory = new JPAQueryFactory(em);
     }
     @Override
-    public List<AgroupListResponseDto> searchAgroupList(SearchAgroupRequestDto agroupRequestDto, Adv adv) {
+    public List<AgroupListResponseDto> searchAgroupList(SearchAgroupRequestDto agroupRequestDto) {
         return queryFactory.select(new QAgroupListResponseDto(
                 agroup.agroupId,
                 agroup.agroupName,
@@ -34,10 +34,10 @@ public class AgroupDslRepositoryImpl implements AgroupDslRepository {
                 ))
                 .from(agroup).leftJoin(ad).on(agroup.agroupId.eq(ad.agroup.agroupId))
                 .where(
-                        ad.adv.eq(adv),
                         agroup.agroupActYn.eq(1),
                         agroup.agroupName.contains(agroupRequestDto.getAgroupName()))
                 .groupBy(agroup.agroupId)
+                .orderBy(agroup.regTime.asc())
                 .fetch();
     }
 }

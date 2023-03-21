@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface AgroupDslRepository {
 
-    List<AgroupListResponseDto> searchAgroupList(SearchAgroupRequestDto agroupRequestDto, Adv adv);
+    List<AgroupListResponseDto> searchAgroupList(SearchAgroupRequestDto agroupRequestDto);
 }

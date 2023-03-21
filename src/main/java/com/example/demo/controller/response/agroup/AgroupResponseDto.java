@@ -44,7 +44,7 @@ public class AgroupResponseDto {
                 .adActYn(dto.getAdActYn())
                 .adUseConfigYn(dto.getAdUseConfigYn())
                 .agroupUseConfigYnSrt(agroupUseConfigYnSrt)
-                .itemCnt(dto.getAdActYn() + " / " + dto.getAdUseConfigYn())
+                .itemCnt(dto.getAdUseConfigYn() + " / " + dto.getAdActYn())
                 .build();
     }
 

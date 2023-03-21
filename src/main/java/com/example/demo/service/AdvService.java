@@ -39,7 +39,7 @@ public class AdvService {
     }
 
     /**
-     * 일일 허용 예산 변경
+     *  일일 허용 예산 변경 - [광고관리]
      */
     @Transactional
     public AdvResponseDto updateLimitBudget(DayLimitBudgetRequestDto dayLimitBudgetRequestDto, HttpServletRequest request) {

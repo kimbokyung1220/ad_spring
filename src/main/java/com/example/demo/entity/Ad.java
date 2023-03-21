@@ -21,10 +21,10 @@ public class Ad {
     @Id @Column(name = "ad_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long adId; // 광고 ID
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn( name = "agroup_id", nullable = false)
     private Agroup agroup; // 광고그룹 ID(FK)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn( name = "item_id", nullable = false)
     private Item item; // 상품ID(FK)
     @Column(name = "ad_use_config_yn", nullable = false)

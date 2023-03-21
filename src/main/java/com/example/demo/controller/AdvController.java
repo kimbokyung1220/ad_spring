@@ -30,7 +30,7 @@ public class AdvController {
 
     /** 일일 허용 예산 변경 */
     @PostMapping("/adv/ad-budget")
-    public ResponseEntity<AdvResponseDto> updateAdAct(@RequestBody DayLimitBudgetRequestDto dayLimitBudgetRequestDto, HttpServletRequest request) {
+    public ResponseEntity<AdvResponseDto> updateLimitBudget(@RequestBody DayLimitBudgetRequestDto dayLimitBudgetRequestDto, HttpServletRequest request) {
         return ResponseEntity.ok().body(advService.updateLimitBudget(dayLimitBudgetRequestDto, request));
     }
 }

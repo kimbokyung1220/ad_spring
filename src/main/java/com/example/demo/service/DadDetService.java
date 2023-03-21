@@ -21,6 +21,7 @@ import java.util.Optional;
 public class DadDetService {
     private final EntityManager em;
     private final DadDetBidRepository dadDetBidRepository;
+    private final DadDetRepository dadDetRepository;
     private final ValidationService validation;
 
     @Transactional
@@ -33,10 +34,10 @@ public class DadDetService {
             Kwd kwd = validation.isPresentKwd(kwdName);
 
             // 직접광고 상세 등록
-            DadDet dadDet = adRequestDto.createDadDet(ad, kwd);
+            DadDet dadDetInfo = adRequestDto.createDadDet(ad, kwd);
 //            dadDet.addCnrReq(cnrReq);
-//            dadDetRepository.save(dadDet);
-            em.persist(dadDet);
+            DadDet dadDet = dadDetRepository.save(dadDetInfo);
+//            em.persist(dadDet);
             dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), bidCost));
             cnrReq.saveCnrReq(dadDet);
 //            cnrReqRepository.save(new CnrReq().saveCnrReq(dadDet));
