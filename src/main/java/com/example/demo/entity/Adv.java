@@ -42,10 +42,6 @@ public class Adv implements Serializable {
     @Column(name = "day_limit_budget")
     private Integer dayLimitBudget; // 일 제한 예산
 
-    @OneToMany(mappedBy = "adv", cascade = CascadeType.ALL)
-    private List<Agroup> agroups;
-
-
     public Adv addBalance(AddBalanceRequestDto dto) {
        return Adv.builder()
                .advId(dto.getAdvId())

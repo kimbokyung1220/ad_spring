@@ -14,13 +14,12 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class CreateAgroupRequestDto {
     private String agroupName;
-    public Agroup createAgroup(Adv adv) {
+    public Agroup createAgroup() {
         return Agroup.builder()
                 .agroupName(agroupName)
                 .regTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")))
                 .agroupActYn(1)
                 .agroupUseConfigYn(1)
-                .adv(adv)
                 .build();
     }
 }

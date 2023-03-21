@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface AgroupRepository extends JpaRepository<Agroup, Long> {
-
-    List<Agroup> findByAdv(Adv adv);
     boolean existsByAgroupName(String agroupName);
     Agroup findByAgroupName(String agroupName);
 

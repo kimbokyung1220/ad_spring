@@ -12,6 +12,7 @@ import com.example.demo.repository.AgroupDslRepositoryImpl;
 import com.example.demo.repository.AgroupRepository;
 import com.example.demo.service.common.ValidationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,14 +28,14 @@ public class AgroupService {
     private final AgroupDslRepositoryImpl agroupDslRepository;
 
     /**
-     * 광고그룹 생성
+     * 광고그룹 생성 - [광고등록]
      */
     public AgroupResponseDto saveAgroup(CreateAgroupRequestDto createAgroupRequestDto, HttpServletRequest request) {
         Member member = validation.getMember(request);
         Adv adv = validation.isPresentAdv(member.getMemberId());
 
         if (!agroupRepository.existsByAgroupName(createAgroupRequestDto.getAgroupName())) {
-            Agroup agroupInfo = createAgroupRequestDto.createAgroup(adv);
+            Agroup agroupInfo = createAgroupRequestDto.createAgroup();
             agroupRepository.save(agroupInfo);
         }
 
@@ -44,25 +45,15 @@ public class AgroupService {
     }
 
     /**
-     * 해당 광고주의 광고그룹 목록 조회 - [광고등록]
+     * 해당 광고주의 광고그룹 목록 전체 조회 - [광고등록]
      */
-    public List<AgroupResponseDto> agroupList(HttpServletRequest request) {
-        Member member = validation.getMember(request);
-        Adv adv = validation.isPresentAdv(member.getMemberId());
-
-        List<Agroup> list = agroupRepository.findByAdv(adv);
+    public List<AgroupResponseDto> agroupAllList(HttpServletRequest request) {
+        List<Agroup> list = agroupRepository.findAll(Sort.by(Sort.Direction.DESC, "regTime"));
         List<AgroupResponseDto> dtoList = new ArrayList<>();
 
         for (Agroup agroup : list) {
             dtoList.add(
-                    AgroupResponseDto.builder()
-                            .agroupId(agroup.getAgroupId())
-                            .agroupName(agroup.getAgroupName())
-                            .agroupActYn(agroup.getAgroupActYn())
-                            .agroupUseConfigYn(agroup.getAgroupUseConfigYn())
-                            .regTime(agroup.getRegTime())
-                            .build()
-
+                    AgroupResponseDto.of(agroup)
             );
         }
 

@@ -22,9 +22,9 @@ public class AgroupController {
      * 해당 광고주의 광고그룹 목록 조회 - [광고등록]
      */
     @GetMapping("/agroup")
-    public ResponseEntity<List<AgroupResponseDto>> agroupList(HttpServletRequest request) {
+    public ResponseEntity<List<AgroupResponseDto>> agroupAllList(HttpServletRequest request) {
 
-        return ResponseEntity.ok().body(agroupService.agroupList(request));
+        return ResponseEntity.ok().body(agroupService.agroupAllList(request));
     }
 
     /**
