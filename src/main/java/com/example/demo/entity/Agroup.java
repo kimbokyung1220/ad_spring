@@ -1,7 +1,9 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.request.agroup.AgroupNameRequestDto;
 import com.example.demo.controller.request.agroup.UpdateAgUseConfigListRequestDto;
 import com.example.demo.controller.request.agroup.UpdateAgUseConfigRequestDto;
+import com.example.demo.controller.request.agroup.UpdateAgroupNameRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,5 +45,8 @@ public class Agroup {
     }
     public void updateOffActYn() {
         this.agroupActYn = 0;
+    }
+    public void updateAgroupName(UpdateAgroupNameRequestDto requestDto) {
+        this.agroupName = requestDto.getNewAgroupName();
     }
 }

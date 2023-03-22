@@ -29,7 +29,26 @@ public class AgroupResponseDto {
                 .agroupUseConfigYn(agroup.getAgroupUseConfigYn())
                 .build();
     }
-    public static AgroupResponseDto agroupItem(AgroupListResponseDto dto) {
+    public static AgroupResponseDto agroupItemList(AgroupListResponseDto dto) {
+        String agroupUseConfigYnSrt = "";
+        if(dto.getAgroupUseConfigYn() == 1) {
+            agroupUseConfigYnSrt = "ON";
+        }else if(dto.getAgroupUseConfigYn() == 0){
+            agroupUseConfigYnSrt = "OFF";
+        }
+        return  AgroupResponseDto.builder()
+                .agroupId(dto.getAgroupId())
+                .agroupName(dto.getAgroupName())
+                .regTime(dto.getRegTime())
+                .agroupUseConfigYn(dto.getAgroupUseConfigYn())
+                .adActYn(dto.getAdActYn())
+                .adUseConfigYn(dto.getAdUseConfigYn())
+                .agroupUseConfigYnSrt(agroupUseConfigYnSrt)
+                .itemCnt(dto.getAdUseConfigYn() + " / " + dto.getAdActYn())
+                .build();
+    }
+
+    public static AgroupResponseDto agroupItem(AgroupItemResponseDto dto) {
         String agroupUseConfigYnSrt = "";
         if(dto.getAgroupUseConfigYn() == 1) {
             agroupUseConfigYnSrt = "ON";

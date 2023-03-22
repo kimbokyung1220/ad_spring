@@ -34,17 +34,25 @@ public class AgroupController {
     }
 
     /**
-     * 광고그룹명 검색 - [광고관리]
+     * 광고그룹명 리스트 검색 - [광고관리]
      */
     @PostMapping("/agroup/list")
-    public ResponseEntity<List<AgroupResponseDto>> searchAgroupList(@RequestBody SearchAgroupRequestDto agroupRequestDto, HttpServletRequest servletRequest) {
+    public ResponseEntity<List<AgroupResponseDto>> searchAgroupList(@RequestBody AgroupNameRequestDto agroupRequestDto, HttpServletRequest servletRequest) {
         return ResponseEntity.ok().body(agroupService.searchAgroupList(agroupRequestDto, servletRequest));
+    }
+
+    /**
+     * 광고그룹 상세화면 - [광고관리]
+     */
+    @PostMapping("/agroup/aginfo")
+    public ResponseEntity<AgroupResponseDto> agroupDetail(@RequestBody AgroupIdRequestDto requestDto, HttpServletRequest servletRequest) {
+        return ResponseEntity.ok().body(agroupService.agroupDetail(requestDto, servletRequest));
     }
 
     /**
      * 광고그룹 사용 설정 여부 변경 - [광고관리]
      */
-    @PostMapping("agroup/aguc")
+    @PostMapping("/agroup/aguc")
     public void updateAgUseConfig(@RequestBody UpdateAgUseConfigRequestDto requestDto, HttpServletRequest servletRequest) {
         agroupService.updateAgUseConfig(requestDto, servletRequest);
     }
@@ -52,12 +60,22 @@ public class AgroupController {
     /**
      * 광고그룹 사용 설정 여부 변경(체크박스) - [광고관리]
      */
-    @PostMapping("agroup/agucs")
+    @PostMapping("/agroup/agucs")
     public void updateAgUseConfigs(@RequestBody UpdateAgUseConfigListRequestDto requestDtos, HttpServletRequest servletRequest) {
         agroupService.updateAgUseConfigs(requestDtos, servletRequest);
     }
-    @PostMapping("agroup/agayns")
+    /**
+     * 광고그룹 활성 여부 변경(체크박스) - [광고관리]
+     */
+    @PostMapping("/agroup/agayns")
     public void updateAgActYns(@RequestBody DeleteAgroupListRequestDto requestDtos, HttpServletRequest servletRequest) {
         agroupService.updateAgActYns(requestDtos, servletRequest);
+    }
+
+    /** 그룹명 변경 - [광고관리] */
+    @PostMapping("/agroup/agname")
+    public void updateAdGroupName(@RequestBody UpdateAgroupNameRequestDto requestDto, HttpServletRequest servletRequest) {
+        agroupService.updateAdGroupName(requestDto, servletRequest);
+
     }
 }

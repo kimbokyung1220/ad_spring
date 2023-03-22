@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.controller.request.agroup.*;
+import com.example.demo.controller.response.agroup.AgroupItemResponseDto;
 import com.example.demo.controller.response.agroup.AgroupListResponseDto;
 import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.entity.Adv;
@@ -59,9 +60,9 @@ public class AgroupService {
     }
 
     /**
-     * 광고그룹 검색 - [광고관리]
+     * 광고그룹 리스트 검색 - [광고관리]
      */
-    public List<AgroupResponseDto> searchAgroupList(SearchAgroupRequestDto agroupRequestDto, HttpServletRequest request) {
+    public List<AgroupResponseDto> searchAgroupList(AgroupNameRequestDto agroupRequestDto, HttpServletRequest request) {
         Member member = validation.getMember(request);
         Adv adv = validation.isPresentAdv(member.getMemberId());
         List<AgroupListResponseDto> dtoList = agroupDslRepository.searchAgroupList(agroupRequestDto);
@@ -69,10 +70,17 @@ public class AgroupService {
 
         for (AgroupListResponseDto dto : dtoList) {
             result.add(
-                    AgroupResponseDto.agroupItem(dto)
+                    AgroupResponseDto.agroupItemList(dto)
             );
         }
         return result;
+    }
+    /**
+     * 광고그룹 상세화면 - [광고관리]
+     */
+    public AgroupResponseDto agroupDetail(AgroupIdRequestDto dto, HttpServletRequest servletRequest) {
+        AgroupItemResponseDto agroupInfo = agroupDslRepository.agroupDetail(dto);
+        return AgroupResponseDto.agroupItem(agroupInfo);
     }
 
     /**
@@ -113,5 +121,17 @@ public class AgroupService {
             Agroup agroup = validation.isPresentAgroup(deleteAgList.get(i).getAgroupId());
             agroup.updateOffActYn();
         }
+    }
+    /** 그룹명 변경 - [광고관리] */
+    @Transactional
+    public void updateAdGroupName(UpdateAgroupNameRequestDto requestDto, HttpServletRequest servletRequest) {
+
+        Agroup agroup = agroupRepository.findByAgroupName(requestDto.getAgroupName());
+
+        if(agroupRepository.existsByAgroupName(requestDto.getNewAgroupName())) {
+            System.out.println("기존에 있는 그룹명입니다.");
+            return;
+        }
+        agroup.updateAgroupName(requestDto);
     }
 }
