@@ -15,6 +15,4 @@ import java.util.Optional;
 public interface AgroupRepository extends JpaRepository<Agroup, Long> {
     boolean existsByAgroupName(String agroupName);
     Agroup findByAgroupName(String agroupName);
-
-
 }

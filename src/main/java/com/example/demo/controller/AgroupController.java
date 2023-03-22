@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.request.agroup.CreateAgroupRequestDto;
-import com.example.demo.controller.request.agroup.SearchAgroupRequestDto;
-import com.example.demo.controller.request.agroup.UpdateAgUseConfigRequestDto;
+import com.example.demo.controller.request.agroup.*;
 import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.service.AgroupService;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +44,20 @@ public class AgroupController {
     /**
      * 광고그룹 사용 설정 여부 변경 - [광고관리]
      */
-    @PostMapping("agroup/useConfig")
+    @PostMapping("agroup/aguc")
     public void updateAgUseConfig(@RequestBody UpdateAgUseConfigRequestDto requestDto, HttpServletRequest servletRequest) {
         agroupService.updateAgUseConfig(requestDto, servletRequest);
+    }
+
+    /**
+     * 광고그룹 사용 설정 여부 변경(체크박스) - [광고관리]
+     */
+    @PostMapping("agroup/agucs")
+    public void updateAgUseConfigs(@RequestBody UpdateAgUseConfigListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        agroupService.updateAgUseConfigs(requestDtos, servletRequest);
+    }
+    @PostMapping("agroup/agayns")
+    public void updateAgActYns(@RequestBody DeleteAgroupListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        agroupService.updateAgActYns(requestDtos, servletRequest);
     }
 }

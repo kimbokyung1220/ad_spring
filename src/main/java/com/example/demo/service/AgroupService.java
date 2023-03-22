@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.request.agroup.CreateAgroupRequestDto;
-import com.example.demo.controller.request.agroup.SearchAgroupRequestDto;
-import com.example.demo.controller.request.agroup.UpdateAgUseConfigRequestDto;
+import com.example.demo.controller.request.agroup.*;
 import com.example.demo.controller.response.agroup.AgroupListResponseDto;
 import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.entity.Adv;
@@ -77,10 +75,43 @@ public class AgroupService {
         return result;
     }
 
-    /** 광고그룹 사용 설정 여부 변경 - [광고관리] */
+    /**
+     * 광고그룹 사용 설정 여부 변경 - [광고관리]
+     */
     @Transactional
     public void updateAgUseConfig(UpdateAgUseConfigRequestDto requestDto, HttpServletRequest servletRequest) {
         Agroup agroup = validation.isPresentAgroup(requestDto.getAgroupId());
         agroup.updateAgUseConfig(requestDto);
+    }
+
+    /**
+     * 광고그룹 사용 설정 여부 변경(체크박스) - [광고관리]
+     */
+    @Transactional
+    public void updateAgUseConfigs(UpdateAgUseConfigListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        List<UpdateAgUseConfigRequestDto> agUseConfigList = requestDtos.getAgUseConfigList();
+        if (requestDtos.getCode() == 1) {
+            for (int i = 0; i < agUseConfigList.size(); i++) {
+                Agroup agroup = validation.isPresentAgroup(agUseConfigList.get(i).getAgroupId());
+                agroup.updateOnAgUseConfig();
+            }
+        } else {
+            for (int i = 0; i < agUseConfigList.size(); i++) {
+                Agroup agroup = validation.isPresentAgroup(agUseConfigList.get(i).getAgroupId());
+                agroup.updateOffAgUseConfig();
+            }
+        }
+    }
+
+    /**
+     * 광고그룹 활성 여부 변경(체크박스) - [광고관리]
+     */
+    @Transactional
+    public void updateAgActYns(DeleteAgroupListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        List<DeleteAgroupRequestDto> deleteAgList = requestDtos.getDeleteGroupList();
+        for (int i = 0; i < deleteAgList.size(); i++) {
+            Agroup agroup = validation.isPresentAgroup(deleteAgList.get(i).getAgroupId());
+            agroup.updateOffActYn();
+        }
     }
 }

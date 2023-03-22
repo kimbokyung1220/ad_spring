@@ -1,15 +1,13 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.request.agroup.UpdateAgUseConfigListRequestDto;
 import com.example.demo.controller.request.agroup.UpdateAgUseConfigRequestDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
@@ -35,5 +33,15 @@ public class Agroup {
 
     public void updateAgUseConfig(UpdateAgUseConfigRequestDto requestDto) {
         this.agroupUseConfigYn = requestDto.getAgroupUseConfigYn();
+    }
+
+    public void updateOnAgUseConfig() {
+        this.agroupUseConfigYn = 1;
+    }
+    public void updateOffAgUseConfig() {
+        this.agroupUseConfigYn = 0;
+    }
+    public void updateOffActYn() {
+        this.agroupActYn = 0;
     }
 }
