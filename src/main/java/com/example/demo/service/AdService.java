@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.config.jwt.TokenProvider;
+import com.example.demo.controller.request.ad.AdUseConfigYnRequestDto;
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
 import com.example.demo.controller.request.kwd.KwdRequestDto;
 import com.example.demo.controller.response.AdResponseDto;
@@ -60,5 +61,9 @@ public class AdService {
             }
         }
         dadDetService.saveDadDet(ad, adRequestDto);
+    }
+
+    public void updateAdUseConfig(Long adId, AdUseConfigYnRequestDto adUseConfigYnRequestDto) {
+//        Ad ad = validation.isPresentAd(adId{longi[]
     }
 }

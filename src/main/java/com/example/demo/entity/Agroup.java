@@ -43,7 +43,7 @@ public class Agroup {
     public void updateOffAgUseConfig() {
         this.agroupUseConfigYn = 0;
     }
-    public void updateOffActYn() {
+    public void updateOffAgActYn() {
         this.agroupActYn = 0;
     }
     public void updateAgroupName(UpdateAgroupNameRequestDto requestDto) {

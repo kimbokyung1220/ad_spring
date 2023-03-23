@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.request.ad.AdUseConfigYnRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,5 +37,15 @@ public class Ad {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "adv_id", nullable = false)
     private Adv adv; // 광고주 ID (FK)
+
+    public void updateOnAdUseConfig(AdUseConfigYnRequestDto requestDto) {
+        this.adUseConfigYn = requestDto.getAdUseconfigYn();
+    }
+    public void updateOffAdUseConfig(AdUseConfigYnRequestDto requestDto) {
+        this.adUseConfigYn = requestDto.getAdUseconfigYn();
+    }
+    public void updateOffAdActYn() {
+        this.adActYn = 0;
+    }
             
 }

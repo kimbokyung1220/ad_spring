@@ -16,6 +16,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ValidationService {
     private final TokenProvider tokenProvider;
+    private final AdRepository adRepository;
     private final AdvRepository advRepository;
     private final ItemRepository itemRepository;
     private final AgroupRepository agroupRepository;
@@ -30,7 +31,11 @@ public class ValidationService {
         //Authentication에서 멤버 객체 불러오기
         return tokenProvider.getMemberFromAuthentication();
     }
-
+    // 광고 확인
+    public Ad isPresentAd(Long adId) {
+        Optional<Ad> ad = adRepository.findById(adId);
+        return ad.orElse(null);
+    }
 
     // 광고주 확인
     public Adv isPresentAdv(String advId) {

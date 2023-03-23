@@ -41,7 +41,7 @@ public class ItemDslRepositoryImpl implements ItemDslRepository {
                 .on(ad.item.itemId.eq(item.itemId)
                         .and(ad.agroup.agroupId.eq(agroupId)).and(ad.adActYn.eq(1)))
                 .where(item.itemNo.contains(noNameRequestDto.getItemNo())
-                        .or(item.itemName.contains(noNameRequestDto.getItemName())))
+                        .and(item.itemName.contains(noNameRequestDto.getItemName())))
                 .fetch();
     }
 }

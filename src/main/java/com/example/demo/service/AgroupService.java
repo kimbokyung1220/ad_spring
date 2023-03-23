@@ -112,6 +112,7 @@ public class AgroupService {
     }
 
     /**
+     * 광고삭제
      * 광고그룹 활성 여부 변경(체크박스) - [광고관리]
      */
     @Transactional
@@ -119,7 +120,7 @@ public class AgroupService {
         List<DeleteAgroupRequestDto> deleteAgList = requestDtos.getDeleteGroupList();
         for (int i = 0; i < deleteAgList.size(); i++) {
             Agroup agroup = validation.isPresentAgroup(deleteAgList.get(i).getAgroupId());
-            agroup.updateOffActYn();
+            agroup.updateOffAgActYn();
         }
     }
     /** 그룹명 변경 - [광고관리] */
