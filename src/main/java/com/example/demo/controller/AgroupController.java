@@ -17,7 +17,7 @@ public class AgroupController {
     private final AgroupService agroupService;
 
     /**
-     * 해당 광고주의 광고그룹 목록 조회 - [광고등록]
+     * 광고그룹 전체조회 - [광고등록]
      */
     @GetMapping("/agroup")
     public ResponseEntity<List<AgroupResponseDto>> agroupAllList(HttpServletRequest request) {
@@ -34,7 +34,7 @@ public class AgroupController {
     }
 
     /**
-     * 광고그룹명 리스트 검색 - [광고관리]
+     * 광고그룹명 조건 검색 - [광고관리]
      */
     @PostMapping("/agroup/list")
     public ResponseEntity<List<AgroupResponseDto>> searchAgroupList(@RequestBody AgroupNameRequestDto agroupRequestDto, HttpServletRequest servletRequest) {

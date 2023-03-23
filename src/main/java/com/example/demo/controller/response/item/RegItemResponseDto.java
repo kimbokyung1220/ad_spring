@@ -1,4 +1,4 @@
-package com.example.demo.controller.response;
+package com.example.demo.controller.response.item;
 
 import com.example.demo.entity.Item;
 import lombok.AllArgsConstructor;
@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemResponseDto {
+public class RegItemResponseDto {
     private Long itemId; // 상품 ID
     private String itemNo; // 상품번호
     private String itemName; // 상품명
     private String adultYn; // 성인여부
     private Integer itemOrgCost; // 상품원본금액
     private String itemActYn; // 상품활성여부
-
-    public static ItemResponseDto of(Item item) {
+    
+    public static RegItemResponseDto of(Item item) {
         String adultYn = "";
         String itemActYn = "";
 
@@ -34,7 +34,7 @@ public class ItemResponseDto {
             itemActYn = "비활성화";
         }
 
-        return ItemResponseDto.builder()
+        return RegItemResponseDto.builder()
                 .itemId(item.getItemId())
                 .itemNo(item.getItemNo())
                 .itemName(item.getItemName())
