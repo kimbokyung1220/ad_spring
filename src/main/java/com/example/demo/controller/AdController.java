@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.request.ad.AdUseConfigYnListRequestDto;
 import com.example.demo.controller.request.ad.AdUseConfigYnRequestDto;
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
 import com.example.demo.controller.response.AdResponseDto;
 import com.example.demo.repository.AdRepository;
 import com.example.demo.service.AdService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.runtime.internal.cflowstack.ThreadCounter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +29,14 @@ public class AdController {
     }
 
     /** 광고 사용 설정 여부 변경 - [광고관리] */
-    @PostMapping("/ad/{adId}")
-    public void updateAdUseConfig(@PathVariable Long adId, AdUseConfigYnRequestDto adUseConfigYnRequestDto)  {
-        adService.updateAdUseConfig(adId, adUseConfigYnRequestDto);
+    @PostMapping("/ad/list")
+    public Long updateAdUseConfig(@RequestBody AdUseConfigYnRequestDto adUseConfigYnRequestDto)  {
+        return adService.updateAdUseConfig(adUseConfigYnRequestDto);
+    }
+    /** 광고 사용 설정 여부 변경(체크박스) - [광고관리] */
+    @PostMapping("/ad/lists")
+    public void updateAdUseConfigs(@RequestBody AdUseConfigYnListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        adService.updateAdUseConfigs(requestDtos, servletRequest);
     }
 
 }

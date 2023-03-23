@@ -47,4 +47,10 @@ public class DadDetService {
 //        DadDetBidRequestDto dadDetBidRequestDto = new DadDetBidRequestDto(dadDet.getDadDetId(), adRequestDto.getBidCost());
 //        dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), adRequestDto.getBidCost()));
     }
+
+    @Transactional
+    public void updateDedUseConfig(Ad ad, int useConfigValue) {
+        DadDet dadDet = dadDetRepository.findByAd(ad);
+        dadDet.updateDadUseConfig(useConfigValue);
+    }
 }

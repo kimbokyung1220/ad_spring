@@ -38,11 +38,15 @@ public class Ad {
     @JoinColumn( name = "adv_id", nullable = false)
     private Adv adv; // 광고주 ID (FK)
 
-    public void updateOnAdUseConfig(AdUseConfigYnRequestDto requestDto) {
-        this.adUseConfigYn = requestDto.getAdUseconfigYn();
+    // 하나 update
+    public void updateAdUseConfig(AdUseConfigYnRequestDto requestDto) {
+        this.adUseConfigYn = requestDto.getAdUseConfigYn();
     }
-    public void updateOffAdUseConfig(AdUseConfigYnRequestDto requestDto) {
-        this.adUseConfigYn = requestDto.getAdUseconfigYn();
+    public void updateOnAdUseConfig() {
+        this.adUseConfigYn = 1;
+    }
+    public void updateOffAdUseConfig() {
+        this.adUseConfigYn = 0;
     }
     public void updateOffAdActYn() {
         this.adActYn = 0;

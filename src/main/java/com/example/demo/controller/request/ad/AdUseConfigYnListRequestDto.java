@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class AdUseConfigYnRequestDto {
-    private Long adId;
-    private Integer adUseConfigYn;
+public class AdUseConfigYnListRequestDto {
+    private Integer code;
+    private List<AdUseConfigYnRequestDto> adUseConfigYnList;
 }

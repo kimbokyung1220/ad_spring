@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.config.jwt.TokenProvider;
+import com.example.demo.controller.request.ad.AdUseConfigYnListRequestDto;
 import com.example.demo.controller.request.ad.AdUseConfigYnRequestDto;
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
 import com.example.demo.controller.request.kwd.KwdRequestDto;
@@ -10,6 +11,7 @@ import com.example.demo.repository.*;
 import com.example.demo.service.common.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -62,8 +64,38 @@ public class AdService {
         }
         dadDetService.saveDadDet(ad, adRequestDto);
     }
+    /** 광고 사용 설정 여부 변경- [광고관리] */
+    @Transactional
+    public Long updateAdUseConfig(AdUseConfigYnRequestDto adUseConfigYnRequestDto) {
+        Ad ad = validation.isPresentAd(adUseConfigYnRequestDto.getAdId());
+        ad.updateAdUseConfig(adUseConfigYnRequestDto);
 
-    public void updateAdUseConfig(Long adId, AdUseConfigYnRequestDto adUseConfigYnRequestDto) {
-//        Ad ad = validation.isPresentAd(adId{longi[]
+        // 관련 직접광고 사용 설정 여부 변경
+        if(adUseConfigYnRequestDto.getAdUseConfigYn() == 1) {
+            dadDetService.updateDedUseConfig(ad, 0);
+        } else {
+            dadDetService.updateDedUseConfig(ad, 1);
+        }
+        return ad.getAgroup().getAgroupId();
+    }
+    /** 광고 사용 설정 여부 변경(체크박스) - [광고관리] */
+    @Transactional
+    public void updateAdUseConfigs(AdUseConfigYnListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        List<AdUseConfigYnRequestDto> adUseConfigList = requestDtos.getAdUseConfigYnList();
+        if(requestDtos.getCode() == 1) {
+            for (int i = 0; i < adUseConfigList.size(); i++) {
+                Ad ad = validation.isPresentAd(adUseConfigList.get(i).getAdId());
+                ad.updateOnAdUseConfig();
+                dadDetService.updateDedUseConfig(ad, 0);
+            }
+        } else {
+            for (int i = 0; i < adUseConfigList.size(); i++) {
+                Ad ad = validation.isPresentAd(adUseConfigList.get(i).getAdId());
+                ad.updateOffAdUseConfig();
+                dadDetService.updateDedUseConfig(ad, 1);
+            }
+        }
     }
 }
+
+

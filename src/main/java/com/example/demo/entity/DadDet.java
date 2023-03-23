@@ -50,4 +50,8 @@ public class DadDet {
     public void update(CnrReq cnrReq) {
         DadDet.builder().cnrReq(cnrReq).build();
     }
+
+    public void updateDadUseConfig(int param) {
+       this.dadUseConfigYn = param;
+    }
 }
