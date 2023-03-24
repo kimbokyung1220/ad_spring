@@ -21,6 +21,7 @@ public class ValidationService {
     private final ItemRepository itemRepository;
     private final AgroupRepository agroupRepository;
     private final KwdRepository kwdRepository;
+    private final DadDetRepository dadDetRepository;
 
 
     @Transactional(readOnly = true)
@@ -59,5 +60,10 @@ public class ValidationService {
     public Kwd isPresentKwd(String kwdName) {
         Optional<Kwd> kwd = kwdRepository.findByKwdName(kwdName);
         return kwd.orElse(null);
+    }
+    //직접광고 상세
+    public DadDet isPresentDadDet(Long dadDetId) {
+        Optional<DadDet> dadDet = Optional.ofNullable(dadDetRepository.findByDadDetId(dadDetId));
+        return dadDet.orElse(null);
     }
 }

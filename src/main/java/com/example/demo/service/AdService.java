@@ -1,9 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.config.jwt.TokenProvider;
-import com.example.demo.controller.request.ad.AdUseConfigYnListRequestDto;
-import com.example.demo.controller.request.ad.AdUseConfigYnRequestDto;
-import com.example.demo.controller.request.ad.RegisterAdRequestDto;
+import com.example.demo.controller.request.ad.*;
 import com.example.demo.controller.request.kwd.KwdRequestDto;
 import com.example.demo.controller.response.AdResponseDto;
 import com.example.demo.entity.*;
@@ -72,9 +70,9 @@ public class AdService {
 
         // 관련 직접광고 사용 설정 여부 변경
         if(adUseConfigYnRequestDto.getAdUseConfigYn() == 1) {
-            dadDetService.updateDedUseConfig(ad, 0);
+            dadDetService.itemDedUseConfig(ad, 0);
         } else {
-            dadDetService.updateDedUseConfig(ad, 1);
+            dadDetService.itemDedUseConfig(ad, 1);
         }
         return ad.getAgroup().getAgroupId();
     }
@@ -86,15 +84,25 @@ public class AdService {
             for (int i = 0; i < adUseConfigList.size(); i++) {
                 Ad ad = validation.isPresentAd(adUseConfigList.get(i).getAdId());
                 ad.updateOnAdUseConfig();
-                dadDetService.updateDedUseConfig(ad, 0);
+                dadDetService.itemDedUseConfig(ad, 0);
             }
         } else {
             for (int i = 0; i < adUseConfigList.size(); i++) {
                 Ad ad = validation.isPresentAd(adUseConfigList.get(i).getAdId());
                 ad.updateOffAdUseConfig();
-                dadDetService.updateDedUseConfig(ad, 1);
+                dadDetService.itemDedUseConfig(ad, 1);
             }
         }
+    }
+
+    @Transactional
+    public void updateAdActYns(DeleteAdListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        List<DeleteAdRequestDto> deleteAdList = requestDtos.getDeleteAdList();
+        for (int i = 0; i < deleteAdList.size(); i++) {
+            Ad ad = validation.isPresentAd(deleteAdList.get(i).getAdId());
+            ad.updateOffAdActYn();
+        }
+
     }
 }
 

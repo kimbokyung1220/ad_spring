@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.request.daddet.DadUseConfigYnRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DadDet {
-    @Id @Column(name = "ada_det_id")
+    @Id @Column(name = "dad_det_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dadDetId; // 직접광고 상세 ID
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,16 +43,24 @@ public class DadDet {
 //    @JsonManagedReference
     private DadDetBid dadDetBid;
 
-//    public void addCnrReq(CnrReq cnrReq) {
-//        this.cnrReq = cnrReq;
-//        cnrReq.setDadDet(this);
-//    }
-
     public void update(CnrReq cnrReq) {
         DadDet.builder().cnrReq(cnrReq).build();
     }
 
-    public void updateDadUseConfig(int param) {
+    public void updateItemDadUseConfig(Integer param) {
        this.dadUseConfigYn = param;
+    }
+    public void updateDadUseConfig(DadUseConfigYnRequestDto requestDto) {
+        this.dadUseConfigYn = requestDto.getDadUseConfigYn();
+    }
+
+    public void updateOnDadUseConfig() {
+        this.dadUseConfigYn = 1;
+    }
+    public void updateOffDadUseConfig() {
+        this.dadUseConfigYn = 0;
+    }
+    public void updateOffDadActYn() {
+        this.dadActYn = 0;
     }
 }

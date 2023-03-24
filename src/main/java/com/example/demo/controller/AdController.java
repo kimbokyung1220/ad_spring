@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.request.ad.AdUseConfigYnListRequestDto;
 import com.example.demo.controller.request.ad.AdUseConfigYnRequestDto;
+import com.example.demo.controller.request.ad.DeleteAdListRequestDto;
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
+import com.example.demo.controller.request.agroup.DeleteAgroupListRequestDto;
 import com.example.demo.controller.response.AdResponseDto;
 import com.example.demo.repository.AdRepository;
 import com.example.demo.service.AdService;
@@ -28,15 +30,28 @@ public class AdController {
         return ResponseEntity.ok().body(adService.saveAd(adRequestDto, request));
     }
 
-    /** 광고 사용 설정 여부 변경 - [광고관리] */
-    @PostMapping("/ad/list")
-    public Long updateAdUseConfig(@RequestBody AdUseConfigYnRequestDto adUseConfigYnRequestDto)  {
+    /**
+     * 광고 사용 설정 여부 변경 - [광고관리]
+     */
+    @PostMapping("/ad/aduc")
+    public Long updateAdUseConfig(@RequestBody AdUseConfigYnRequestDto adUseConfigYnRequestDto) {
         return adService.updateAdUseConfig(adUseConfigYnRequestDto);
     }
-    /** 광고 사용 설정 여부 변경(체크박스) - [광고관리] */
-    @PostMapping("/ad/lists")
+
+    /**
+     * 광고 사용 설정 여부 변경(체크박스) - [광고관리]
+     */
+    @PostMapping("/ad/aducs")
     public void updateAdUseConfigs(@RequestBody AdUseConfigYnListRequestDto requestDtos, HttpServletRequest servletRequest) {
         adService.updateAdUseConfigs(requestDtos, servletRequest);
     }
+    /**
+     * 광고 활성 여부 변경(체크박스) - [광고관리]
+     */
+    @PostMapping("/ad/adayns")
+    public void updateAdActYns(@RequestBody DeleteAdListRequestDto requestDtos, HttpServletRequest servletRequest) {
+        adService.updateAdActYns(requestDtos, servletRequest);
+    }
+
 
 }

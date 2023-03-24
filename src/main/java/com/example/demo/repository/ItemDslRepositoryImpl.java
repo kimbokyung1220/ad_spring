@@ -39,8 +39,10 @@ public class ItemDslRepositoryImpl implements ItemDslRepository {
                 .from(ad)
                 .innerJoin(item)
                 .on(ad.item.itemId.eq(item.itemId)
-                        .and(ad.agroup.agroupId.eq(agroupId)).and(ad.adActYn.eq(1)))
-                .where(item.itemNo.contains(noNameRequestDto.getItemNo())
+                        .and(ad.agroup.agroupId.eq(agroupId)))
+                .where(ad.adActYn.eq(1)
+                        .and(item.itemActYn.eq(1))
+                        .and(item.itemNo.contains(noNameRequestDto.getItemNo()))
                         .and(item.itemName.contains(noNameRequestDto.getItemName())))
                 .fetch();
     }
