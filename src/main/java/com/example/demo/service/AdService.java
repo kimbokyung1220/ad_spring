@@ -127,6 +127,7 @@ public class AdService {
         for (int i = 0; i < deleteAdList.size(); i++) {
             Ad ad = validation.isPresentAd(deleteAdList.get(i).getAdId());
             ad.updateOffAdActYn();
+            ad.updateOffAdUseConfig();
             dadDetService.itemDedAct(ad, 0);
             dadDetService.itemDedUseConfig(ad, 0);
         }

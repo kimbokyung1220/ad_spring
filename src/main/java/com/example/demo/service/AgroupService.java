@@ -88,9 +88,9 @@ public class AgroupService {
     @Transactional
     public ResponseDto<String> updateAgUseConfig(UpdateAgUseConfigRequestDto requestDto, HttpServletRequest servletRequest) {
         Agroup agroup = validation.isPresentAgroup(requestDto.getAgroupId());
-        Ad ad = adRepository.findByAgroup(agroup);
-        ad.updateOffAdUseConfig();
-        ad.updateOffAdActYn();
+//        Ad ad = adRepository.findByAgroup(agroup);
+//        ad.updateOffAdUseConfig();
+//        ad.updateOffAdActYn();
         agroup.updateAgUseConfig(requestDto);
 
         String value = requestDto.getAgroupUseConfigYn() == 1 ? "ON" : "OFF";
@@ -135,10 +135,11 @@ public class AgroupService {
 
         for (int i = 0; i < deleteAgList.size(); i++) {
             Agroup agroup = validation.isPresentAgroup(deleteAgList.get(i).getAgroupId());
-            Ad ad = adRepository.findByAgroup(agroup);
-            ad.updateOffAdUseConfig();
-            ad.updateOffAdActYn();
+//            Ad ad = adRepository.findByAgroup(agroup);
+//            ad.updateOffAdUseConfig();
+//            ad.updateOffAdActYn();
             agroup.updateOffAgActYn();
+            agroup.updateOffAgUseConfig();
         }
         return ResponseDto.success(ErrorCode.DELETE_ADGROUP.getMessage());
     }
