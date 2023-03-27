@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.controller.request.adv.AdActYnRequestDto;
 import com.example.demo.controller.request.adv.DayLimitBudgetRequestDto;
 import com.example.demo.controller.response.AdvResponseDto;
+import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.service.AdvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,8 @@ public class AdvController {
     }
 
     /** 일일 허용 예산 변경 */
-    @PostMapping("/adv/ad-budget")
-    public ResponseEntity<AdvResponseDto> updateLimitBudget(@RequestBody DayLimitBudgetRequestDto dayLimitBudgetRequestDto, HttpServletRequest request) {
-        return ResponseEntity.ok().body(advService.updateLimitBudget(dayLimitBudgetRequestDto, request));
+    @PostMapping("/adv/budget")
+    public ResponseDto<AdvResponseDto> updateLimitBudget(@RequestBody DayLimitBudgetRequestDto dayLimitBudgetRequestDto, HttpServletRequest request) {
+        return advService.updateLimitBudget(dayLimitBudgetRequestDto, request);
     }
 }

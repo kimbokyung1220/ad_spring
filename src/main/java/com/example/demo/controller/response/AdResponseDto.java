@@ -9,8 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Builder
@@ -21,7 +21,7 @@ public class AdResponseDto {
     private Agroup agroup; // 광고그룹 ID(FK)
     private Item item; // 상품ID(FK)
     private Integer adUseConfigYn; // 광고 사용 설정 여부
-    private ZonedDateTime regTime; // 등록시간
+    private LocalDateTime regTime; // 등록시간
     private Integer adActYn; // 광고 활성 여부
     private Adv adv; // 광고주 ID (FK)
 

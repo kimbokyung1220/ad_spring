@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * 직접광고 상세
@@ -18,7 +18,8 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DadDet {
-    @Id @Column(name = "dad_det_id")
+    @Id
+    @Column(name = "dad_det_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dadDetId; // 직접광고 상세 ID
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,19 +38,25 @@ public class DadDet {
     @Column(name = "dad_act_yn", nullable = false)
     private Integer dadActYn; // 직접광고 활성 여부
     @Column(name = "reg_time", nullable = false)
-    private ZonedDateTime regTime; // 등록시간
+    private LocalDateTime regTime; // 등록시간
     @PrimaryKeyJoinColumn
     @OneToOne(mappedBy = "dadDet", cascade = CascadeType.ALL)
 //    @JsonManagedReference
     private DadDetBid dadDetBid;
 
     public void update(CnrReq cnrReq) {
-        DadDet.builder().cnrReq(cnrReq).build();
+        DadDet.builder()
+                .cnrReq(cnrReq)
+                .build();
     }
 
     public void updateItemDadUseConfig(Integer param) {
-       this.dadUseConfigYn = param;
+        this.dadUseConfigYn = param;
     }
+    public void itemDedAct(Integer param) {
+        this.dadActYn = param;
+    }
+
     public void updateDadUseConfig(DadUseConfigYnRequestDto requestDto) {
         this.dadUseConfigYn = requestDto.getDadUseConfigYn();
     }
@@ -57,9 +64,11 @@ public class DadDet {
     public void updateOnDadUseConfig() {
         this.dadUseConfigYn = 1;
     }
+
     public void updateOffDadUseConfig() {
         this.dadUseConfigYn = 0;
     }
+
     public void updateOffDadActYn() {
         this.dadActYn = 0;
     }

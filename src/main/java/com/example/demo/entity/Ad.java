@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 /**
  * 광고
@@ -31,7 +30,7 @@ public class Ad {
     @Column(name = "ad_use_config_yn", nullable = false)
     private Integer adUseConfigYn; // 광고 사용 설정 여부
     @Column(name = "reg_time", nullable = false)
-    private ZonedDateTime regTime; // 등록시간
+    private LocalDateTime regTime; // 등록시간
     @Column(name = "ad_act_yn", nullable = false)
     private Integer adActYn; // 광고 활성 여부
     @ManyToOne(fetch = FetchType.LAZY)

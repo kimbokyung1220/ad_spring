@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -18,7 +18,7 @@ public class MngItemResponseDto {
     private String advId; //광고주 ID
     private Integer adUseConfigYn; //광고 사용설정 여부
     private Integer adActYn; // 광고 활성 여부
-    private ZonedDateTime regTime; // 광고등록시간
+    private LocalDateTime regTime; // 광고등록시간
     private Long itemId; //상품ID
     private String itemNo; // 상품번호
     private String itemName; //상품명

@@ -41,6 +41,7 @@ public class KwdDslRepositoryImpl implements KwdDslRepository {
                 .innerJoin(dadDet).on(ad.adId.eq(dadDet.ad.adId))
                 .innerJoin(kwd).on(dadDet.kwd.kwdId.eq(kwd.kwdId))
                 .where(ad.adActYn.eq(1)
+                        .and(kwd.sellPossKwdYn.eq(1))
                         .and(ad.adId.eq(adId))
                         .and(kwd.kwdName.contains(requestDto.getKwdName())))
                 .fetch();

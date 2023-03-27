@@ -3,7 +3,9 @@ package com.example.demo.controller.response.agroup;
 import com.example.demo.entity.Agroup;
 import lombok.*;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Getter
 @Builder
@@ -12,7 +14,7 @@ import java.time.ZonedDateTime;
 public class AgroupResponseDto {
     private Long agroupId; //광고그룹 ID
     private String agroupName; //광고그룹명
-    private ZonedDateTime regTime; // 등록시간
+    private String regTime; // 등록시간
     private Integer agroupActYn; // 광고그룹 활성 여부
     private Integer agroupUseConfigYn; // 광고그룹 사용 설정 여부
     private Integer adActYn;  // 광고 활성 여부 상품 개수
@@ -20,16 +22,22 @@ public class AgroupResponseDto {
     private String agroupUseConfigYnSrt;
     private String itemCnt;
 
+    private static String fm = "yyyy.MM.dd HH:mm";
     public static AgroupResponseDto of(Agroup agroup) {
+        String time = agroup.getRegTime().format(DateTimeFormatter.ofPattern(fm));
+
         return AgroupResponseDto.builder()
                 .agroupId(agroup.getAgroupId())
                 .agroupName(agroup.getAgroupName())
-                .regTime(agroup.getRegTime())
+                .regTime(time)
                 .agroupActYn(agroup.getAgroupActYn())
                 .agroupUseConfigYn(agroup.getAgroupUseConfigYn())
                 .build();
     }
     public static AgroupResponseDto agroupItemList(AgroupListResponseDto dto) {
+
+        String time = dto.getRegTime().format(DateTimeFormatter.ofPattern(fm));
+
         String agroupUseConfigYnSrt = "";
         if(dto.getAgroupUseConfigYn() == 1) {
             agroupUseConfigYnSrt = "ON";
@@ -39,7 +47,7 @@ public class AgroupResponseDto {
         return  AgroupResponseDto.builder()
                 .agroupId(dto.getAgroupId())
                 .agroupName(dto.getAgroupName())
-                .regTime(dto.getRegTime())
+                .regTime(time)
                 .agroupUseConfigYn(dto.getAgroupUseConfigYn())
                 .adActYn(dto.getAdActYn())
                 .adUseConfigYn(dto.getAdUseConfigYn())
@@ -49,6 +57,8 @@ public class AgroupResponseDto {
     }
 
     public static AgroupResponseDto agroupItem(AgroupItemResponseDto dto) {
+        String time = dto.getRegTime().format(DateTimeFormatter.ofPattern(fm));
+
         String agroupUseConfigYnSrt = "";
         if(dto.getAgroupUseConfigYn() == 1) {
             agroupUseConfigYnSrt = "ON";
@@ -58,7 +68,7 @@ public class AgroupResponseDto {
         return  AgroupResponseDto.builder()
                 .agroupId(dto.getAgroupId())
                 .agroupName(dto.getAgroupName())
-                .regTime(dto.getRegTime())
+                .regTime(time)
                 .agroupUseConfigYn(dto.getAgroupUseConfigYn())
                 .adActYn(dto.getAdActYn())
                 .adUseConfigYn(dto.getAdUseConfigYn())

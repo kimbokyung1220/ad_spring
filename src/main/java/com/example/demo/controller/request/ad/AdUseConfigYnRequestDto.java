@@ -9,5 +9,6 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class AdUseConfigYnRequestDto {
     private Long adId;
+    private Long itemId;
     private Integer adUseConfigYn;
 }

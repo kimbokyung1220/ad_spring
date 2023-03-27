@@ -10,8 +10,8 @@ import static com.example.demo.entity.QItem.item;
 import static com.example.demo.entity.QAd.ad;
 
 import javax.persistence.EntityManager;
-import java.time.ZonedDateTime;
 import java.util.List;
+
 
 @Repository
 public class ItemDslRepositoryImpl implements ItemDslRepository {

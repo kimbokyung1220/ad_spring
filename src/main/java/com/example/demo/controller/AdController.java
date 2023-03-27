@@ -6,6 +6,7 @@ import com.example.demo.controller.request.ad.DeleteAdListRequestDto;
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
 import com.example.demo.controller.request.agroup.DeleteAgroupListRequestDto;
 import com.example.demo.controller.response.AdResponseDto;
+import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.repository.AdRepository;
 import com.example.demo.service.AdService;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,21 @@ public class AdController {
     private final AdService adService;
     private final AdRepository adRepository;
 
+    /**
+     * 하나의 상품은 하나의 광고만 등록 가능
+     */
+    @PostMapping("ad/item/{itemId}")
+    public ResponseDto<Long> checkResAdItem(@PathVariable Long itemId) {
+        return adService.checkResAdItem(itemId);
+    }
+
 
     /**
      * 광고 등록
      */
     @PostMapping("/ad")
-    public ResponseEntity<AdResponseDto> saveAd(@RequestBody RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
-        return ResponseEntity.ok().body(adService.saveAd(adRequestDto, request));
+    public ResponseDto<String> saveAd(@RequestBody RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
+        return adService.saveAd(adRequestDto, request);
     }
 
     /**
@@ -35,7 +44,7 @@ public class AdController {
      */
     @PostMapping("/ad/aduc")
     public Long updateAdUseConfig(@RequestBody AdUseConfigYnRequestDto adUseConfigYnRequestDto) {
-        return adService.updateAdUseConfig(adUseConfigYnRequestDto);
+       return adService.updateAdUseConfig(adUseConfigYnRequestDto);
     }
 
     /**

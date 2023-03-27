@@ -7,8 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -32,7 +31,7 @@ public class RegisterAdRequestDto {
                 .agroup(agroup)
                 .item(item)
                 .adUseConfigYn(1)
-                .regTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")))
+                .regTime(LocalDateTime.now())
                 .adActYn(1)
                 .adv(adv)
                 .build();
@@ -45,10 +44,11 @@ public class RegisterAdRequestDto {
         return DadDet.builder()
                 .ad(ad)
                 .kwd(kwd)
+//                .cnrReq()
                 .dadCnrStatus("APPROVAL")
                 .dadUseConfigYn(1)
                 .dadActYn(1)
-                .regTime(ZonedDateTime.now(ZoneId.of("Asia/Seoul")))
+                .regTime(LocalDateTime.now())
                 .build();
     }
     public void update(CnrReq cnrReq) {

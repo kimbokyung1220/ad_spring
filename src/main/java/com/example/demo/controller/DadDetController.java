@@ -18,25 +18,25 @@ public class DadDetController {
 
     /**
      * 직접광고 사용 설정 여부
-     */
-    @PostMapping("/dad/aduc")
-    public Long updateDadUseConfig(@RequestBody DadUseConfigYnRequestDto requestDto) {
-        return dadDetService.updateDadUseConfig(requestDto);
-    }
+//     */
+//    @PostMapping("/dad/aduc")
+//    public Long updateDadUseConfig(@RequestBody DadUseConfigYnRequestDto requestDto) {
+//        return dadDetService.updateDadUseConfig(requestDto);
+//    }
 
     /**
      * 직접광고 사용 설정 여부(체크박스)
      */
-    @PostMapping("/dad/aducs")
-    public void updateDadUseConfigs(@RequestBody DadUseConfigYnListRequestDto requestDto) {
-        dadDetService.updateDadUseConfigs(requestDto);
-    }
-    /**
-     * 직접광고 활성여부 변경(체크박스) - [광고관리]
-     */
-    @PostMapping("/dad/agayns")
-    public void updateDadActs(@RequestBody DeleteDadListRequestDto requestDto) {
-        dadDetService.updateDadActs(requestDto);
-    }
+//    @PostMapping("/dad/aducs")
+//    public void updateDadUseConfigs(@RequestBody DadUseConfigYnListRequestDto requestDto) {
+//        dadDetService.updateDadUseConfigs(requestDto);
+//    }
+//    /**
+//     * 직접광고 활성여부 변경(체크박스) - [광고관리]
+//     */
+//    @PostMapping("/dad/agayns")
+//    public void updateDadActs(@RequestBody DeleteDadListRequestDto requestDto) {
+//        dadDetService.updateDadActs(requestDto);
+//    }
 
 }

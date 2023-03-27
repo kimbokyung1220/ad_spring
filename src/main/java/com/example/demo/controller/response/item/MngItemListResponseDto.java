@@ -1,11 +1,12 @@
 package com.example.demo.controller.response.item;
 
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -16,13 +17,14 @@ public class MngItemListResponseDto {
     private String advId; //광고주 ID
     private Integer adUseConfigYn; //광고 사용설정 여부
     private Integer adActYn; // 광고 활성 여부
-    private ZonedDateTime regTime; // 광고등록시간
+    private LocalDateTime regTime; // 광고등록시간
     private Long itemId; //상품ID
     private String itemNo; // 상품번호
     private String itemName; //상품명
     private Integer itemActYn; //상품 활성여부
     @QueryProjection
-    public MngItemListResponseDto(Long adId, Long agroupId, String advId, Integer adUseConfigYn, Integer adActYn, ZonedDateTime regTime, Long itemId, String itemNo, String itemName, Integer itemActYn) {
+
+    public MngItemListResponseDto(Long adId, Long agroupId, String advId, Integer adUseConfigYn, Integer adActYn, LocalDateTime regTime, Long itemId, String itemNo, String itemName, Integer itemActYn) {
         this.adId = adId;
         this.agroupId = agroupId;
         this.advId = advId;

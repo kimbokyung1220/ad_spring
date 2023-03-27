@@ -4,7 +4,10 @@ import com.example.demo.config.jwt.TokenProvider;
 import com.example.demo.controller.request.ad.*;
 import com.example.demo.controller.request.kwd.KwdRequestDto;
 import com.example.demo.controller.response.AdResponseDto;
+import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.entity.*;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.*;
 import com.example.demo.service.common.ValidationService;
 import lombok.RequiredArgsConstructor;
@@ -19,25 +22,43 @@ import java.util.List;
 public class AdService {
     private final ValidationService validation;
     private final AdRepository adRepository;
+    private final AgroupRepository agroupRepository;
     private final KwdRepository kwdRepository;
     private final DadDetService dadDetService;
+    private final AdvRepository advRepository;
 
-    public AdResponseDto saveAd(RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
+    /**
+     * 하나의 상품은 하나의 광고만 등록 가능
+     */
+    public ResponseDto<Long> checkResAdItem(Long itemId) {
+        Item item = validation.isPresentItem(itemId);
+        if (adRepository.existsAdByItemAndAdActYnLike(item, 1)) {
+            return ResponseDto.fail(ErrorCode.EXIST_AD_ITEM.getCode(), ErrorCode.EXIST_AD_ITEM.getMessage());
+        }
+        return ResponseDto.success(itemId);
+    }
+
+    public ResponseDto<String> saveAd(RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
+
         Member member = validation.getMember(request);
         // 광고주
         Adv adv = validation.isPresentAdv(member.getMemberId());
         // 상품
         Item item = validation.isPresentItem(adRequestDto.getItemId());
+
+        if(adRepository.existsAdByItemAndAdActYnLike(item, 1)) {
+            return ResponseDto.fail(ErrorCode.EXIST_AD.getCode(), ErrorCode.EXIST_AD.getMessage());
+        }
+
         // 광고그룹
-        Agroup agroup = validation.isPresentAgroup(adRequestDto.getAgroupId());
+        Agroup agroup = agroupRepository.findByAgroupName(adRequestDto.getAgroupName());
         // 광고 등록
         Ad ad = adRequestDto.createAd(adv, item, agroup);
         adRepository.save(ad);
-
         // 키워드 등록
         saveKwd(ad, adRequestDto);
 
-        return null;
+        return ResponseDto.success("광고 등록 완료! :-)");
 
     }
 
@@ -57,40 +78,45 @@ public class AdService {
                         .manualCnrKwdYn(0)
                         .build();
                 kwdRepository.save(kwdInfo);
-
             }
         }
         dadDetService.saveDadDet(ad, adRequestDto);
     }
-    /** 광고 사용 설정 여부 변경- [광고관리] */
+
+    /**
+     * 광고 사용 설정 여부 변경- [광고관리]
+     */
     @Transactional
     public Long updateAdUseConfig(AdUseConfigYnRequestDto adUseConfigYnRequestDto) {
         Ad ad = validation.isPresentAd(adUseConfigYnRequestDto.getAdId());
         ad.updateAdUseConfig(adUseConfigYnRequestDto);
 
         // 관련 직접광고 사용 설정 여부 변경
-        if(adUseConfigYnRequestDto.getAdUseConfigYn() == 1) {
-            dadDetService.itemDedUseConfig(ad, 0);
-        } else {
+        if (adUseConfigYnRequestDto.getAdUseConfigYn() == 1) {
             dadDetService.itemDedUseConfig(ad, 1);
+        } else {
+            dadDetService.itemDedUseConfig(ad, 0);
         }
         return ad.getAgroup().getAgroupId();
     }
-    /** 광고 사용 설정 여부 변경(체크박스) - [광고관리] */
+
+    /**
+     * 광고 사용 설정 여부 변경(체크박스) - [광고관리]
+     */
     @Transactional
     public void updateAdUseConfigs(AdUseConfigYnListRequestDto requestDtos, HttpServletRequest servletRequest) {
         List<AdUseConfigYnRequestDto> adUseConfigList = requestDtos.getAdUseConfigYnList();
-        if(requestDtos.getCode() == 1) {
+        if (requestDtos.getCode() == 1) {
             for (int i = 0; i < adUseConfigList.size(); i++) {
                 Ad ad = validation.isPresentAd(adUseConfigList.get(i).getAdId());
                 ad.updateOnAdUseConfig();
-                dadDetService.itemDedUseConfig(ad, 0);
+                dadDetService.itemDedUseConfig(ad, 1);
             }
         } else {
             for (int i = 0; i < adUseConfigList.size(); i++) {
                 Ad ad = validation.isPresentAd(adUseConfigList.get(i).getAdId());
                 ad.updateOffAdUseConfig();
-                dadDetService.itemDedUseConfig(ad, 1);
+                dadDetService.itemDedUseConfig(ad, 0);
             }
         }
     }
@@ -101,9 +127,13 @@ public class AdService {
         for (int i = 0; i < deleteAdList.size(); i++) {
             Ad ad = validation.isPresentAd(deleteAdList.get(i).getAdId());
             ad.updateOffAdActYn();
+            dadDetService.itemDedAct(ad, 0);
+            dadDetService.itemDedUseConfig(ad, 0);
         }
 
     }
+
+
 }
 
 

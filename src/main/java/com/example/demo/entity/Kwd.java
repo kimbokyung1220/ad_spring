@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.request.kwd.KwdIdRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,4 +30,16 @@ public class Kwd {
     private Integer manualCnrKwdYn; // 수동 검수 키워드 여부
     @OneToMany(mappedBy = "kwd", cascade = CascadeType.ALL)
     private List<DadDet> DadDets;
+
+    public void updateSellPossKwd(KwdIdRequestDto requestDto) {
+        this.sellPossKwdYn = requestDto.getSellPossKwdYn();
+    }
+
+    public void updateOnSellPossKwd() {
+        this.sellPossKwdYn = 1;
+    }
+
+    public void updateOffSellPossKwd() {
+        this.sellPossKwdYn = 0;
+    }
 }

@@ -3,8 +3,10 @@ package com.example.demo.service;
 import com.example.demo.controller.request.adv.AdActYnRequestDto;
 import com.example.demo.controller.request.adv.DayLimitBudgetRequestDto;
 import com.example.demo.controller.response.AdvResponseDto;
+import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.entity.Adv;
 import com.example.demo.entity.Member;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.service.common.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,7 +44,7 @@ public class AdvService {
      *  일일 허용 예산 변경 - [광고관리]
      */
     @Transactional
-    public AdvResponseDto updateLimitBudget(DayLimitBudgetRequestDto dayLimitBudgetRequestDto, HttpServletRequest request) {
+    public ResponseDto<AdvResponseDto> updateLimitBudget(DayLimitBudgetRequestDto dayLimitBudgetRequestDto, HttpServletRequest request) {
         Member member = validation.getMember(request);
         Adv adv = validation.isPresentAdv(member.getMemberId());
 
@@ -50,15 +52,15 @@ public class AdvService {
         String dayLimitBudgetStr = String.valueOf(dayLimitBudgetRequestDto.getDayLimitBudget());
 
         if(dayLimitBudgetStr.length() >= 2 && !dayLimitBudgetStr.substring(dayLimitBudgetStr.length()-2, dayLimitBudgetStr.length()).equals("00")) {
-            return AdvResponseDto.sendMsg("일일 허용 예산은 100원 단위로 변경 가능합니다.");
+            return ResponseDto.fail(ErrorCode.DAY_LIMIT_MEASURE.getCode(), ErrorCode.DAY_LIMIT_MEASURE.getMessage());
         }
 
         if(dayLimitBudget < 100 && dayLimitBudget >= 1) {
-            return AdvResponseDto.sendMsg("일일 허용 예산은 100원 단위로 변경 가능합니다.");
+            return ResponseDto.fail(ErrorCode.DAY_LIMIT_MEASURE.getCode(), ErrorCode.DAY_LIMIT_MEASURE.getMessage());
         }
 
         adv.updateLimitBudget(dayLimitBudgetRequestDto);
 
-        return AdvResponseDto.advInfo(adv);
+        return ResponseDto.success(AdvResponseDto.advInfo(adv));
     }
 }

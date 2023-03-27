@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * 광고 그룹
@@ -27,7 +27,7 @@ public class Agroup {
     @Column(name="agroup_name", nullable = false)
     private String agroupName; //광고그룹명
     @Column(name="reg_time")
-    private ZonedDateTime regTime; // 등록시간
+    private LocalDateTime regTime; // 등록시간
     @Column(name="agroup_act_yn", nullable = false)
     private Integer agroupActYn; // 광고그룹 활성 여부
     @Column(name="agroup_use_config_yn", nullable = false)

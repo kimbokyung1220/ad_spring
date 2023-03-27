@@ -61,9 +61,15 @@ public class ValidationService {
         Optional<Kwd> kwd = kwdRepository.findByKwdName(kwdName);
         return kwd.orElse(null);
     }
+
+    // 키워드
+    public Kwd isPresentKwdId(Long kwdId) {
+        Optional<Kwd> kwd = kwdRepository.findByKwdId(kwdId);
+        return kwd.orElse(null);
+    }
     //직접광고 상세
     public DadDet isPresentDadDet(Long dadDetId) {
-        Optional<DadDet> dadDet = Optional.ofNullable(dadDetRepository.findByDadDetId(dadDetId));
+        Optional<DadDet> dadDet = dadDetRepository.findByDadDetId(dadDetId);
         return dadDet.orElse(null);
     }
 }
