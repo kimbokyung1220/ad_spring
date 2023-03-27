@@ -14,4 +14,5 @@ public interface KwdRepository extends JpaRepository<Kwd, Long> {
     boolean existsByKwdName(String kwdName);
 
     Optional<Kwd> findByKwdId(Long kwdId);
+
 }

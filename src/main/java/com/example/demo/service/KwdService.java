@@ -4,6 +4,7 @@ import com.example.demo.controller.request.kwd.*;
 import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.controller.response.kwd.KwdDto;
 import com.example.demo.controller.response.kwd.KwdResponseDto;
+import com.example.demo.entity.Ad;
 import com.example.demo.entity.DadDet;
 import com.example.demo.entity.Kwd;
 import com.example.demo.exception.ErrorCode;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -44,7 +46,6 @@ public class KwdService {
     @Transactional
     public ResponseDto<String> updateKwdUseConfig(KwdIdRequestDto requestDto) {
         Kwd kwd = validation.isPresentKwdId(requestDto.getKwdId());
-//        kwd.updateSellPossKwd(requestDto);
         DadDet dadDet = dadDetRepository.findByKwd(kwd);
         dadDet.updateItemDadUseConfig(requestDto.getSellPossKwdYn());
         return ResponseDto.success("변경 되었습니다.");
@@ -54,29 +55,29 @@ public class KwdService {
      * 키워드 ON/OFF (체크박스)
      */
     @Transactional
-    public ResponseDto<String> updateKwdUseConfigs(KwdListRequestDto requestDto) {
-        List<KwdIdRequestDto> kwdConfigList = requestDto.getKwdList();
-        if (kwdConfigList.isEmpty()) {
+    public ResponseDto<List<KwdIdRequestDto>> updateKwdUseConfigs(KwdListRequestDto requestDto) {
+        List<KwdIdRequestDto> kwdList = requestDto.getKwdList();
+        if (kwdList.isEmpty()) {
             return ResponseDto.fail(ErrorCode.NOT_SELECTED_ADGROUP.getCode(), ErrorCode.NOT_SELECTED_ADGROUP.getMessage());
         }
 
         if (requestDto.getCode() == 1) {
-            for (int i = 0; i < kwdConfigList.size(); i++) {
-                Kwd kwd = validation.isPresentKwdId(kwdConfigList.get(i).getKwdId());
-//                kwd.updateOnSellPossKwd();
-                DadDet dadDet = dadDetRepository.findByKwd(kwd);
+            for (int i = 0; i < kwdList.size(); i++) {
+                Kwd kwd = validation.isPresentKwdId(kwdList.get(i).getKwdId());
+                Ad ad = validation.isPresentAd(kwdList.get(i).getAdId());
+                DadDet dadDet = dadDetRepository.findByKwdAndAd(kwd, ad);
                 dadDet.updateOnDadUseConfig();
             }
         } else {
-            for (int i = 0; i < kwdConfigList.size(); i++) {
-                Kwd kwd = validation.isPresentKwdId(kwdConfigList.get(i).getKwdId());
-//                kwd.updateOffSellPossKwd();
-                DadDet dadDet = dadDetRepository.findByKwd(kwd);
+            for (int i = 0; i < kwdList.size(); i++) {
+                Kwd kwd = validation.isPresentKwdId(kwdList.get(i).getKwdId());
+                Ad ad = validation.isPresentAd(kwdList.get(i).getAdId());
+                DadDet dadDet = dadDetRepository.findByKwdAndAd(kwd, ad);
                 dadDet.updateOffDadUseConfig();
             }
         }
 
-        return ResponseDto.success("변경 되었습니다.");
+        return ResponseDto.success(kwdList);
     }
     @Transactional
     public ResponseDto<String> updateActYn(DeleteKwdListRequestDto requestDto, HttpServletRequest servletRequest) {

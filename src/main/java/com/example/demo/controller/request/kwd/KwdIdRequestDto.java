@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class KwdIdRequestDto {
     private Long kwdId;
+    private Long adId;
     private Integer sellPossKwdYn;
 }

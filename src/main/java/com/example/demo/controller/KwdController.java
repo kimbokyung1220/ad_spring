@@ -17,7 +17,9 @@ import java.util.List;
 public class KwdController {
     private final KwdService kwdService;
 
-    /** 키워드 조건조회 - [광고관리] */
+    /**
+     * 키워드 조건조회 - [광고관리]
+     */
     @PostMapping("/kwd/list/{adId}")
     public ResponseEntity<List<KwdResponseDto>> searchKwdList(@PathVariable Long adId, @RequestBody KwdNameRequestDto requestDto, HttpServletRequest servletRequest) {
 
@@ -31,12 +33,13 @@ public class KwdController {
     public ResponseDto<String> updateKwdUseConfig(@RequestBody KwdIdRequestDto requestDto, HttpServletRequest servletRequest) {
         return kwdService.updateKwdUseConfig(requestDto);
     }
+
     /**
      * 키워드 사용 설정 여부 변경(체크박스) - [광고관리]
      */
     @PostMapping("/kwd/kucs")
-    public ResponseDto<String> updateKwdUseConfigs(@RequestBody KwdListRequestDto requestDto, HttpServletRequest servletRequest) {
-        return kwdService.updateKwdUseConfigs(requestDto);
+    public void updateKwdUseConfigs(@RequestBody KwdListRequestDto requestDto, HttpServletRequest servletRequest) {
+        kwdService.updateKwdUseConfigs(requestDto);
     }
 
     /**
