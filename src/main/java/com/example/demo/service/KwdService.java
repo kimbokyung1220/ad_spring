@@ -88,9 +88,9 @@ public class KwdService {
         }
         for (int i = 0; i < deleteKwdList.size(); i++) {
             Kwd kwd = validation.isPresentKwdId(deleteKwdList.get(i).getKwdId());
-            kwd.updateOffSellPossKwd();
             DadDet dadDet = dadDetRepository.findByKwd(kwd);
             dadDet.updateOffDadUseConfig();
+            dadDet.updateOffDadActYn();
         }
         return ResponseDto.success("변경 완료되었습니다.");
     }
