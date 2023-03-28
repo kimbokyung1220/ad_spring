@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.controller.request.kwd.*;
 import com.example.demo.controller.response.ResponseDto;
+import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.controller.response.kwd.KwdDto;
 import com.example.demo.controller.response.kwd.KwdResponseDto;
 import com.example.demo.entity.Ad;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class KwdService {
         List<KwdResponseDto> result = new ArrayList<>();
         for (KwdDto dto : dtoList) {
             result.add(
-                    KwdResponseDto.KwdList(dto)
+                    KwdResponseDto.kwdList(dto)
             );
         }
         return result;
@@ -79,11 +81,18 @@ public class KwdService {
 
         return ResponseDto.success(kwdList);
     }
+
+    /**
+     * 키워드 삭제 - 직접광고 사용여부 off
+     * @param requestDto
+     * @param servletRequest
+     * @return
+     */
     @Transactional
     public ResponseDto<String> updateActYn(DeleteKwdListRequestDto requestDto, HttpServletRequest servletRequest) {
         List<DeleteKwdRequestDto> deleteKwdList = requestDto.getDeleteKwdList();
 
-        if(deleteKwdList.isEmpty()) {
+        if (deleteKwdList.isEmpty()) {
             return ResponseDto.fail(ErrorCode.NOT_SELECTED_ADGROUP.getCode(), ErrorCode.NOT_SELECTED_ADGROUP.getMessage());
         }
         for (int i = 0; i < deleteKwdList.size(); i++) {
@@ -94,4 +103,17 @@ public class KwdService {
         }
         return ResponseDto.success("변경 완료되었습니다.");
     }
+
+    /**
+     * 검수 대상 키워드 조회- [키워드 검수]
+     */
+    public ResponseDto<List<KwdDto>> searchIspKwdList(KwdNameRequestDto kwdNameRequestDto) {
+
+        List<KwdDto> ispKwdList = kwdDslRepository.searchIspKwdList(kwdNameRequestDto);
+        ispKwdList.stream().map(kwdDto -> KwdResponseDto.kwdIspList(kwdDto))
+                .collect(Collectors.toList());
+
+        return ResponseDto.success(ispKwdList);
+    }
+
 }

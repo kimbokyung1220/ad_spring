@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.request.kwd.*;
 import com.example.demo.controller.response.ResponseDto;
+import com.example.demo.controller.response.kwd.KwdDto;
 import com.example.demo.controller.response.kwd.KwdResponseDto;
 import com.example.demo.service.KwdService;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,12 @@ public class KwdController {
     @PostMapping("/kwd/kacts")
     public ResponseDto<String> updateActYn(@RequestBody DeleteKwdListRequestDto requestDto, HttpServletRequest servletRequest) {
         return kwdService.updateActYn(requestDto, servletRequest);
+    }
+    /**
+     * 검수 대상 키워드 조회 - [키워드 검수]
+     */
+    @PostMapping("/kwd/isp/list")
+    public ResponseDto<List<KwdDto>> searchIspKwdList(@RequestBody KwdNameRequestDto kwdNameRequestDto) {
+        return kwdService.searchIspKwdList(kwdNameRequestDto);
     }
 }

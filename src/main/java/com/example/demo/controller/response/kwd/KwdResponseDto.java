@@ -22,8 +22,10 @@ public class KwdResponseDto {
     private Integer dadUseConfigYn; // 직접광고 사용 설정 여부
     private Long kwdId; //키워드 ID
     private String kwdName; // 키워드명
+    private Integer sellPossKwdYn; // 판매 가능 키워드 여부
+    private Integer manualCnrKwdYn; // 수동 검수 키워드 여부
 
-    public static KwdResponseDto KwdList(KwdDto kwdDto) {
+    public static KwdResponseDto kwdList(KwdDto kwdDto) {
         return KwdResponseDto.builder()
                 .adId(kwdDto.getAdId())
                 .agroupId(kwdDto.getAgroupId())
@@ -35,6 +37,14 @@ public class KwdResponseDto {
                 .dadUseConfigYn(kwdDto.getDadUseConfigYn())
                 .kwdId(kwdDto.getKwdId())
                 .kwdName(kwdDto.getKwdName())
+                .build();
+    }
+    public static KwdResponseDto kwdIspList(KwdDto kwdDto) {
+        return KwdResponseDto.builder()
+                .kwdId(kwdDto.getKwdId())
+                .kwdName(kwdDto.getKwdName())
+                .sellPossKwdYn(kwdDto.getSellPossKwdYn())
+                .manualCnrKwdYn(kwdDto.getManualCnrKwdYn())
                 .build();
     }
 

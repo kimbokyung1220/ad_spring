@@ -39,15 +39,27 @@ public class CnrReq {
     @Column(name = "cnr_fail_comt")
     private String cnrFailComt; // 검수 실패 코멘트
 
-//
+    // 검수요청 일반등록
     public CnrReq saveCnrReq(DadDet dadDet) {
         return CnrReq.builder()
                 .dadDet(dadDet)
-                .cnrCompleteYn(0)
-                .cnrIngStatus("status")
+                .cnrIngStatus("APPROVAL")
                 .cnrInputDiv("INPUT_CNR")
                 .cnrReqTime(LocalDateTime.now())
+                .cnrProcTime(LocalDateTime.now())
                 .cnrCompleteYn(1)
+                .build();
+    }
+
+    // 검수요청 수동등록
+    public CnrReq saveManualCnrReq(DadDet dadDet) {
+        return CnrReq.builder()
+                .dadDet(dadDet)
+                .cnrIngStatus("REQ")
+                .cnrInputDiv("INPUT_CNR")
+                .cnrReqTime(LocalDateTime.now())
+                .cnrProcTime(null)
+                .cnrCompleteYn(0)
                 .build();
     }
 }

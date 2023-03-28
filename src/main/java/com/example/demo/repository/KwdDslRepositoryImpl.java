@@ -24,6 +24,7 @@ public class KwdDslRepositoryImpl implements KwdDslRepository {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+    // 키워드 조회
     @Override
     public List<KwdDto> searchKwdList(Long adId, KwdNameRequestDto requestDto) {
         return queryFactory.select(new QKwdDto(
@@ -46,5 +47,19 @@ public class KwdDslRepositoryImpl implements KwdDslRepository {
                         .and(kwd.kwdName.contains(requestDto.getKwdName())))
                 .fetch();
 
+    }
+    
+    // 검수 키워드 조회
+    @Override
+    public List<KwdDto> searchIspKwdList(KwdNameRequestDto requestDto) {
+        return queryFactory.select(new QKwdDto(
+                        kwd.kwdId,
+                        kwd.kwdName,
+                        kwd.sellPossKwdYn,
+                        kwd.manualCnrKwdYn))
+                .from(kwd)
+                .where(kwd.manualCnrKwdYn.eq(1)
+                        .and(kwd.kwdName.contains(requestDto.getKwdName())))
+                .fetch();
     }
 }

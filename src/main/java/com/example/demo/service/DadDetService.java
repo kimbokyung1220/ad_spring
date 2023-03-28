@@ -35,13 +35,25 @@ public class DadDetService {
             Integer bidCost = kwdList.get(i).getBidCost();
             Kwd kwd = validation.isPresentKwd(kwdName);
 
-            // 직접광고 상세 등록
-            DadDet dadDetInfo = adRequestDto.createDadDet(ad, kwd);
-            DadDet dadDet = dadDetRepository.save(dadDetInfo);
-            dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), bidCost));
-            CnrReq cnrReq = cnrReqRepository.save(new CnrReq().saveCnrReq(dadDet));
-            cnrReqRepository.save(cnrReq);
-            dadDet.update(cnrReq);
+            if (adRequestDto.getCode() == 1) {
+                // 직접광고 상세 등록 - 수동 등록
+                DadDet dadDetInfo = adRequestDto.createManualDadDet(ad, kwd);
+                DadDet dadDet = dadDetRepository.save(dadDetInfo);
+                dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), bidCost));
+                // 검수 요청 등록 - 수동 등록
+                CnrReq cnrReq = cnrReqRepository.save(new CnrReq().saveManualCnrReq(dadDet));
+                cnrReqRepository.save(cnrReq);
+                dadDet.update(cnrReq);
+            } else {
+                // 직접광고 상세 등록 - 일반 등록
+                DadDet dadDetInfo = adRequestDto.createDadDet(ad, kwd);
+                DadDet dadDet = dadDetRepository.save(dadDetInfo);
+                dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), bidCost));
+                // 검수 요청 등록 - 일반 등록
+                CnrReq cnrReq = cnrReqRepository.save(new CnrReq().saveCnrReq(dadDet));
+                cnrReqRepository.save(cnrReq);
+                dadDet.update(cnrReq);
+            }
         }
     }
 
@@ -53,6 +65,7 @@ public class DadDetService {
             dadDet.updateItemDadUseConfig(useConfigValue);
         }
     }
+
     @Transactional
     public void itemDedAct(Ad ad) {
         List<DadDet> dadDets = dadDetRepository.findByAd(ad);

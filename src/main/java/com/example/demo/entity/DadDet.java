@@ -45,9 +45,7 @@ public class DadDet {
     private DadDetBid dadDetBid;
 
     public void update(CnrReq cnrReq) {
-        DadDet.builder()
-                .cnrReq(cnrReq)
-                .build();
+        this.cnrReq = cnrReq;
     }
 
     public void updateItemDadUseConfig(Integer param) {

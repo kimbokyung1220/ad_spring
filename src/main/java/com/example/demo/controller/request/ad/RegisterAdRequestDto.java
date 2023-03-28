@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterAdRequestDto {
+    private Long code;
     private Long agroupId; // 광고그룹 ID(FK)
     private Long cnrId; // 검수요청 ID
     private Long itemId; // 상품ID(FK)
@@ -36,16 +37,48 @@ public class RegisterAdRequestDto {
                 .adv(adv)
                 .build();
     }
-
     /**
-     * 광고 직접등록 상세
+     * 키워드 등록 - 일반등록
+     */
+    public Kwd createKwd(String kwdName) {
+        return Kwd.builder()
+                .kwdName(kwdName)
+                .sellPossKwdYn(1)
+                .manualCnrKwdYn(0)
+                .build();
+    }
+    /**
+     * 키워드 등록 - 수동등록
+     */
+    public Kwd createManualKwd(String kwdName) {
+        return Kwd.builder()
+                .kwdName(kwdName)
+                .sellPossKwdYn(1)
+                .manualCnrKwdYn(1)
+                .build();
+    }
+    /**
+     * 광고 직접등록 상세 - 일반
      */
     public DadDet createDadDet(Ad ad, Kwd kwd) {
         return DadDet.builder()
                 .ad(ad)
                 .kwd(kwd)
-//                .cnrReq()
                 .dadCnrStatus("APPROVAL")
+                .dadUseConfigYn(1)
+                .dadActYn(1)
+                .regTime(LocalDateTime.now())
+                .build();
+    }
+
+    /**
+     * 광고 직접등록 상세 - 수동
+     */
+    public DadDet createManualDadDet(Ad ad, Kwd kwd) {
+        return DadDet.builder()
+                .ad(ad)
+                .kwd(kwd)
+                .dadCnrStatus("REQ")
                 .dadUseConfigYn(1)
                 .dadActYn(1)
                 .regTime(LocalDateTime.now())

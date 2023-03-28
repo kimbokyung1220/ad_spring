@@ -46,7 +46,7 @@ public class AdService {
         // 상품
         Item item = validation.isPresentItem(adRequestDto.getItemId());
 
-        if(adRepository.existsAdByItemAndAdActYnLike(item, 1)) {
+        if (adRepository.existsAdByItemAndAdActYnLike(item, 1)) {
             return ResponseDto.fail(ErrorCode.EXIST_AD.getCode(), ErrorCode.EXIST_AD.getMessage());
         }
 
@@ -68,16 +68,19 @@ public class AdService {
             dadDetService.saveDadDet(ad, adRequestDto);
             return;
         }
+
         for (int i = 0; i < kwdList.size(); i++) {
             String kwdName = kwdList.get(i).getKwdName();
             if (!kwdRepository.existsByKwdName(kwdName)) {
-                // 키워드 저장
-                Kwd kwdInfo = Kwd.builder()
-                        .kwdName(kwdList.get(i).getKwdName())
-                        .sellPossKwdYn(1)
-                        .manualCnrKwdYn(0)
-                        .build();
-                kwdRepository.save(kwdInfo);
+                if (adRequestDto.getCode() == 1) { // 수동 키워드 저장
+                    Kwd kwdInfo = adRequestDto.createManualKwd(kwdList.get(i).getKwdName());
+                    kwdRepository.save(kwdInfo);
+                } else {
+
+                    // 일반 키워드 저장
+                    Kwd kwdInfo = adRequestDto.createKwd(kwdList.get(i).getKwdName());
+                    kwdRepository.save(kwdInfo);
+                }
             }
         }
         dadDetService.saveDadDet(ad, adRequestDto);

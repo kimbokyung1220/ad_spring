@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 @NoArgsConstructor
 public class KwdDto {
     private Long adId; // 광고ID
@@ -22,9 +21,11 @@ public class KwdDto {
     private Integer dadUseConfigYn; // 직접광고 사용 설정 여부
     private Long kwdId; //키워드 ID
     private String kwdName; // 키워드명
+    private Integer sellPossKwdYn; // 판매 가능 키워드 여부
+    private Integer manualCnrKwdYn; // 수동 검수 키워드 여부
 
+    // 키워드 검색
     @QueryProjection
-
     public KwdDto(Long adId, Long agroupId, Integer adUseConfigYn, Integer adActYn, LocalDateTime regTime, Long dadDetId, Integer dadActYn, Integer dadUseConfigYn, Long kwdId, String kwdName) {
         this.adId = adId;
         this.agroupId = agroupId;
@@ -36,5 +37,15 @@ public class KwdDto {
         this.dadUseConfigYn = dadUseConfigYn;
         this.kwdId = kwdId;
         this.kwdName = kwdName;
+    }
+
+    // 검수 키워드 검색
+    @QueryProjection
+
+    public KwdDto(Long kwdId, String kwdName, Integer sellPossKwdYn, Integer manualCnrKwdYn) {
+        this.kwdId = kwdId;
+        this.kwdName = kwdName;
+        this.sellPossKwdYn = sellPossKwdYn;
+        this.manualCnrKwdYn = manualCnrKwdYn;
     }
 }
