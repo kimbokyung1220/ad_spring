@@ -54,11 +54,11 @@ public class DadDetService {
         }
     }
     @Transactional
-    public void itemDedAct(Ad ad, int useConfigValue) {
+    public void itemDedAct(Ad ad) {
         List<DadDet> dadDets = dadDetRepository.findByAd(ad);
         for (int i = 0; i < dadDets.size(); i++) {
             DadDet dadDet = validation.isPresentDadDet(dadDets.get(i).getDadDetId());
-            dadDet.updateItemDadUseConfig(useConfigValue);
+            dadDet.updateOffDadActYn();
         }
     }
 }
