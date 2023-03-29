@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterAdRequestDto {
-    private Long code;
     private Long agroupId; // 광고그룹 ID(FK)
     private Long cnrId; // 검수요청 ID
     private Long itemId; // 상품ID(FK)

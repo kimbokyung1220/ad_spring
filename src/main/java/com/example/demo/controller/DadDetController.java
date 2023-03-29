@@ -1,18 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.request.daddet.DadUseConfigYnListRequestDto;
-import com.example.demo.controller.request.daddet.DadUseConfigYnRequestDto;
-import com.example.demo.controller.request.daddet.DeleteDadListRequestDto;
+import com.example.demo.controller.request.daddet.updateIspAdDadCrnRequestDto;
 import com.example.demo.controller.request.kwd.KwdNameRequestDto;
 import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.controller.response.dadDet.DadDetDto;
 import com.example.demo.controller.response.dadDet.IspAdListResponseDto;
 import com.example.demo.service.DadDetService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,4 +25,18 @@ public class DadDetController {
         return dadDetService.searchIspAdList(kwdNameRequestDto);
     }
 
+    /**
+     * 광고 검수 대상 상세조회 (검수처리)
+     */
+    @PostMapping("/dad/list/{dadDetId}")
+    public ResponseDto<IspAdListResponseDto> IspAdDetail(@PathVariable Long dadDetId) {
+        return dadDetService.IspAdDetail(dadDetId);
+    }
+    /**
+     * 광고 검수 대상 검수처리 (반려 / 승인)
+     */
+    @PostMapping("/dad/status")
+    public ResponseDto<List<DadDetDto>> updateIspAdDadCrn(@RequestBody updateIspAdDadCrnRequestDto requestDto) {
+        return dadDetService.updateIspAdDadCrn(requestDto);
+    }
 }

@@ -31,6 +31,7 @@ public enum ErrorCode {
     NOT_SELECTED_ADGROUP("NOT_SELECTED_ADGROUP", HttpStatus.BAD_REQUEST, "선택한 그룹이 없습니다."),
     DELETE_ADGROUP("DELETE_ADGROUP", HttpStatus.BAD_REQUEST, "광고그룹을 삭제했습니다."),
     EXIST_ISP_KWD("EXIST_ISP_KWD", HttpStatus.BAD_REQUEST, "이미 존재하는 키워드 입니다."),
+    KWD_UNABLE_SELL("KWD_UNABLE_SELL", HttpStatus.BAD_REQUEST, "판매가능한 키워드가 아닙니다."),
 
 
     // JWT

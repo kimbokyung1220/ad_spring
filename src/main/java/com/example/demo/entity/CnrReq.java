@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.request.daddet.updateIspAdDadCrnRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,5 +62,18 @@ public class CnrReq {
                 .cnrProcTime(null)
                 .cnrCompleteYn(0)
                 .build();
+    }
+
+    public void updateToReject(updateIspAdDadCrnRequestDto requestDto) {
+        this.cnrIngStatus = requestDto.getCnrIngStatus();
+        this.cnrProcTime = LocalDateTime.now();
+        this.cnrCompleteYn = 1;
+        this.cnrFailCause = requestDto.getCnrFailCause();
+        this.cnrFailComt = requestDto.getCnrFailComt();
+    }
+    public void updateToApproval(updateIspAdDadCrnRequestDto requestDto) {
+        this.cnrIngStatus = requestDto.getCnrIngStatus();
+        this.cnrProcTime = LocalDateTime.now();
+        this.cnrCompleteYn = 1;
     }
 }

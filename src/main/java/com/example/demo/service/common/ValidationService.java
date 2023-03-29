@@ -22,7 +22,7 @@ public class ValidationService {
     private final AgroupRepository agroupRepository;
     private final KwdRepository kwdRepository;
     private final DadDetRepository dadDetRepository;
-
+    private final CnrReqRepository cnrReqRepository;
 
     @Transactional(readOnly = true)
     public Member getMember(HttpServletRequest request) {
@@ -71,5 +71,9 @@ public class ValidationService {
     public DadDet isPresentDadDet(Long dadDetId) {
         Optional<DadDet> dadDet = dadDetRepository.findByDadDetId(dadDetId);
         return dadDet.orElse(null);
+    }
+    public CnrReq isPresentCnrReq(Long cnrReqId) {
+        Optional<CnrReq> CnrReq = cnrReqRepository.findByCnrReqId(cnrReqId);
+        return CnrReq.orElse(null);
     }
 }

@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface CnrReqRepository extends JpaRepository<CnrReq, Long> {
     Optional<CnrReq> findByDadDet(DadDet dadDet);
+
+    Optional<CnrReq> findByCnrReqId(Long cnrReqId);
 }

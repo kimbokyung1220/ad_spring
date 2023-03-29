@@ -10,4 +10,6 @@ import java.util.List;
 public interface DadDetDslRepository {
     List<DadDetDto> searchIspAdList(String kwdNameDto);
 
+    DadDetDto ispAdListDetail (Long dadDetId);
+
 }

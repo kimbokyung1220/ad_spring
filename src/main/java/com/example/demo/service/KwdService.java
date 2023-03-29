@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.controller.request.kwd.*;
 import com.example.demo.controller.response.ResponseDto;
-import com.example.demo.controller.response.agroup.AgroupResponseDto;
 import com.example.demo.controller.response.kwd.KwdDto;
 import com.example.demo.controller.response.kwd.KwdResponseDto;
 import com.example.demo.entity.Ad;
@@ -19,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

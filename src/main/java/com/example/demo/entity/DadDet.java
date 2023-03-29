@@ -70,4 +70,8 @@ public class DadDet {
     public void updateOffDadActYn() {
         this.dadActYn = 0;
     }
+
+    public void updateDadCnrStatus() {
+        this.dadCnrStatus = "APPROVAL";
+    }
 }

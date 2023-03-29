@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
+import com.example.demo.controller.request.daddet.updateIspAdDadCrnRequestDto;
 import com.example.demo.controller.request.kwd.KwdNameRequestDto;
 import com.example.demo.controller.request.kwd.KwdRequestDto;
 import com.example.demo.controller.response.ResponseDto;
@@ -38,11 +39,12 @@ public class DadDetService {
             Integer bidCost = kwdList.get(i).getBidCost();
             Kwd kwd = validation.isPresentKwd(kwdName);
 
-            if (adRequestDto.getCode() == 1) {
+            if (kwd.getManualCnrKwdYn() == 1) {
                 // 직접광고 상세 등록 - 수동 등록
-                DadDet dadDetInfo = adRequestDto.createDadDet(ad, kwd);
+                DadDet dadDetInfo = adRequestDto.createManualDadDet(ad, kwd);
                 DadDet dadDet = dadDetRepository.save(dadDetInfo);
                 dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), bidCost));
+
                 // 검수 요청 등록 - 수동 등록
                 CnrReq cnrReq = cnrReqRepository.save(new CnrReq().saveManualCnrReq(dadDet));
                 cnrReqRepository.save(cnrReq);
@@ -52,6 +54,7 @@ public class DadDetService {
                 DadDet dadDetInfo = adRequestDto.createDadDet(ad, kwd);
                 DadDet dadDet = dadDetRepository.save(dadDetInfo);
                 dadDetBidRepository.save(new DadDetBid(dadDet).addCost(dadDet.getDadDetId(), bidCost));
+
                 // 검수 요청 등록 - 일반 등록
                 CnrReq cnrReq = cnrReqRepository.save(new CnrReq().saveCnrReq(dadDet));
                 cnrReqRepository.save(cnrReq);
@@ -90,5 +93,32 @@ public class DadDetService {
 
         return ResponseDto.success(IspAdList);
 
+    }
+    /**
+     * 광고 검수 대상 상세조회 (검수처리)
+     */
+    public ResponseDto<IspAdListResponseDto> IspAdDetail(Long dadDetId) {
+        DadDetDto dadDetDto = dadDetDslRepository.ispAdListDetail(dadDetId);
+        return ResponseDto.success(IspAdListResponseDto.IspAdList(dadDetDto));
+    }
+
+    /**
+     * 광고 검수 대상 검수처리 (반려 / 승인)
+     */
+    @Transactional
+    public ResponseDto<List<DadDetDto>> updateIspAdDadCrn(updateIspAdDadCrnRequestDto requestDto) {
+        DadDet dadDet = validation.isPresentDadDet(requestDto.getDadDetId());
+        CnrReq cnrReq = validation.isPresentCnrReq(requestDto.getCnrReqId());
+
+        // 반려 처리
+        if(requestDto.getCnrIngStatus().equals("REJECT")) {
+            cnrReq.updateToReject(requestDto);
+        // 승인처리
+        } else {
+            cnrReq.updateToApproval(requestDto);
+        }
+        dadDet.updateDadCnrStatus();
+        KwdNameRequestDto reload = new KwdNameRequestDto("");
+        return searchIspAdList(reload);
     }
 }

@@ -71,16 +71,16 @@ public class AdService {
 
         for (int i = 0; i < kwdList.size(); i++) {
             String kwdName = kwdList.get(i).getKwdName();
+            // 키워드 신규등록 (일반등록)
             if (!kwdRepository.existsByKwdName(kwdName)) {
-                if (adRequestDto.getCode() == 1) { // 수동 키워드 저장
+                Kwd kwdInfo = adRequestDto.createKwd(kwdList.get(i).getKwdName());
+                kwdRepository.save(kwdInfo);
 
-                    Kwd kwdInfo = adRequestDto.createManualKwd(kwdList.get(i).getKwdName());
-                    kwdRepository.save(kwdInfo);
-                } else {
-
-                    // 일반 키워드 저장
-                    Kwd kwdInfo = adRequestDto.createKwd(kwdList.get(i).getKwdName());
-                    kwdRepository.save(kwdInfo);
+            } else {
+                Kwd kwd = validation.isPresentKwd(kwdName);
+                // 판매가능여부가 false인 키워드
+                if (kwd.getSellPossKwdYn() == 0) {
+                    throw new CustomException(ErrorCode.KWD_UNABLE_SELL);
                 }
             }
         }
