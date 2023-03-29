@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +37,7 @@ public class KwdService {
         List<KwdResponseDto> result = new ArrayList<>();
         for (KwdDto dto : dtoList) {
             result.add(
-                    KwdResponseDto.kwdList(dto)
+                    KwdResponseDto.kwdListDto.kwdList(dto)
             );
         }
         return result;
@@ -109,11 +110,47 @@ public class KwdService {
      */
     public ResponseDto<List<KwdDto>> searchIspKwdList(KwdNameRequestDto kwdNameRequestDto) {
 
-        List<KwdDto> ispKwdList = kwdDslRepository.searchIspKwdList(kwdNameRequestDto);
-        ispKwdList.stream().map(kwdDto -> KwdResponseDto.kwdIspList(kwdDto))
+        List<KwdDto> ispKwdList = kwdDslRepository.searchIspKwdList(kwdNameRequestDto.getKwdName());
+        ispKwdList.stream().map(kwdDto -> KwdResponseDto.ispKwdListDto.ispKwdList(kwdDto))
                 .collect(Collectors.toList());
 
         return ResponseDto.success(ispKwdList);
     }
 
+    /**
+     * 검수 대상 키워드 등록
+     */
+    @Transactional
+    public ResponseDto<List<KwdDto>> saveIspKwd(KwdNameRequestDto kwdNameRequestDto) {
+        String kwdNameDto = kwdNameRequestDto.getKwdName();
+        Kwd kwd = validation.isPresentKwd(kwdNameDto);
+
+        // 1. DB에 존재 O, 수동여부 1
+        if(kwdRepository.existsByKwdName(kwdNameDto) && kwd.getManualCnrKwdYn() == 1) {
+            return ResponseDto.fail(ErrorCode.EXIST_ISP_KWD.getCode(), ErrorCode.EXIST_ISP_KWD.getMessage());
+        }
+
+        // 2. DB에 존재 O, 수동여부 0
+        if(kwdRepository.existsByKwdName(kwdNameDto) && kwd.getManualCnrKwdYn() == 0) {
+            kwd.updateOnManualYn(); // manualCnrKwdYn = 1
+            KwdNameRequestDto reload = new KwdNameRequestDto("");
+            return searchIspKwdList(reload);
+        }
+
+        // 3. DB에 존재 X
+        Kwd kwdInfo = kwdNameRequestDto.saveKwd();
+        kwdRepository.save(kwdInfo);
+        KwdNameRequestDto reload = new KwdNameRequestDto("");
+        return searchIspKwdList(reload);
+    }
+    /**
+     * 검수 대상 키워드 삭제
+     */
+    @Transactional
+    public ResponseDto<List<KwdDto>> updateOffIspKwdManualYn(Long kwdIds) {
+        Kwd kwd = validation.isPresentKwdId(kwdIds);
+        kwd.updateOffManualYn();
+        KwdNameRequestDto reload = new KwdNameRequestDto("");
+        return searchIspKwdList(reload);
+    }
 }

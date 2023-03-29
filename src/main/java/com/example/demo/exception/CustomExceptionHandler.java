@@ -56,9 +56,9 @@ public class CustomExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public Object processValidationError(NoSuchElementException e) {
         return ResponseEntity
-                .status(ErrorCode.NOT_FOUND_ID.getStatus())
+                .status(ErrorCode.NO_SEARCH_ELEMENT.getStatus())
                 .body(ErrorResponse.builder()
-                        .code(ErrorCode.NOT_FOUND_ID.getCode())
+                        .code(ErrorCode.NO_SEARCH_ELEMENT.getCode())
                         .desc(e.getMessage() + "ddd")
                         .build());
     }
@@ -103,11 +103,11 @@ public class CustomExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     public Object processValidationError(UsernameNotFoundException e) {
         return ResponseEntity
-                .status(ErrorCode.NOT_FOUND_USERID.getStatus())
+                .status(ErrorCode.USER_NAME_NOT_FOUND.getStatus())
                 .body(ErrorResponse.builder()
-                        .code(ErrorCode.NOT_FOUND_USERID.getCode())
-                        .desc(ErrorCode.NOT_FOUND_USERID.getMessage())
-                        .status(ErrorCode.NOT_FOUND_USERID.getStatus())
+                        .code(ErrorCode.USER_NAME_NOT_FOUND.getCode())
+                        .desc(ErrorCode.USER_NAME_NOT_FOUND.getMessage())
+                        .status(ErrorCode.USER_NAME_NOT_FOUND.getStatus())
                         .build());
     }
 

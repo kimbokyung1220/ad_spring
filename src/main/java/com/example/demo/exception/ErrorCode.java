@@ -9,13 +9,15 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     // Common Error
-    INVALID_PARAMETER("CER-01", HttpStatus.BAD_REQUEST, "잘못된 값입니다."),
-    RESOURCE_NOT_FOUND("CER-02", HttpStatus.NOT_FOUND, "존재하지 않는 Resource입니다."),
-    INTERNAL_SERVER_ERROR("CER-03", HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error 입니다."),
-    METHOD_ERROR("CER-04", HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 메서드 요청입니다."),
-    TYPE_NULL_ERROR("CER-05", HttpStatus.BAD_REQUEST,"모든 값을 입력해 주세요."),
-    HTTP_CT_ERROR("CER-06", HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 서버 요청입니다."),
-    SQL_ERROR("CER-06", HttpStatus.INTERNAL_SERVER_ERROR, "SQL을 확인하세요"),
+    INVALID_PARAMETER("INVALID_PARAMETER", HttpStatus.BAD_REQUEST, "잘못된 값입니다."),
+    RESOURCE_NOT_FOUND("RESOURCE_NOT_FOUND", HttpStatus.NOT_FOUND, "존재하지 않는 Resource입니다."),
+    INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error 입니다."),
+    METHOD_ERROR("METHOD_ERROR", HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 메서드 요청입니다."),
+    TYPE_NULL_ERROR("TYPE_NULL_ERROR", HttpStatus.BAD_REQUEST,"모든 값을 입력해 주세요."),
+    HTTP_CT_ERROR("HTTP_CT_ERROR", HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 서버 요청입니다."),
+    SQL_ERROR("SQL_ERROR", HttpStatus.INTERNAL_SERVER_ERROR, "SQL을 확인하세요"),
+    NO_SEARCH_ELEMENT("NO_SEARCH_ELEMENT", HttpStatus.INTERNAL_SERVER_ERROR, "해당 데이터를 찾지 못했습니다."),
+    USER_NAME_NOT_FOUND("USER_NAME_NOT_FOUND", HttpStatus.INTERNAL_SERVER_ERROR, "유저를 찾지 못했습니다."),
 
     //사용자 Error
     EXIST_AD_ITEM("EXIST_AD_ITEM", HttpStatus.BAD_REQUEST, "해당 상품은 이미 광고로 등록되어 있습니다."),
@@ -28,12 +30,11 @@ public enum ErrorCode {
     ADGROUP_ACT_OFF("ADGROUP_ACT_OFF", HttpStatus.BAD_REQUEST, "광고그룹 사용여부가 OFF로 변경되었습니다."),
     NOT_SELECTED_ADGROUP("NOT_SELECTED_ADGROUP", HttpStatus.BAD_REQUEST, "선택한 그룹이 없습니다."),
     DELETE_ADGROUP("DELETE_ADGROUP", HttpStatus.BAD_REQUEST, "광고그룹을 삭제했습니다."),
-    NOT_FOUND_ID("UER-01", HttpStatus.BAD_REQUEST, "해당 게시글을 찾지 못했습니다."),
-    NOT_FOUND_USERID("UER-02", HttpStatus.BAD_REQUEST, "존재하지 않는 아이디입니다."),
+    EXIST_ISP_KWD("EXIST_ISP_KWD", HttpStatus.BAD_REQUEST, "이미 존재하는 키워드 입니다."),
 
 
     // JWT
-    UNAUTHORIZED("JWT-01",HttpStatus.BAD_REQUEST,  "로그인이 필요합니다.")
+    UNAUTHORIZED("UNAUTHORIZED",HttpStatus.BAD_REQUEST,  "로그인이 필요합니다.")
 
     ;
 

@@ -73,6 +73,7 @@ public class AdService {
             String kwdName = kwdList.get(i).getKwdName();
             if (!kwdRepository.existsByKwdName(kwdName)) {
                 if (adRequestDto.getCode() == 1) { // 수동 키워드 저장
+
                     Kwd kwdInfo = adRequestDto.createManualKwd(kwdList.get(i).getKwdName());
                     kwdRepository.save(kwdInfo);
                 } else {

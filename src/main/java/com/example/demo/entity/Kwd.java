@@ -32,15 +32,11 @@ public class Kwd {
     @OneToMany(mappedBy = "kwd", cascade = CascadeType.ALL)
     private List<DadDet> DadDets;
 
-    public void updateSellPossKwd(KwdIdRequestDto requestDto) {
-        this.sellPossKwdYn = requestDto.getSellPossKwdYn();
+    public void updateOnManualYn() {
+        this.manualCnrKwdYn = 1;
     }
 
-    public void updateOnSellPossKwd() {
-        this.sellPossKwdYn = 1;
-    }
-
-    public void updateOffSellPossKwd() {
-        this.sellPossKwdYn = 0;
+    public void updateOffManualYn() {
+        this.manualCnrKwdYn = 0;
     }
 }

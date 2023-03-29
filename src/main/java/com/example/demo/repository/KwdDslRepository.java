@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface KwdDslRepository {
     List<KwdDto> searchKwdList(Long adId, KwdNameRequestDto requestDto);
-    List<KwdDto> searchIspKwdList(KwdNameRequestDto requestDto);
+    List<KwdDto> searchIspKwdList(String kwdNameDto);
 }

@@ -57,4 +57,22 @@ public class KwdController {
     public ResponseDto<List<KwdDto>> searchIspKwdList(@RequestBody KwdNameRequestDto kwdNameRequestDto) {
         return kwdService.searchIspKwdList(kwdNameRequestDto);
     }
+
+    /**
+     * 검수 대상 키워드 등록
+     */
+    @PostMapping("/kwd/isp")
+    public ResponseDto<List<KwdDto>> saveIspKwd(@RequestBody KwdNameRequestDto kwdNameRequestDto) {
+        return kwdService.saveIspKwd(kwdNameRequestDto);
+    }
+
+    /**
+     * 검수 대상 키워드 삭제
+     * 수동 검수 여부 1 => 0으로 update
+     */
+    @PostMapping("/kwd/isp/{kwdId}")
+    public ResponseDto<List<KwdDto>> updateOffIspKwdManualYn(@PathVariable Long kwdId) {
+        return kwdService.updateOffIspKwdManualYn(kwdId);
+    }
+
 }

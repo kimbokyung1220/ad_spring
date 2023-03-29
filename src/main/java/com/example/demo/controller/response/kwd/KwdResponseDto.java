@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class KwdResponseDto {
     private Long adId; // 광고ID
@@ -25,27 +24,32 @@ public class KwdResponseDto {
     private Integer sellPossKwdYn; // 판매 가능 키워드 여부
     private Integer manualCnrKwdYn; // 수동 검수 키워드 여부
 
-    public static KwdResponseDto kwdList(KwdDto kwdDto) {
-        return KwdResponseDto.builder()
-                .adId(kwdDto.getAdId())
-                .agroupId(kwdDto.getAgroupId())
-                .adUseConfigYn(kwdDto.getAdUseConfigYn())
-                .adActYn(kwdDto.getAdActYn())
-                .regTime(kwdDto.getRegTime())
-                .dadDetId(kwdDto.getDadDetId())
-                .dadActYn(kwdDto.getDadActYn())
-                .dadUseConfigYn(kwdDto.getDadUseConfigYn())
-                .kwdId(kwdDto.getKwdId())
-                .kwdName(kwdDto.getKwdName())
-                .build();
-    }
-    public static KwdResponseDto kwdIspList(KwdDto kwdDto) {
-        return KwdResponseDto.builder()
-                .kwdId(kwdDto.getKwdId())
-                .kwdName(kwdDto.getKwdName())
-                .sellPossKwdYn(kwdDto.getSellPossKwdYn())
-                .manualCnrKwdYn(kwdDto.getManualCnrKwdYn())
-                .build();
+    @Getter
+    public static class kwdListDto {
+        public static KwdResponseDto kwdList(KwdDto kwdDto) {
+            return KwdResponseDto.builder()
+                    .adId(kwdDto.getAdId())
+                    .agroupId(kwdDto.getAgroupId())
+                    .adUseConfigYn(kwdDto.getAdUseConfigYn())
+                    .adActYn(kwdDto.getAdActYn())
+                    .regTime(kwdDto.getRegTime())
+                    .dadDetId(kwdDto.getDadDetId())
+                    .dadActYn(kwdDto.getDadActYn())
+                    .dadUseConfigYn(kwdDto.getDadUseConfigYn())
+                    .kwdId(kwdDto.getKwdId())
+                    .kwdName(kwdDto.getKwdName())
+                    .build();
+        }
     }
 
+    // 검수 키워드 리스트
+    @Getter
+    public static class ispKwdListDto {
+        public static KwdResponseDto ispKwdList(KwdDto kwdDto) {
+            return KwdResponseDto.builder()
+                    .kwdId(kwdDto.getKwdId())
+                    .kwdName(kwdDto.getKwdName())
+                    .build();
+        }
+    }
 }

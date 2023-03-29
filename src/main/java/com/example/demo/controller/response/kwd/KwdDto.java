@@ -21,8 +21,10 @@ public class KwdDto {
     private Integer dadUseConfigYn; // 직접광고 사용 설정 여부
     private Long kwdId; //키워드 ID
     private String kwdName; // 키워드명
-    private Integer sellPossKwdYn; // 판매 가능 키워드 여부
-    private Integer manualCnrKwdYn; // 수동 검수 키워드 여부
+    private Long itemId;
+    private String itemName;
+    private Long cnrReqId;
+
 
     // 키워드 검색
     @QueryProjection
@@ -41,11 +43,18 @@ public class KwdDto {
 
     // 검수 키워드 검색
     @QueryProjection
-
-    public KwdDto(Long kwdId, String kwdName, Integer sellPossKwdYn, Integer manualCnrKwdYn) {
+    public KwdDto(Long kwdId, String kwdName) {
         this.kwdId = kwdId;
         this.kwdName = kwdName;
-        this.sellPossKwdYn = sellPossKwdYn;
-        this.manualCnrKwdYn = manualCnrKwdYn;
+    }
+    // 광고 검수 대상 검색
+    @QueryProjection
+    public KwdDto(Long dadDetId, Long kwdId, String kwdName, Long itemId, String itemName, Long cnrReqId) {
+        this.dadDetId = dadDetId;
+        this.kwdId = kwdId;
+        this.kwdName = kwdName;
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.cnrReqId = cnrReqId;
     }
 }
