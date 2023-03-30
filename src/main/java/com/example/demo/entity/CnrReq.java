@@ -25,7 +25,7 @@ public class CnrReq {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // 직접광고 상세 ID
     @JoinColumn(name = "dad_det_id")
     private DadDet dadDet;
-    @Column(name = "crn_ing_status")
+    @Column(name = "cnr_ing_status")
     private String cnrIngStatus; // 검수 진행 상태
     @Column(name = "cnr_input_div")
     private String cnrInputDiv; // 검수 입력 구분

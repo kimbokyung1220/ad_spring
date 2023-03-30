@@ -20,12 +20,19 @@ public class ErrorResponse {
     private final String code;
     private final String desc;
     private HttpStatus status;
+    private String keyword;
 
+//    @Builder
+//    public ErrorResponse(String code, String desc, HttpStatus status) {
+//        this.code = code;
+//        this.desc = desc;
+//        this.status = status;
+//    }
     @Builder
-
-    public ErrorResponse(String code, String desc, HttpStatus status) {
+    public ErrorResponse(String code, String desc, HttpStatus status, String keyword) {
         this.code = code;
         this.desc = desc;
         this.status = status;
+        this.keyword = keyword;
     }
 }

@@ -38,6 +38,7 @@ public class AdService {
         return ResponseDto.success(itemId);
     }
 
+    @Transactional
     public ResponseDto<String> saveAd(RegisterAdRequestDto adRequestDto, HttpServletRequest request) {
 
         Member member = validation.getMember(request);
@@ -62,7 +63,7 @@ public class AdService {
 
     }
 
-    public void saveKwd(Ad ad, RegisterAdRequestDto adRequestDto) {
+    private void saveKwd(Ad ad, RegisterAdRequestDto adRequestDto) {
         List<KwdRequestDto> kwdList = adRequestDto.getKwds();
         if (kwdList.isEmpty()) {
             dadDetService.saveDadDet(ad, adRequestDto);
@@ -80,7 +81,8 @@ public class AdService {
                 Kwd kwd = validation.isPresentKwd(kwdName);
                 // 판매가능여부가 false인 키워드
                 if (kwd.getSellPossKwdYn() == 0) {
-                    throw new CustomException(ErrorCode.KWD_UNABLE_SELL);
+                    String errorKwdName = kwd.getKwdName();
+                    throw new CustomException(ErrorCode.KWD_UNABLE_SELL, errorKwdName);
                 }
             }
         }

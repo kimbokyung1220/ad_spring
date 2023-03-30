@@ -42,6 +42,7 @@ public enum ErrorCode {
     private final String code;
     private HttpStatus status;
     private String message;
+    private String keyword;
 
     ErrorCode(String code, HttpStatus status, String message) {
         this.code = code;

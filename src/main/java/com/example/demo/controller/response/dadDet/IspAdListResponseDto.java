@@ -15,6 +15,7 @@ public class IspAdListResponseDto {
     private String itemName;
     private Long dadDetId;
     private Long cnrReqId;
+    private Integer adultYn;
 
     public static IspAdListResponseDto IspAdList(DadDetDto dadDetDto) {
         return IspAdListResponseDto.builder()
@@ -24,6 +25,18 @@ public class IspAdListResponseDto {
                 .itemName(dadDetDto.getItemName())
                 .dadDetId(dadDetDto.getDadDetId())
                 .cnrReqId(dadDetDto.getCnrReqId())
+                .build();
+    }
+
+    public static IspAdListResponseDto csAdAllList(DadDetDto dadDetDto) {
+        return IspAdListResponseDto.builder()
+                .kwdId(dadDetDto.getKwdId())
+                .kwdName(dadDetDto.getKwdName())
+                .itemId(dadDetDto.getItemId())
+                .itemName(dadDetDto.getItemName())
+                .dadDetId(dadDetDto.getDadDetId())
+                .cnrReqId(dadDetDto.getCnrReqId())
+                .adultYn(dadDetDto.getAdultYn())
                 .build();
     }
 }

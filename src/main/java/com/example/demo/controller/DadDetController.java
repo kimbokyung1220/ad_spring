@@ -39,4 +39,11 @@ public class DadDetController {
     public ResponseDto<List<DadDetDto>> updateIspAdDadCrn(@RequestBody updateIspAdDadCrnRequestDto requestDto) {
         return dadDetService.updateIspAdDadCrn(requestDto);
     }
+    /**
+     * 광고현황
+     */
+    @PostMapping("/dad/cslist")
+    public ResponseDto<List<DadDetDto>> csAdAllList() {
+        return dadDetService.csAdAllList();
+    }
 }

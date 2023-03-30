@@ -121,4 +121,17 @@ public class DadDetService {
         KwdNameRequestDto reload = new KwdNameRequestDto("");
         return searchIspAdList(reload);
     }
+
+    /**
+     * 광고 현황
+     */
+    public ResponseDto<List<DadDetDto>> csAdAllList() {
+        List<DadDetDto> currentStateOf = dadDetDslRepository.csAd();
+        currentStateOf.stream()
+                .map((dadDetDto -> IspAdListResponseDto.csAdAllList(dadDetDto)))
+                .collect(Collectors.toList());
+
+        return ResponseDto.success(currentStateOf);
+
+    }
 }

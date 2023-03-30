@@ -37,6 +37,7 @@ public class CustomExceptionHandler {
                         .code(e.getErrorCode().getCode())
                         .desc(e.getErrorCode().getMessage())
                         .status(e.getErrorCode().getStatus())
+                        .keyword(e.getData())
                         .build());
     }
 

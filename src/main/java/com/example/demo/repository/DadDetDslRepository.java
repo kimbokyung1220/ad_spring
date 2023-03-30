@@ -12,4 +12,5 @@ public interface DadDetDslRepository {
 
     DadDetDto ispAdListDetail (Long dadDetId);
 
+    List<DadDetDto> csAd();
 }

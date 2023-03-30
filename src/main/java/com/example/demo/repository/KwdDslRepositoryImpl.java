@@ -61,6 +61,7 @@ public class KwdDslRepositoryImpl implements KwdDslRepository {
                 ))
                 .from(kwd)
                 .where(kwd.manualCnrKwdYn.eq(1)
+                        .and(kwd.sellPossKwdYn.eq(1))
                         .and(kwd.kwdName.contains(kwdNameDto)))
                 .fetch();
     }
