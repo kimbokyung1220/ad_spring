@@ -51,6 +51,12 @@ dependencies {
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+    // commons-io
+    implementation 'commons-io:commons-io:2.11.0'
+    // commons-fileupload
+    implementation 'commons-fileupload:commons-fileupload:1.5'
+
+
     // JUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
     // Mock
