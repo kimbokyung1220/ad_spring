@@ -23,6 +23,7 @@ public class ValidationService {
     private final KwdRepository kwdRepository;
     private final DadDetRepository dadDetRepository;
     private final CnrReqRepository cnrReqRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
     public Member getMember(HttpServletRequest request) {
@@ -42,6 +43,11 @@ public class ValidationService {
     public Adv isPresentAdv(String advId) {
         Optional<Adv> adv = advRepository.findById(advId);
         return adv.orElse(null);
+    }
+
+    public Member isPresentMember(String memberId) {
+        Optional<Member> member = memberRepository.findByMemberId(memberId);
+        return member.orElse(null);
     }
 
     //상품 확인

@@ -19,7 +19,7 @@ public class DadDetDto {
     private String itemName;
     private Long cnrReqId;
     private Integer adultYn;
-
+    private String advId;
     // 광고 검수 대상 검색
     @QueryProjection
     public DadDetDto(Long dadDetId, Long kwdId, String kwdName, Long itemId, String itemName, Long cnrReqId) {
@@ -31,11 +31,15 @@ public class DadDetDto {
         this.cnrReqId = cnrReqId;
     }
     @QueryProjection
-
     public DadDetDto(Long dadDetId, String kwdName, String itemName, Integer adultYn) {
         this.dadDetId = dadDetId;
         this.kwdName = kwdName;
         this.itemName = itemName;
         this.adultYn = adultYn;
+    }
+
+    @QueryProjection
+    public DadDetDto(String advId) {
+        this.advId = advId;
     }
 }

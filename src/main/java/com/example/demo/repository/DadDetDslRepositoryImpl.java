@@ -22,6 +22,7 @@ public class DadDetDslRepositoryImpl implements DadDetDslRepository {
     public DadDetDslRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
     }
+
     // 광고 검수 대상 리스트
     @Override
     public List<DadDetDto> searchIspAdList(String kwdNameDto) {
@@ -84,4 +85,13 @@ public class DadDetDslRepositoryImpl implements DadDetDslRepository {
                 .fetch();
     }
 
+    @Override
+    public String getAdvId(Long dadDetId) {
+        return queryFactory.select(new QDadDetDto(
+                        ad.adv.advId
+                ))
+                .from(ad).innerJoin(dadDet).on(ad.adId.eq(dadDet.ad.adId))
+                .where(dadDet.dadDetId.eq(dadDetId))
+                .fetchOne().getAdvId();
+    }
 }

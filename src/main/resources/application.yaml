@@ -4,18 +4,6 @@ server:
 spring:
   profiles:
     active: mysql
-
----
-spring:
-  config:
-    activate:
-      on-profile: h2
-  datasource:
-    hikari:
-      driver-class-name: org.h2.Driver
-      url: jdbc:h2:~/batch
-      username: sa
-
 ---
 spring:
   config:
@@ -24,12 +12,9 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3306/ad?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&Timezone=Asia/Seoul
-#      jdbc-url: jdbc:mysql://database-dev.cateuvrwrjjd.ap-northeast-2.rds.amazonaws.com/devDB?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8
+      jdbc-url: jdbc:mysql://localhost:3306/ad_dev?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&Timezone=Asia/Seoul
       username: root
       password: root
-#      username: admin
-#      password: databaseadmin
 
   jpa:
     hibernate:
@@ -43,9 +28,17 @@ spring:
     ansi:
       enabled: always
 
+  batch:
+    jdbc:
+      initialize-schema: always
+
 # jwt
 # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
 # Secret 값은 특정 문자열을 Base64 로 인코딩한 값 사용 (아래 명령어를 터미널에 쳐보면 그대로 나옴)
 # $ echo 'spring-boot-security-jwt-tutorial-jiwoon-spring-boot-security-jwt-tutorial' | base64
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+file:
+  absolutePath: D:\11h11m\week08\ad_spring\src\main\resources\taskFile
+  pathFromRoot: \taskFile\

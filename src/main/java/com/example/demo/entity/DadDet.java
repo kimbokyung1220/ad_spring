@@ -44,6 +44,8 @@ public class DadDet {
 //    @JsonManagedReference
     private DadDetBid dadDetBid;
 
+
+
     public void update(CnrReq cnrReq) {
         this.cnrReq = cnrReq;
     }

@@ -32,6 +32,8 @@ public enum ErrorCode {
     DELETE_ADGROUP("DELETE_ADGROUP", HttpStatus.BAD_REQUEST, "광고그룹을 삭제했습니다."),
     EXIST_ISP_KWD("EXIST_ISP_KWD", HttpStatus.BAD_REQUEST, "이미 존재하는 키워드 입니다."),
     KWD_UNABLE_SELL("KWD_UNABLE_SELL", HttpStatus.BAD_REQUEST, "판매가능한 키워드가 아닙니다."),
+    EMPTY_TASK_FILE("EMPTY_TASK_FILE", HttpStatus.BAD_REQUEST, "작업 요청 파일을 업로드 해주세요."),
+    EMPTY_TASK_NAME("EMPTY_TASK_NAME", HttpStatus.BAD_REQUEST, "작업명을 입력해 주세요."),
 
 
     // JWT

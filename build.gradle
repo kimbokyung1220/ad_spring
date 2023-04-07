@@ -51,10 +51,18 @@ dependencies {
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+    implementation 'com.querydsl:querydsl-sql:5.0.0'
+    // QueryDSL SQL 모듈 의존성 추가
+    implementation 'com.querydsl:querydsl-sql:4.4.0'
     // commons-io
     implementation 'commons-io:commons-io:2.11.0'
     // commons-fileupload
     implementation 'commons-fileupload:commons-fileupload:1.5'
+    // spring-batch
+    implementation 'org.springframework.batch:spring-batch-core:4.3.3'
+    // quartz
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+    implementation 'org.quartz-scheduler:quartz:2.3.2'
 
 
     // JUnit

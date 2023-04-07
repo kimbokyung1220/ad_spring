@@ -1,6 +1,7 @@
 package com.example.demo.controller.response.agroup;
 
 import com.example.demo.entity.Agroup;
+import com.example.demo.util.FormatDateUtil;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -22,10 +23,8 @@ public class AgroupResponseDto {
     private String agroupUseConfigYnSrt;
     private String itemCnt;
 
-    private static String fm = "yyyy.MM.dd HH:mm";
     public static AgroupResponseDto of(Agroup agroup) {
-        String time = agroup.getRegTime().format(DateTimeFormatter.ofPattern(fm));
-
+        String time = agroup.getRegTime().format(DateTimeFormatter.ofPattern(FormatDateUtil.fm));
         return AgroupResponseDto.builder()
                 .agroupId(agroup.getAgroupId())
                 .agroupName(agroup.getAgroupName())
@@ -36,7 +35,7 @@ public class AgroupResponseDto {
     }
     public static AgroupResponseDto agroupItemList(AgroupListResponseDto dto) {
 
-        String time = dto.getRegTime().format(DateTimeFormatter.ofPattern(fm));
+        String time = dto.getRegTime().format(DateTimeFormatter.ofPattern(FormatDateUtil.fm));
 
         String agroupUseConfigYnSrt = "";
         if(dto.getAgroupUseConfigYn() == 1) {
@@ -57,7 +56,7 @@ public class AgroupResponseDto {
     }
 
     public static AgroupResponseDto agroupItem(AgroupItemResponseDto dto) {
-        String time = dto.getRegTime().format(DateTimeFormatter.ofPattern(fm));
+        String time = dto.getRegTime().format(DateTimeFormatter.ofPattern(FormatDateUtil.fm));
 
         String agroupUseConfigYnSrt = "";
         if(dto.getAgroupUseConfigYn() == 1) {

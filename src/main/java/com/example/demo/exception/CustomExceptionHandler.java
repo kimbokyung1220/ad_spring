@@ -1,8 +1,12 @@
 package com.example.demo.exception;
 
+import com.example.demo.entity.TaskReq;
+import com.example.demo.entity.enm.TaskStatus;
+import com.example.demo.repository.TaskReqRepository;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.method.annotation.MethodArgumentConversionNotSupportedException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -24,7 +30,10 @@ import java.util.NoSuchElementException;
  */
 @RestControllerAdvice
 @Slf4j
+@RequiredArgsConstructor
 public class CustomExceptionHandler {
+    private final TaskReqRepository taskReqRepository;
+
     /**
      * @ExceptionHandler: 특정 클래스에서 발생할 수 있는 예외를 잡아 Throw
      */
@@ -74,6 +83,16 @@ public class CustomExceptionHandler {
                                 .code(ErrorCode.TYPE_NULL_ERROR.getCode())
                                 .desc(e.getBindingResult().getAllErrors().get(0).getDefaultMessage())
                                 .build());
+    }
+
+    @ExceptionHandler(MethodArgumentConversionNotSupportedException.class)
+    public Object processValidationError(MethodArgumentConversionNotSupportedException e) {
+        return ResponseEntity
+                .status(ErrorCode.TYPE_NULL_ERROR.getStatus())
+                .body(ErrorResponse.builder()
+                        .code(ErrorCode.TYPE_NULL_ERROR.getCode())
+                        .desc(ErrorCode.TYPE_NULL_ERROR.getMessage())
+                        .build());
     }
 
     // [Exception] 클라이언트에서 Body로 '객체' 데이터가 넘어오지 않았을 경우
@@ -132,5 +151,26 @@ public class CustomExceptionHandler {
                         .desc(e.getMessage())
                         .status(ErrorCode.HTTP_CT_ERROR.getStatus())
                         .build());
+    }
+    // 대량관리 - 작업요청 등록 시, 첨부파일이 없을 경우
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public Object processValidationError(MissingServletRequestPartException e) {
+        return ResponseEntity
+                .status(ErrorCode.EMPTY_TASK_FILE.getStatus())
+                .body(ErrorResponse.builder()
+                        .code(ErrorCode.EMPTY_TASK_FILE.getCode())
+                        .desc(ErrorCode.EMPTY_TASK_FILE.getMessage())
+                        .status(ErrorCode.EMPTY_TASK_FILE.getStatus())
+                        .build());
+    }
+
+    //배치 파싱 오류
+    @ExceptionHandler(FlatFileParseException.class)
+    public org.springframework.batch.repeat.exception.ExceptionHandler handleException(String filePath) throws Exception {
+
+       TaskReq taskReq = taskReqRepository.findByTaskReqFilePath(filePath);
+        // 예외 처리 로직 작성
+        taskReqRepository.updateTaskStatus(TaskStatus.ERROR.name(), taskReq.getTaskReqId());
+        return null;
     }
 }

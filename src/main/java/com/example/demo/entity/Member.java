@@ -10,6 +10,8 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -35,6 +37,9 @@ public class Member {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
 //    @JsonManagedReference
     private Adv adv;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<TaskReq> taskReqList = new ArrayList<>();
 
 //    public boolean equals(Object o) {
 //        if (this == o) {

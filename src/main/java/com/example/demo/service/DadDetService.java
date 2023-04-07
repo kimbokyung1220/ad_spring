@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.controller.request.ad.RegisterAdRequestDto;
-import com.example.demo.controller.request.daddet.updateIspAdDadCrnRequestDto;
+import com.example.demo.controller.request.daddet.updateIspAdDadCnrRequestDto;
 import com.example.demo.controller.request.kwd.KwdNameRequestDto;
 import com.example.demo.controller.request.kwd.KwdRequestDto;
 import com.example.demo.controller.response.ResponseDto;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -106,7 +105,7 @@ public class DadDetService {
      * 광고 검수 대상 검수처리 (반려 / 승인)
      */
     @Transactional
-    public ResponseDto<List<DadDetDto>> updateIspAdDadCrn(updateIspAdDadCrnRequestDto requestDto) {
+    public ResponseDto<List<DadDetDto>> updateIspAdDadCrn(updateIspAdDadCnrRequestDto requestDto) {
         DadDet dadDet = validation.isPresentDadDet(requestDto.getDadDetId());
         CnrReq cnrReq = validation.isPresentCnrReq(requestDto.getCnrReqId());
 

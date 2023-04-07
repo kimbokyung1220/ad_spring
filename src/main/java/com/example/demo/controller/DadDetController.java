@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.request.daddet.updateIspAdDadCrnRequestDto;
+import com.example.demo.controller.request.daddet.updateIspAdDadCnrRequestDto;
 import com.example.demo.controller.request.kwd.KwdNameRequestDto;
 import com.example.demo.controller.response.ResponseDto;
 import com.example.demo.controller.response.dadDet.DadDetDto;
@@ -36,13 +36,13 @@ public class DadDetController {
      * 광고 검수 대상 검수처리 (반려 / 승인)
      */
     @PostMapping("/dad/status")
-    public ResponseDto<List<DadDetDto>> updateIspAdDadCrn(@RequestBody updateIspAdDadCrnRequestDto requestDto) {
+    public ResponseDto<List<DadDetDto>> updateIspAdDadCrn(@RequestBody updateIspAdDadCnrRequestDto requestDto) {
         return dadDetService.updateIspAdDadCrn(requestDto);
     }
     /**
      * 광고현황
      */
-    @PostMapping("/dad/cslist")
+    @GetMapping("/dad/cslist")
     public ResponseDto<List<DadDetDto>> csAdAllList() {
         return dadDetService.csAdAllList();
     }

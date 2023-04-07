@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class updateIspAdDadCrnRequestDto {
+public class updateIspAdDadCnrRequestDto {
     private Long dadDetId;
     private Long cnrReqId;
     private String cnrIngStatus;

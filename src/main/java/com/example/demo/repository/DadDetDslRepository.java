@@ -13,4 +13,6 @@ public interface DadDetDslRepository {
     DadDetDto ispAdListDetail (Long dadDetId);
 
     List<DadDetDto> csAd();
+
+    String getAdvId(Long dadDetId);
 }
