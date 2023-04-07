@@ -9,6 +9,7 @@ import org.springframework.batch.core.*;
 import org.springframework.batch.core.annotation.AfterJob;
 import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.AfterWrite;
+import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.core.io.FileSystemResource;
@@ -16,6 +17,9 @@ import org.springframework.core.io.FileSystemResource;
 @RequiredArgsConstructor
 public class FlatFileParseExceptionHandler {
     private final TaskReqRepository taskReqRepository;
+
+    @BeforeStep
+    public void
 
     @AfterStep
     public ExitStatus afterStep(StepExecution stepExecution) {

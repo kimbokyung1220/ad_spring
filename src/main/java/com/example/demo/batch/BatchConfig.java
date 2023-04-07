@@ -47,22 +47,21 @@ public class BatchConfig {
     public Job taskFileJob() throws Exception {
         return jobBuilderFactory.get("taskFileJob")
 //                .incrementer(new RunIdIncrementer())
-                .start(taskFileStep1(null))
+                .start(taskFileStep1())
                 .build();
     }
 
     @Bean
-    @JobScope
-    public Step taskFileStep1(@Value("#{jobParameters[filePath]}") String filePath) throws Exception {
-        log.info("filePath: {} ", filePath);
+//    @JobScope
+    public Step taskFileStep1() throws Exception {
+        System.out.println("*****************");
+
         return stepBuilderFactory.get("taskFileStep1")
                 //<Reader에서 읽어올 타입, Writer에서 넘겨줄 타입>
                 .<DadRptRequestDto, DadRpt>chunk(chunkSize)
                 .reader(reader(null))
                 .processor(taskFileProcessor) // 인스턴스 넘겨주기
                 .writer(taskFileWriter)
-                .faultTolerant()
-                .skip(NullPointerException.class)
                 .listener(new FlatFileParseExceptionHandler(taskReqRepository)) // FlatFileParseException 처리를 위한 listener 등록
                 .build();
     }

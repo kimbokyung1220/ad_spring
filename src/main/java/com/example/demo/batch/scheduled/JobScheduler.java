@@ -46,8 +46,9 @@ public class JobScheduler {
             for (int i = 0; i < taskReqList.size(); i++) {
                 Map<String, JobParameter> confMap = new HashMap<>();
                 confMap.put("filePath", new JobParameter(taskReqList.get(i).getTaskReqFilePath()));
+                confMap.put("time", new JobParameter(System.currentTimeMillis()));
                 JobParameters jobParameters = new JobParameters(confMap);
-//                jobLauncher.run(batchConfig.taskFileJob(), jobParameters);
+                jobLauncher.run(batchConfig.taskFileJob(), jobParameters);
             }
 
         } catch (Exception e) {
