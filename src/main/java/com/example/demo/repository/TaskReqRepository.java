@@ -32,4 +32,9 @@ public interface TaskReqRepository extends JpaRepository<TaskReq, Long> {
     @Transactional
     void updateTaskStatus(@Param("taskStatus")String taskStatus,@Param("taskReqId")Long taskReqId);
 
+    @Modifying(clearAutomatically = true)
+    @Query("update TaskReq t set t.taskStatus = :taskStatus, t.taskEndTime = :taskEndTime where t.taskReqId = :taskReqId")
+    @Transactional
+    void updateTaskStatusAndEndTime(@Param("taskStatus")String taskStatus, @Param("taskEndTime")LocalDateTime taskEndTime, @Param("taskReqId")Long taskReqId);
+
 }

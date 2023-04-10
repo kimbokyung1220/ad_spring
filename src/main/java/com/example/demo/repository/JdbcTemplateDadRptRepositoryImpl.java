@@ -18,7 +18,7 @@ public class JdbcTemplateDadRptRepositoryImpl implements JdbcTemplateDadRptRepos
 
     @Override
     public List<DadRptDto> getDadRptDetail(Long dadDetId) {
-        String sql = "SELECT IFNULL(basic_date, '-') AS basic_date, " +
+        String sql = "SELECT IFNULL(basic_date, '합계') AS basic_date, " +
                 "dad_det_id, " +
                 "SUM(imp_cnt) AS imp_cnt, " +
                 "SUM(click_cnt) AS click_cnt, " +

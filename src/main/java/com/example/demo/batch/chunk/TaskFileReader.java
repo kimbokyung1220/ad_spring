@@ -12,6 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 public class TaskFileReader {
     public FlatFileItemReader<DadRptRequestDto> reader(String filePath) {
         // 요청상태가 REQ인 파일
+
         FlatFileItemReader<DadRptRequestDto> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource(filePath));
         System.out.println(filePath);

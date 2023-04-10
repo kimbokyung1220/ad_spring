@@ -62,7 +62,7 @@ public class BatchConfig {
                 .reader(reader(null))
                 .processor(taskFileProcessor) // 인스턴스 넘겨주기
                 .writer(taskFileWriter)
-                .listener(new FlatFileParseExceptionHandler(taskReqRepository)) // FlatFileParseException 처리를 위한 listener 등록
+                .listener(new FlatFileParseExceptionHandler(taskReqRepository))
                 .build();
     }
 

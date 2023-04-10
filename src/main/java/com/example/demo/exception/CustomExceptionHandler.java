@@ -163,14 +163,4 @@ public class CustomExceptionHandler {
                         .status(ErrorCode.EMPTY_TASK_FILE.getStatus())
                         .build());
     }
-
-    //배치 파싱 오류
-    @ExceptionHandler(FlatFileParseException.class)
-    public org.springframework.batch.repeat.exception.ExceptionHandler handleException(String filePath) throws Exception {
-
-       TaskReq taskReq = taskReqRepository.findByTaskReqFilePath(filePath);
-        // 예외 처리 로직 작성
-        taskReqRepository.updateTaskStatus(TaskStatus.ERROR.name(), taskReq.getTaskReqId());
-        return null;
-    }
 }
