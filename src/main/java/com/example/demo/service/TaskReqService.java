@@ -50,7 +50,7 @@ public class TaskReqService {
         }
 
         Member member = validation.getMember(servletRequest);
-        String taskFilePath = PATH + saveFileName;
+        String taskFilePath = PATH + "\\" + saveFileName;
         TaskReq taskReq = requestDto.saveTaskReq(member, taskFilePath);
         taskReqRepository.save(taskReq);
 

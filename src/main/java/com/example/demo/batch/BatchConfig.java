@@ -16,11 +16,15 @@ import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.step.skip.AlwaysSkipItemSkipPolicy;
+import org.springframework.batch.core.step.skip.NonSkippableReadException;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.BindException;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
@@ -33,14 +37,9 @@ public class BatchConfig {
     private final StepBuilderFactory stepBuilderFactory;
 
     //  JPA를 사용하기 위해 EntityManagerFactory를 주입받아야 함
-    private final EntityManagerFactory entityManagerFactory;
-
-    //private final FlatFileItemReader flatFileItemReader;
     private final TaskFileProcessor taskFileProcessor;
     private final TaskFileWriter taskFileWriter;
-//    private final TaskFileLstener taskFileLstener;
     private static final int chunkSize = 1;
-
     private final TaskReqRepository taskReqRepository;
 
     @Bean
@@ -54,12 +53,11 @@ public class BatchConfig {
     @Bean
 //    @JobScope
     public Step taskFileStep1() throws Exception {
-        System.out.println("*****************");
-
         return stepBuilderFactory.get("taskFileStep1")
                 //<Reader에서 읽어올 타입, Writer에서 넘겨줄 타입>
                 .<DadRptRequestDto, DadRpt>chunk(chunkSize)
                 .reader(reader(null))
+                .faultTolerant()
                 .processor(taskFileProcessor) // 인스턴스 넘겨주기
                 .writer(taskFileWriter)
                 .listener(new FlatFileParseExceptionHandler(taskReqRepository))

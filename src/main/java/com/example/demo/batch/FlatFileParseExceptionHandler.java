@@ -13,6 +13,7 @@ import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -21,20 +22,33 @@ public class FlatFileParseExceptionHandler {
     private final TaskReqRepository taskReqRepository;
 
     @BeforeStep
+    @Transactional
     public void beforStep(StepExecution stepExecution) {
         String filePath = stepExecution.getJobExecution().getJobParameters().getString("filePath");
         TaskReq taskReq = taskReqRepository.findByTaskReqFilePath(filePath);
-        if(taskReq == null) {
+        if (taskReq == null) {
             return;
         }
+
+        if (stepExecution.getFailureExceptions().stream().anyMatch(ex -> ex instanceof FlatFileParseException)) {
+            stepExecution.setStatus(BatchStatus.FAILED);
+            stepExecution.getJobExecution().setStatus(BatchStatus.FAILED);
+            stepExecution.getJobExecution().setExitStatus(ExitStatus.FAILED.addExitDescription("Flat file parse exception occurred"));
+
+//            TaskReq taskReq = taskReqRepository.findByTaskReqFilePath(filePath);
+            taskReqRepository.updateTaskStatus(TaskStatus.ERROR.name(), taskReq.getTaskReqId());
+        }
+
         taskReqRepository.updateTaskStatusAndStartTime(TaskStatus.ING.name(), LocalDateTime.now(), taskReq.getTaskReqId());
     }
 
     @AfterStep
     public ExitStatus afterStep(StepExecution stepExecution) {
         String filePath = stepExecution.getJobExecution().getJobParameters().getString("filePath");
+        System.out.println(filePath);
 
-        if (stepExecution.getFailureExceptions().stream().anyMatch(ex -> ex instanceof FlatFileParseException)) {
+
+        if (stepExecution.getStatus() == BatchStatus.FAILED) {
             stepExecution.setStatus(BatchStatus.FAILED);
             stepExecution.getJobExecution().setStatus(BatchStatus.FAILED);
             stepExecution.getJobExecution().setExitStatus(ExitStatus.FAILED.addExitDescription("Flat file parse exception occurred"));
@@ -43,6 +57,7 @@ public class FlatFileParseExceptionHandler {
             taskReqRepository.updateTaskStatus(TaskStatus.ERROR.name(), taskReq.getTaskReqId());
         }
 
+
         if (stepExecution.getStatus() == BatchStatus.COMPLETED) {
             TaskReq taskReq = taskReqRepository.findByTaskReqFilePath(filePath);
             taskReqRepository.updateTaskStatusAndEndTime(TaskStatus.COMPLETED.name(), LocalDateTime.now(), taskReq.getTaskReqId());
@@ -50,6 +65,7 @@ public class FlatFileParseExceptionHandler {
 
         return ExitStatus.COMPLETED;
     }
+
     @AfterJob
     public ExitStatus afterJob(JobExecution jobExecution) {
 
@@ -60,6 +76,4 @@ public class FlatFileParseExceptionHandler {
         }
         return ExitStatus.COMPLETED;
     }
-
-
 }

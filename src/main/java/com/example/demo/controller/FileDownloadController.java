@@ -22,10 +22,8 @@ public class FileDownloadController {
      * 파일 다운로드
      */
     @PostMapping("/download")
-    public void downloadFile(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            @RequestBody FileNameRequestDto requestDto) throws Exception {
+    public void downloadFile( HttpServletResponse response,
+                              @RequestBody FileNameRequestDto requestDto) throws Exception {
 
         try {
             String path = UPLOAD_PATH + "\\" + requestDto.getFileName();

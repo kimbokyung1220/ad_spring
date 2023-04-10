@@ -7,6 +7,7 @@ import com.example.demo.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ public class UploadFileService {
     @Value("${file.absolutePath}")
     String UPLOAD_PATH;
 
+    @Transactional
     public ResponseDto<?> uploadFile(MultipartFile taskFile, TaskReqSaveRequestDto requestDto, HttpServletRequest servletRequest) {
 
         String fileRealName = taskFile.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
@@ -37,12 +39,13 @@ public class UploadFileService {
 //        File saveFile = new File(UPLOAD_PATH + "\\" + saveFileName + fileExtension);
         File saveFile = new File(UPLOAD_PATH + "\\" + saveFileName);  // 적용 후
         try {
-            taskFile.transferTo(saveFile); // 실제 파일 저err0장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+            taskFile.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
 
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new CustomException(ErrorCode.FAILED_FILE_PATH, ErrorCode.FAILED_FILE_PATH.getMessage());
         }
         return taskReqService.saveTaskReq(saveFileName, requestDto, servletRequest);
     }

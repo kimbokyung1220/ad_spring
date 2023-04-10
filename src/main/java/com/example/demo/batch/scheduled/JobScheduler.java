@@ -33,7 +33,10 @@ public class JobScheduler {
 
     @SneakyThrows
     //프로그램이 시작된 후 5분 후에 jobSchedule() 메소드가 최초로 호출되며, 이후에는 3분마다 주기적으로 호출
-    @Scheduled(cron = "0 0/3 * * * ?")
+
+    @Scheduled(cron = "0 * * * * ?") // 1분 마다
+//    @Scheduled(cron = "0 0/3 * * * ?") // 3분마다
+//    @Scheduled(cron = "0 0 0 * * *") // 매일 자정
     public void jobSchedule() {
 
         // 요청상태가 REQ인 파일

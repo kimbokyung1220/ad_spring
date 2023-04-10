@@ -34,6 +34,7 @@ public enum ErrorCode {
     KWD_UNABLE_SELL("KWD_UNABLE_SELL", HttpStatus.BAD_REQUEST, "판매가능한 키워드가 아닙니다."),
     EMPTY_TASK_FILE("EMPTY_TASK_FILE", HttpStatus.BAD_REQUEST, "작업 요청 파일을 업로드 해주세요."),
     EMPTY_TASK_NAME("EMPTY_TASK_NAME", HttpStatus.BAD_REQUEST, "작업명을 입력해 주세요."),
+    FAILED_FILE_PATH("FAILED_FILE_PATH", HttpStatus.BAD_REQUEST, "파일을 업로드하지 못했습니다."),
 
 
     // JWT
