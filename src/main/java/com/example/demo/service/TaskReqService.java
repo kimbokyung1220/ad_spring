@@ -20,9 +20,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TaskReqService {
-    @Value("${file.pathFromRoot}")
-    String PATH;
-
+    @Value("${file.absolutePath}")
+    String UPLOAD_PATH;
     private final ValidationService validation;
     private final TaskReqRepository taskReqRepository;
 
@@ -50,7 +49,7 @@ public class TaskReqService {
         }
 
         Member member = validation.getMember(servletRequest);
-        String taskFilePath = PATH + "\\" + saveFileName;
+        String taskFilePath = saveFileName;
         TaskReq taskReq = requestDto.saveTaskReq(member, taskFilePath);
         taskReqRepository.save(taskReq);
 

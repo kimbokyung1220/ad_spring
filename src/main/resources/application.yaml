@@ -42,4 +42,4 @@ jwt:
 
 file:
   absolutePath: D:\week8\ad_server\src\main\resources\taskFile
-  pathFromRoot: taskFile\
+  pathFromRoot: \taskFile\

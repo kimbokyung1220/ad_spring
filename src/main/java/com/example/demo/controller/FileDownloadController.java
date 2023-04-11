@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.http.HttpHeaders;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,21 +25,21 @@ public class FileDownloadController {
     @PostMapping("/download")
     public void downloadFile(HttpServletResponse response,
                              @RequestBody FileNameRequestDto requestDto) throws Exception {
-        String path = UPLOAD_PATH + "\\" + requestDto.getFileName();
-        String originFileName = requestDto.getFileName().substring(requestDto.getFileName().indexOf("-") + 1);
+
+        String originFileName = requestDto.getFileName().substring(37);
+        String filePathName = UPLOAD_PATH + "\\" + originFileName;
         System.out.println("--------------------------------");
-        System.out.println(originFileName);
+        System.out.println("originFileName::::::::::: " + originFileName);
+        System.out.println("filePathName::::::::::: " + filePathName);
 
-        File file = new File(path);
+
+
+        File file = new File(filePathName);
         // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
-
-        response.addHeader("Content-Disposition", "attachment;filename=\"" + requestDto.getFileName().substring(requestDto.getFileName().indexOf("-") + 1) + "\"");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + requestDto.getFileName().substring(requestDto.getFileName().indexOf("-") + 1) + "\"");
+        response.addHeader("Content-Disposition", "attachment;filename=\"" + originFileName + "\"");
+//        response.setHeader("Content-Disposition", "attachment;filename=\"" + originFileName + "\"");
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + originFileName +"\";");
         response.setContentType("application/octet-stream;charset=utf-8");
-
-        response.setContentType("application/octet-stream");
-        response.setContentLength((int)file.length());
-
 
         try {
             // 파일 응답 스트림 설정

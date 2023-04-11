@@ -40,7 +40,7 @@ public class BatchConfig {
     //  JPA를 사용하기 위해 EntityManagerFactory를 주입받아야 함
     private final TaskFileProcessor taskFileProcessor;
     private final TaskFileWriter taskFileWriter;
-    private static final int chunkSize = 1;
+    private static final int chunkSize = 10;
     private final TaskReqRepository taskReqRepository;
     private final DadRptRepository dadRptRepository;
 
@@ -59,9 +59,9 @@ public class BatchConfig {
                 //<Reader에서 읽어올 타입, Writer에서 넘겨줄 타입>
                 .<DadRptRequestDto, DadRpt>chunk(chunkSize)
                 .reader(reader(null))
-                .faultTolerant()
-                .skipLimit(5)
-                .skip(FlatFileParseException.class)
+//                .faultTolerant()
+//                .skipLimit(5)
+//                .skip(FlatFileParseException.class)
                 .processor(taskFileProcessor) // 인스턴스 넘겨주기
                 .writer(taskFileWriter)
                 .listener(new FlatFileParseExceptionHandler(taskReqRepository, dadRptRepository))

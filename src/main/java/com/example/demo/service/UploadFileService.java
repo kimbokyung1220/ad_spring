@@ -27,6 +27,8 @@ public class UploadFileService {
 
         String fileRealName = taskFile.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
         String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length()); // 확장자
+        System.out.println("fileRealName");
+        System.out.println(fileRealName);
 		/*
 		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
 		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
@@ -38,6 +40,7 @@ public class UploadFileService {
 
 //        File saveFile = new File(UPLOAD_PATH + "\\" + saveFileName + fileExtension);
         File saveFile = new File(UPLOAD_PATH + "\\" + fileRealName);  // 적용 후
+        String filePath = UPLOAD_PATH + "\\" + fileRealName;
         try {
             taskFile.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
 
@@ -47,6 +50,6 @@ public class UploadFileService {
             e.printStackTrace();
             throw new CustomException(ErrorCode.FAILED_FILE_PATH, ErrorCode.FAILED_FILE_PATH.getMessage());
         }
-        return taskReqService.saveTaskReq(fileRealName, requestDto, servletRequest);
+        return taskReqService.saveTaskReq(filePath, requestDto, servletRequest);
     }
 }
