@@ -18,11 +18,11 @@ public class DadRptDto {
     private Double avgImpRank; // 평균 노출 순위
     private Double avgCpc; // 평균 클릭 비용
     private Long adSpend; // 광고비
-    private Long clickPercent;
+    private Double clickPercent;
 
     // 광고현황 레포트 출력
     @QueryProjection
-    public DadRptDto(String basicDate, Long dadDetId, Long impCnt, Long clickCnt, Double avgImpRank, Double avgCpc, Long adSpend, long clickPercent) {
+    public DadRptDto(String basicDate, Long dadDetId, Long impCnt, Long clickCnt, Double avgImpRank, Double avgCpc, Long adSpend, Double clickPercent) {
         this.basicDate = basicDate;
         this.dadDetId = dadDetId;
         this.impCnt = impCnt;
