@@ -75,7 +75,7 @@ public class TokenProvider {
         return TokenDto.builder()
                 .memberId(member.getMemberId())
                 .grantType(BEARER_PREFIX)
-                .accessToken( accessToken)
+                .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .refreshToken(refreshToken)
                 .authority(member.getRoleGroup().toString())

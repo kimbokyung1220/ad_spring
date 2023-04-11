@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class DadRpt {
     @EmbeddedId
     private RptCompositeKey rptCompositeKey; // advId, basicDate, dadDetId
@@ -29,15 +30,5 @@ public class DadRpt {
     private Long adSpend; // 광고비
 
     @Transient
-    private Double getClickPercent;
-
-    public DadRpt(RptCompositeKey rptCompositeKey, Long impCnt, Long clickCnt, Double avgImpRank, Double avgCpc, Long adSpend, Double getClickPercent) {
-        this.rptCompositeKey = rptCompositeKey;
-        this.impCnt = impCnt;
-        this.clickCnt = clickCnt;
-        this.avgImpRank = avgImpRank;
-        this.avgCpc = avgCpc;
-        this.adSpend = adSpend;
-        this.getClickPercent = getClickPercent;
-    }
+    private String filePath;
 }

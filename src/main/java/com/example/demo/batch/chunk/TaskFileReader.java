@@ -18,26 +18,21 @@ public class TaskFileReader {
     public FlatFileItemReader<DadRptRequestDto> reader(String filePath) {
         FlatFileItemReader<DadRptRequestDto> reader = new FlatFileItemReader<>();
         // 요청상태가 REQ인 파일
-        String fileName = filePath.substring(filePath.indexOf("-")+1);
-        try{
-            reader.setResource(new ClassPathResource(filePath));
-            System.out.println(filePath);
-            System.out.println("********************");
-            reader.setEncoding("UTF-8"); // 인코딩
-            reader.setLinesToSkip(1); // csv파일 header skip
-            reader.setLineMapper(new DefaultLineMapper<DadRptRequestDto>() {{
-                setLineTokenizer(new DelimitedLineTokenizer() {{
-                    setNames("basicDate", "dadDetId", "impCnt", "clickCnt", "avgImpRank", "avgCpc", "adSpend");
-                    setDelimiter(",");
-                }});
-                setFieldSetMapper(new BeanWrapperFieldSetMapper<DadRptRequestDto>() {{
-                    setTargetType(DadRptRequestDto.class);
-                }});
+        String fileName = filePath.substring(filePath.indexOf("-") + 1);
+        reader.setResource(new ClassPathResource(filePath));
+        System.out.println(filePath);
+        System.out.println("********************");
+        reader.setEncoding("UTF-8"); // 인코딩
+        reader.setLinesToSkip(1); // csv파일 header skip
+        reader.setLineMapper(new DefaultLineMapper<DadRptRequestDto>() {{
+            setLineTokenizer(new DelimitedLineTokenizer() {{
+                setNames("basicDate", "dadDetId", "impCnt", "clickCnt", "avgImpRank", "avgCpc", "adSpend");
+                setDelimiter(",");
             }});
-        } catch (NonSkippableReadException e) {
-            e.getMessage();
-            return null;
-        }
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<DadRptRequestDto>() {{
+                setTargetType(DadRptRequestDto.class);
+            }});
+        }});
 
         return reader;
     }

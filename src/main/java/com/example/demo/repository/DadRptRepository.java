@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface DadRptRepository extends JpaRepository<DadRpt, RptCompositeKey> {
+//    void findDad(Long dadDetId);
 
 //    @Query(nativeQuery = true,
 //            value = "SELECT " +

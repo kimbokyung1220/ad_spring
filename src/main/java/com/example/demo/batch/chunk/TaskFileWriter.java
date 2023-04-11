@@ -19,13 +19,10 @@ public class TaskFileWriter implements ItemWriter<DadRpt> {
     @Override
     public void write(List<? extends DadRpt> items) {
 
-
             System.out.println("********************************************");
             System.out.println(" ===== SPRING BATCH DB 적재 완 =======");
             System.out.println("********************************************");
             dadRptRepository.saveAll(new ArrayList<DadRpt>(items));
-
-
 
     }
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,24 +35,31 @@ public class TaskFileProcessor implements ItemProcessor<DadRptRequestDto, DadRpt
 
         // 비교할 키값
         String key = item.getBasicDate() + item.getDadDetId();
+        try{
+            if (processedDataMap.containsKey(key)) { // 중복된 데이터인 경우
+                DadRptRequestDto existingData = processedDataMap.get(key);
+                double avgImpRankRound = ((existingData.getAvgImpRank() + item.getAvgImpRank()) / 2);
 
-        if (processedDataMap.containsKey(key)) { // 중복된 데이터인 경우
-            DadRptRequestDto existingData = processedDataMap.get(key);
-            double avgImpRankRound = ((existingData.getAvgImpRank() + item.getAvgImpRank()) / 2);
+                existingData.setBasicDate(item.getBasicDate());
+                existingData.setDadDetId(item.getDadDetId());
+                existingData.setImpCnt(existingData.getImpCnt() + item.getImpCnt());
+                existingData.setClickCnt(existingData.getClickCnt() + item.getClickCnt());
+                existingData.setAvgImpRank(Double.valueOf(String.format("%.1f", avgImpRankRound)));
+                existingData.setAvgCpc((existingData.getAvgCpc() + item.getAvgCpc()) / 2);
+                existingData.setAdSpend(existingData.getAdSpend() + item.getAdSpend());
+                processedDataMap.put(key, existingData);
 
-            existingData.setBasicDate(item.getBasicDate());
-            existingData.setDadDetId(item.getDadDetId());
-            existingData.setImpCnt(existingData.getImpCnt() + item.getImpCnt());
-            existingData.setClickCnt(existingData.getClickCnt() + item.getClickCnt());
-            existingData.setAvgImpRank(Double.valueOf(String.format("%.1f", avgImpRankRound)));
-            existingData.setAvgCpc((existingData.getAvgCpc() + item.getAvgCpc()) / 2);
-            existingData.setAdSpend(existingData.getAdSpend() + item.getAdSpend());
-            processedDataMap.put(key, existingData);
+                return existingData.of(advId);
+            } else {
+                processedDataMap.put(key, item);
+                return item.of(advId);
+            }
 
-            return existingData.of(advId);
-        } else {
-            processedDataMap.put(key, item);
-            return item.of(advId);
+        } catch (FlatFileParseException ex) {
+            // handle the exception, for example:
+            System.out.println("Skipping invalid input record: " + ex.getInput());
+            return null; // skip the invalid record
         }
+
     }
 }

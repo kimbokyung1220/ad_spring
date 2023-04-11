@@ -17,8 +17,7 @@ import java.util.Optional;
 public interface TaskReqRepository extends JpaRepository<TaskReq, Long> {
     List<TaskReq> findAllByOrderByTaskReqTime();
     List<TaskReq> findByTaskStatus(String taskStatus);
-//    Optional<TaskReq> findByTaskStatus(String taskStatus);
-
+    Long findByTaskStatusAndTaskReqFilePath(String taskStatus, String filePath);
     TaskReq findByTaskReqId(Long taskReqId);
     TaskReq findByTaskReqFilePath(String filePath);
 

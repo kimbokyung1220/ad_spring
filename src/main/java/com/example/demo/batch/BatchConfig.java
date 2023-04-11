@@ -6,6 +6,7 @@ import com.example.demo.entity.DadRpt;
 import com.example.demo.entity.TaskReq;
 import com.example.demo.entity.enm.TaskStatus;
 import com.example.demo.exception.CustomExceptionHandler;
+import com.example.demo.repository.DadRptRepository;
 import com.example.demo.repository.TaskReqRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,7 @@ public class BatchConfig {
     private final TaskFileWriter taskFileWriter;
     private static final int chunkSize = 1;
     private final TaskReqRepository taskReqRepository;
+    private final DadRptRepository dadRptRepository;
 
     @Bean
     public Job taskFileJob() throws Exception {
@@ -60,7 +62,7 @@ public class BatchConfig {
                 .faultTolerant()
                 .processor(taskFileProcessor) // 인스턴스 넘겨주기
                 .writer(taskFileWriter)
-                .listener(new FlatFileParseExceptionHandler(taskReqRepository))
+                .listener(new FlatFileParseExceptionHandler(taskReqRepository, dadRptRepository))
                 .build();
     }
 
