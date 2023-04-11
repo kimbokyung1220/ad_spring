@@ -37,7 +37,7 @@ public class UploadFileService {
         String saveFileName = uuids[0] + "-" + fileRealName;
 
 //        File saveFile = new File(UPLOAD_PATH + "\\" + saveFileName + fileExtension);
-        File saveFile = new File(UPLOAD_PATH + "\\" + saveFileName);  // 적용 후
+        File saveFile = new File(UPLOAD_PATH + "\\" + fileRealName);  // 적용 후
         try {
             taskFile.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
 
@@ -47,6 +47,6 @@ public class UploadFileService {
             e.printStackTrace();
             throw new CustomException(ErrorCode.FAILED_FILE_PATH, ErrorCode.FAILED_FILE_PATH.getMessage());
         }
-        return taskReqService.saveTaskReq(saveFileName, requestDto, servletRequest);
+        return taskReqService.saveTaskReq(fileRealName, requestDto, servletRequest);
     }
 }

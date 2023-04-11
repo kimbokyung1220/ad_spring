@@ -20,8 +20,7 @@ public class TaskFileReader {
         // 요청상태가 REQ인 파일
         String fileName = filePath.substring(filePath.indexOf("-") + 1);
         reader.setResource(new ClassPathResource(filePath));
-        System.out.println(filePath);
-        System.out.println("********************");
+
         reader.setEncoding("UTF-8"); // 인코딩
         reader.setLinesToSkip(1); // csv파일 header skip
         reader.setLineMapper(new DefaultLineMapper<DadRptRequestDto>() {{

@@ -60,6 +60,8 @@ public class BatchConfig {
                 .<DadRptRequestDto, DadRpt>chunk(chunkSize)
                 .reader(reader(null))
                 .faultTolerant()
+                .skipLimit(5)
+                .skip(FlatFileParseException.class)
                 .processor(taskFileProcessor) // 인스턴스 넘겨주기
                 .writer(taskFileWriter)
                 .listener(new FlatFileParseExceptionHandler(taskReqRepository, dadRptRepository))
