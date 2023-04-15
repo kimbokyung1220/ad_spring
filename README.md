@@ -26,15 +26,15 @@
 <br/><br/>
 
 ## 🎯 주요기능
-1. 로그인 및 광고등록
-![login](https://user-images.githubusercontent.com/58963042/232237180-8fd18578-5235-43f5-a745-5e2af26c7daf.gif)
-![광고등록](https://user-images.githubusercontent.com/58963042/232237899-701ff57f-3535-43b1-b79c-a132bfed134a.gif)
+#### 1. 로그인 및 광고등록
+<img src="https://user-images.githubusercontent.com/58963042/232237180-8fd18578-5235-43f5-a745-5e2af26c7daf.gif" width="500" height="300"/><img src="https://user-images.githubusercontent.com/58963042/232237899-701ff57f-3535-43b1-b79c-a132bfed134a.gif" width="500" height="300"/>
 
-2. 광고관리
-![광고관리](https://user-images.githubusercontent.com/58963042/232238494-635d03f0-5c9e-4754-bd44-7904c6d6ab90.gif)
+#### 2. 광고관리
+<img src="https://user-images.githubusercontent.com/58963042/232238494-635d03f0-5c9e-4754-bd44-7904c6d6ab90.gif" width="500" height="300"/>
 
-3. 키워드 및 광고검수, 대량관리, 광고현황
-![React-App-외-페이지-1개-프로필-1-Microsoft_-Edge-2023-04-16-01-45-52](https://user-images.githubusercontent.com/58963042/232238986-42113238-ab2b-4f1d-a2ab-df8d16e37d24.gif)
+#### 3. 키워드 및 광고검수, 대량관리, 광고현황
+<img src="https://user-images.githubusercontent.com/58963042/232238986-42113238-ab2b-4f1d-a2ab-df8d16e37d24.gif" width="500" height="300"/>
+
 
 
  
